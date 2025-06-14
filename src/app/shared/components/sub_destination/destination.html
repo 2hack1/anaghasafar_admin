@@ -1,0 +1,72 @@
+<div class="container py-4">
+
+
+  <div class="d-flex justify-content-between mb-3">
+    <button class="btn btn-primary" (click)="showForm()">Add</button>
+    <input class="form-control w-50" [(ngModel)]="searchText" placeholder="Search by name" />
+
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0">{{destination}}'s Subdestination:</h2>
+  </div>
+
+  <div *ngIf="formVisible" class="card p-3 mb-3">
+    <form [formGroup]="subDestForm" (ngSubmit)="save()">
+      <div class="mb-3">
+        <label>Name</label>
+        <input class="form-control" formControlName="name" />
+      </div>
+
+
+      <div class="mb-3" *ngIf="!isEditing">
+        <label>Destination</label>
+        <select class="form-control" formControlName="sub_dest">
+          <option value="">Select</option>
+          <option>
+            subdestinations
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Image</label>
+        <input type="file" class="form-control" (change)="onFileChange($event)" />
+      </div>
+      <button class="btn btn-success" type="submit">{{ isEditing ? 'Update' : 'Save' }}</button>
+    </form>
+  </div>
+
+  <table class="table table-bordered table-light">
+    <thead class="">
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Packages</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sub of filteredSubDestinations">
+
+
+        <td>
+          <img *ngIf="sub.image_url" [src]="'http://localhost:8000/storage/' + sub.image_url" width="60" />
+        </td>
+        <!-- <td>
+          <img *ngIf="sub.image?.img" [src]="'http://localhost:8000/storage/' + (sub.image.img.replace('//', '/'))"
+            width="60" />
+        </td> -->
+
+
+
+        <td>{{ sub.name }}</td>
+        <!-- <td>{{ sub.destination?.name }}</td> -->
+        <td> <button class="btn btn-primary  me-2" (click)="send(sub)">Find</button>
+        </td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="showForm(true, sub)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteSubDest(sub.sub_destination_id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
