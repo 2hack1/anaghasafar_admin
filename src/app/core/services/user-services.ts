@@ -7,7 +7,7 @@ export interface AdminEntry {
   id?: number;
   name: string;
   type: string;
-} 
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +19,13 @@ export class UserServices {
 
   constructor(private http: HttpClient) { }
 
-  subdestinationid:any;
-  currentpackageId:any;
+  subdestinationid: any;
+  currentpackageId: any;
   toggle() {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
     this.stateSubject.next(newState);
   }
-// ********************destinations***************************
+  // ********************destinations***************************
   // Get all main destinations
   getAll(): Observable<AdminEntry[]> {
     return this.http.get<AdminEntry[]>(`${this.apiUrl}destination/all/des`);
@@ -70,58 +70,58 @@ export class UserServices {
 
 
 
-// ********************Packages***************************
+  // ********************Packages***************************
   getAllPackages(sub_des_id: number) {
     return this.http.get(`http://localhost:8000/api/packages/${sub_des_id}`);
   }
-getperticular(sub_des_id: number) {
+  getperticular(sub_des_id: number) {
     return this.http.get(`http://localhost:8000/api/packages/${sub_des_id}/details`);
   }
-  createPackage(data: FormData,sub_des_id:any) {
+  createPackage(data: FormData, sub_des_id: any) {
     return this.http.post(`http://localhost:8000/api/packages/${sub_des_id}`, data);
   }
 
-  
+
   deletePackage(id: number) {
     return this.http.delete(`http://localhost:8000/api/packages/delete/${id}`);
   }
-  
-  getitineries(package_id:any){
-       return this.http.get(`${this.apiUrl}itineraries/${package_id}`);
+
+  getitineries(package_id: any) {
+    return this.http.get(`${this.apiUrl}itineraries/${package_id}`);
   }
-  getTransportation(package_id:any){
+  getTransportation(package_id: any) {
     return this.http.get(`${this.apiUrl}transports/${package_id}`);
   }
-  getImage(package_id:any){
+  getImage(package_id: any) {
     return this.http.get(`${this.apiUrl}pac_image/${package_id}`);
   }
-  
-  
+
+
   // ******************************* form packages*****************
-  
+
   // (data:any){}  this is fake 
-  
-  uploadPackageImage(data: FormData,sub_des_id:any) {
+
+  uploadPackageImage(data: FormData, sub_des_id: any) {
     return this.http.post(`http://localhost:8000/api/pac_image/${sub_des_id}`, data);
   }
-  
-  saveItinerary(data:any,sub_des_id: any) {
-    return this.http.post(`http://localhost:8000/api/itineraries/${sub_des_id}`,data);
+
+  saveItinerary(data: any, sub_des_id: any) {
+    return this.http.post(`http://localhost:8000/api/itineraries/${sub_des_id}`, data);
   }
-  getMonth(package_id:number){
+  getMonth(package_id: number) {
     return this.http.get(`http://localhost:8000/api/months/${package_id}`);
   }
-  saveMonthTour(data:any) {
-    return this.http.post("http://localhost:8000/api/set-multiple-months",data);
+  saveMonthTour(data: any) {
+    return this.http.post("http://localhost:8000/api/set-multiple-months", data);
   }
 
-  saveDateTour(data:any) {
-    return this.http.post(`http://localhost:8000/api/dateOfTour/a`,data);
+  saveDateTour(data: any) {
+    return this.http.post(`http://localhost:8000/api/dateOfTour/a`, data);
   }
-  saveTransport(data:any,sub_des_id: any) {
-    return this.http.post(`http://localhost:8000/api/transports/${sub_des_id}`,data);
+  saveTransport(data: any, sub_des_id: any) {
+    return this.http.post(`http://localhost:8000/api/transports/${sub_des_id}`, data);
   }
-  
+
   // updates of data
 
   updatePackage(id: number, data: FormData) {
@@ -133,36 +133,38 @@ getperticular(sub_des_id: number) {
   updateItinerary(id: number, data: any) {
     return this.http.post(`http://localhost:8000/api/itineraries/update/${id}`, data); // Use PUT/PATCH as per your backend
   }
-  updateMonthTour( data: any) {
+  updateMonthTour(data: any) {
     return this.http.post(`http://localhost:8000/api/months/update/multiple`, data); // Use PUT/PATCH as per your backend
   }
-  getDateWithMonthId( data: any) {
+  getDateWithMonthId(data: any) {
     return this.http.post(`http://localhost:8000/api/getdatemore`, data); // Use PUT/PATCH as per your backend
   }
-  updateDateTour( data: any) {
+  updateDateTour(data: any) {
     return this.http.post(`http://localhost:8000/api/dateOfTour/multipleupdate`, data); // Use PUT/PATCH as per your backend
   }
   updateTransport(id: number, data: any) {
     return this.http.post(`http://localhost:8000/api/transports/update/${id}`, data); // Use PUT/PATCH as per your backend
   }
-
-  get4card(){
-
+  get4card() {
     return this.http.get("http://localhost:8000/api/four-cards");
   }
-  
-  update4card(id:number,data:any){
-    return this.http.post(`http://localhost:8000/api/four-cards/${id}`,data);
-    
+  update4card(id: number, data: any) {
+    return this.http.post(`http://localhost:8000/api/four-cards/${id}`, data);
   }
-  gettopimage(){
+  gettopimage() {
     return this.http.get("http://localhost:8000/api/topimagess");
-
   }
-  updatetopimage(id:number,data:FormData){
-    return this.http.post(`http://localhost:8000/api/topimg/update/${id}`,data);
+  updatetopimage(id: number, data: FormData) {
+    return this.http.post(`http://localhost:8000/api/topimg/update/${id}`, data);
   }
 
+getUserPlanTrip(){
+      return this.http.get("http://localhost:8000/api/trips");
 
+}
+DeleteUserPlanTrip(id:any){
+      return this.http.delete(`http://localhost:8000/api/trips/${id}`);
+
+}
 
 }

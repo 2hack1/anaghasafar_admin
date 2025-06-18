@@ -1,11 +1,18 @@
+<!-- <div class="wrapper">
+    <div class="body-overlay"></div>
+    <app-header></app-header>
 
-
-<div class="wrapper">
-<div class="body-overlay"></div>
-<app-header></app-header>
-
- <div id="content" class="{{status}}" >
-<router-outlet ></router-outlet>
-</div>
+    <div id="content" class="{{status}}">
+        <router-outlet></router-outlet>
     </div>
+</div> -->
 
+
+    <div class="wrapper" [ngClass]="{ 'full-screen': isLoginPage }">
+        <div class="body-overlay" *ngIf="!isLoginPage"></div>
+        <app-header *ngIf="!isLoginPage"></app-header>
+        
+        <div id="content" [ngClass]="status">
+            <router-outlet></router-outlet>
+        </div>
+    </div>

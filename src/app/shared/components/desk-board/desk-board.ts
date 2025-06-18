@@ -9,12 +9,19 @@ import { UserServices } from '../../../core/services/user-services';
 })
 export class DeskBoard implements OnInit {
   
-  
+  bookings:any;
   
   ngOnInit(): void {
-  
+  this.getBookings();
   }
 
-constructor(private as_:UserServices){}
+constructor(private service:UserServices){}
  
+getBookings(): void {
+    this.service.getUserPlanTrip().subscribe((res) => {
+      this.bookings = res;
+    });
+  }
+
+
 }

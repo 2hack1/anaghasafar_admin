@@ -8,6 +8,7 @@ import { AboutPackage } from './shared/components/about-package/about-package';
 import { HomePlaneNewTrip } from './shared/components/home-plane-new-trip/home-plane-new-trip';
 import { HomefourCard } from './shared/components/homefour-card/homefour-card';
 import { Topimage } from './shared/components/topimage/topimage';
+import { Login } from './shared/components/login/login';
 
 export const routes: Routes = [
 
@@ -38,5 +39,8 @@ export const routes: Routes = [
     },{
         path:"topImage",
         component:Topimage
+    },{
+        path:"login",
+        component:Login
     }
 ];

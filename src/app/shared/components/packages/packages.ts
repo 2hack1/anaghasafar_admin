@@ -4,11 +4,12 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, Reacti
 import { CommonModule } from '@angular/common';
 import { UserServices } from '../../../core/services/user-services';
 import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
+import { NotifierModule, NotifierService } from 'angular-notifier';
 
 
 @Component({
   selector: 'app-packages',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,NotifierModule],
   templateUrl: './packages.html',
   styleUrl: './packages.scss'
 })
@@ -44,7 +45,7 @@ export class Packages implements OnInit {
     private service: UserServices,
     private route: ActivatedRoute,
     private router:Router,
-    
+    private  readonly notifier:NotifierService,
  
   ) {
 
@@ -406,11 +407,14 @@ export class Packages implements OnInit {
       this.service.updatePackage(this.currentId, formData).subscribe({
         next: (res: any) => {
           this.currentId = res.package_id; // Update currentId from response
+          this.notifier.notify('success',' 1st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err) => {
           // console.error('Error updating package info:', err);
-          alert("Failed to update package info.");
+          // alert("Failed to update package info.");
+           this.notifier.notify('error',' Somthing Wants wrong!');
+ 
         }
         
       });
@@ -424,11 +428,15 @@ export class Packages implements OnInit {
           // console.log("Created successfully:", res);
           this.currentId = res.package_id;
           this.loadPackages(); // Refresh list
+          this.notifier.notify('success',' 1st Form Details Successfully Uploaded!');
+
           this.nextStep();
         },
         error: (err) => {
           // console.error('Error creating package:', err);
-          alert("Failed to create package.");
+          // alert("Failed to create package.");
+         this.notifier.notify('error',' Somthing Wants wrong!');
+
         }
     
       });
@@ -460,12 +468,12 @@ export class Packages implements OnInit {
       // Update API – send image update request
       this.service.updatePackageImage(this.service.currentpackageId, formData).subscribe({
         next: (res) => {
-          // console.log("✅ Image updated:", res);
+       this.notifier.notify('success',' 2st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err) => {
-          // console.error("❌ Image update failed:", err);
-          alert("Failed to update image.");
+          // alert("Failed to update image.");
+           this.notifier.notify('error',' Somthing Wants wrong!| Please check this Form Data');
         }
       });
     } else {
@@ -477,11 +485,13 @@ export class Packages implements OnInit {
       this.service.uploadPackageImage(formData, this.currentId).subscribe({
         next: (res) => {
           // console.log("✅ Image uploaded:", res);
+            this.notifier.notify('success',' 3st Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
           // console.error("❌ Image upload failed:", err);
-          alert("Failed to upload image.");
+          // alert("Failed to upload image.");
+           this.notifier.notify('error',' Failed to upload image!......');
         }
       });
     }
@@ -500,11 +510,12 @@ export class Packages implements OnInit {
       this.service.updateItinerary(this.service.currentpackageId, body).subscribe({
         next: (res: any) => {
           console.log("✅ Itinerary updated:", res);
+            this.notifier.notify('success',' 4st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err: any) => {
-          console.error("❌ Failed to update itinerary:", err);
-          alert("Failed to update itinerary.");
+        this.notifier.notify('error',' Failed to update itinerary !......');
+
         }
       });
     } else {
@@ -516,11 +527,13 @@ export class Packages implements OnInit {
       this.service.saveItinerary(body, this.currentId).subscribe({
         next: (res) => {
           console.log("✅ Itinerary created:", res);
+          this.notifier.notify('success',' 4st Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
-          console.error("❌ Failed to create itinerary:", err);
-          alert("Failed to create itinerary.");
+        
+        this.notifier.notify('error',' Failed to Upload itinerary !......');
+
         }
       });
     }
@@ -545,13 +558,14 @@ export class Packages implements OnInit {
       // Update month tour records
       this.service.updateMonthTour(moList).subscribe({
         next: (res: any) => {
-          console.log("✅ Month tours updated:", res);
+          // console.log("✅ Month tours updated:", res);
           this.loadPackagesMonth(this.service.currentpackageId);
+           this.notifier.notify('success','  Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err: any) => {
-          console.error("❌ Failed to update month tours:", err);
-          alert("Failed to update month tours.");
+        
+            this.notifier.notify('error',' Failed to update month tours.!......');
         }
       });
     } else {
@@ -569,11 +583,12 @@ export class Packages implements OnInit {
         next: (res: any) => {
           console.log("📦 Saved months:", res);
           this.loadPackagesMonth(this.currentId);
+       this.notifier.notify('success',' Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
-          console.error("❌ Failed to save month tours:", err);
-          alert("Failed to save month tours.");
+
+           this.notifier.notify('error','Failed to save month of tours.!......');
         }
       });
     }
@@ -608,19 +623,27 @@ export class Packages implements OnInit {
 
     if (this.isEditing) {
       this.service.updateDateTour(allDates).subscribe({
-        next: () =>
-          this.nextStep(),
+        next: () =>{
+          this.notifier.notify('success','Form Details Successfully Updated!');
+          this.nextStep()
+        },
         error: (err: any) => {
-          console.error("❌ Error updating dates:", err);
-          alert("Failed to update date tours.");
+          // console.error("❌ Error updating dates:", err);
+          // alert("Failed to update date tours.");
+         this.notifier.notify('error','Failed to update date of tours!......');
+
         }
       });
     } else {
       this.service.saveDateTour(allDates).subscribe({
-        next: () => this.nextStep(),
+        next: () =>{
+
+       this.notifier.notify('success','Form Details Successfully Upload!');
+           this.nextStep()},
         error: (err) => {
-          console.error("❌ Error saving dates:", err);
-          alert("the end date must be ferther of start date");
+          // console.error("❌ Error saving dates:", err);
+          // alert("the end date must be ferther of start date");
+         this.notifier.notify('error','the end date must be further of start date!......');
         }
       });
     }
@@ -658,27 +681,31 @@ export class Packages implements OnInit {
     const body = { ...this.transportForm.value, mode: modeArray, };
     if (this.isEditing) {
       if (!this.service.currentpackageId) return;
-      console.log("current id", this.service.currentpackageId);
+      // console.log("current id", this.service.currentpackageId);
       this.service.updateTransport(this.service.currentpackageId, body).subscribe({
         next: () => {
           this.nextStep();
+          this.notifier.notify('success','Form Details Successfully Updated!');
+
         },
         error: (err: any) => {
-          console.error("❌ Transport update failed:", err);
-          alert("Update transport failed. Please try again.");
+          this.notifier.notify('error','Update transport failed!......');
         }
       });
     } else {
       if (!this.currentId) return;
       this.service.saveTransport(body, this.currentId).subscribe({
         next: (res) => {
-          console.log("✅ Transport saved:", res);
+          // console.log("✅ Transport saved:", res);
           this.loadPackagesMonth(this.currentId);
+        this.notifier.notify('success','Form Details Successfully Uploaded!');
           this.nextStep();
         },
         error: (err) => {
-          console.error("❌ Transport save failed:", err);
-          alert("Save transport failed. Please try again.");
+          // console.error("❌ Transport save failed:", err);
+          // alert("Save transport failed. Please try again.");
+           this.notifier.notify('error','Save transport failed!......');
+
         }
       });
     }
@@ -690,6 +717,7 @@ export class Packages implements OnInit {
   deletePackage(id: number) {
     if (confirm('Are you sure to delete this package?')) {
       this.service.deletePackage(id).subscribe(() => {
+       this.notifier.notify('success',' Tour Package Successfully Deleted....');
         this.loadPackages();
       });
     }

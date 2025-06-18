@@ -1,1 +1,41 @@
-<p>home-plane-new-trip works!</p>
+<div class="container py-4">
+  <h2 class="text-center mb-4 text-primary fw-bold">📋 Plane My trip Details</h2>
+
+  <div class="table-responsive">
+    <table class="table table-bordered shadow">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Your Address</th>
+          <th>Destination</th>
+          <th>Email</th>
+          <th>Check-In</th>
+          <th>Check-Out</th>
+          <th>Adults</th>
+          <th>Children</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ booking.your_address }}</td>
+          <td>{{ booking.destination_address }}</td>
+          <td>{{ booking.email }}</td>
+          <td>{{ booking.check_in }}</td>
+          <td>{{ booking.check_out }}</td>
+          <td>{{ booking.adults }}</td>
+          <td>{{ booking.children }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteBooking(booking.id)">
+              🗑️ Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="bookings.length === 0">
+          <td colspan="9" class="text-center text-muted">No data found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
