@@ -37,7 +37,6 @@ export class Destination implements OnInit {
     this.des_id = this.route.snapshot.paramMap.get('id');
     console.log("dest_id:", this.des_id);
     this.loadSubDestinations(this.des_id);
-    // this.loadDestinations(); // For dropdown
   }
   // getall:any;
   destination: any;

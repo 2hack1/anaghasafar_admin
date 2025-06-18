@@ -9,8 +9,13 @@
   <input type="text" class="form-control mb-3" placeholder="Search by place name" [(ngModel)]="searchText" />
 
 
+
   <div *ngIf="formVisible" class="card p-4 mb-4">
-    <h4 class="mb-3">Step {{ currentStep }} of {{ maxSteps }}</h4>
+    <div class="d-flex align-items-center ">
+      <h4>Step {{ currentStep }} of {{ maxSteps }}</h4>
+      <button type="button"  style="border: none; background: none; margin-left: auto; font-size: 1.3rem; " (click)="closeForm()">×</button>
+    </div>
+
 
 
     <form *ngIf="currentStep === 1" [formGroup]="packageForm">
@@ -21,7 +26,7 @@
         </div>
         <div class="col-md-6">
           <label>Place Name</label>
-          <input formControlName="place_name" class="form-control"  placeholder=" Enter Place name" />
+          <input formControlName="place_name" class="form-control" placeholder=" Enter Place name" />
         </div>
         <div class="col-md-4">
           <label>Price</label>
@@ -29,7 +34,8 @@
         </div>
         <div class="col-md-4">
           <label>Duration (Days)</label>
-          <input type="number" formControlName="duration_days" class="form-control" placeholder="Enter the duration in no." />
+          <input type="number" formControlName="duration_days" class="form-control"
+            placeholder="Enter the duration in no." />
         </div>
         <div class="col-md-4">
           <label>Origin</label>
@@ -46,22 +52,21 @@
       </div>
     </form>
 
-<!-- image form  -->
+    <!-- image form  -->
     <div *ngIf="currentStep === 2">
-  <label>Package Image</label>
-  <input type="file" (change)="onFileChange($event)" class="form-control" />
-
-  
-  <div *ngIf="imageForm.get('image')?.value" class="mt-2">
-    <p>Current Image:</p>
-    <img [src]="'http://localhost:8000/storage/' + imageForm.get('image')?.value" 
-         alt="Current Package Image"
-         style="max-width: 200px; border: 1px solid #ccc;" />
-  </div>
-</div>
+      <label>Package Image</label>
+      <input type="file" (change)="onFileChange($event)" class="form-control" />
 
 
-<!-- Day-wise Details form -->
+      <div *ngIf="imageForm.get('image')?.value" class="mt-2">
+        <p>Current Image:</p>
+        <img [src]="'http://localhost:8000/storage/' + imageForm.get('image')?.value" alt="Current Package Image"
+          style="max-width: 200px; border: 1px solid #ccc;" />
+      </div>
+    </div>
+
+
+    <!-- Day-wise Details form -->
     <form *ngIf="currentStep === 3" [formGroup]="itineraryForm">
       <h5>Day-wise Details</h5>
       <div formArrayName="day_wise_details">
@@ -72,9 +77,10 @@
           <label>Title</label>
           <input formControlName="title" class="form-control mb-2" placeholder="Enter the title " />
           <label>Detail</label>
-          <textarea formControlName="detail" class="form-control mb-2" placeholder="Enter Detail about Title"></textarea>
+          <textarea formControlName="detail" class="form-control mb-2"
+            placeholder="Enter Detail about Title"></textarea>
           <label>Status (Open)</label>
-          <select formControlName="open" class="form-control mb-2" >
+          <select formControlName="open" class="form-control mb-2">
             <option [value]="true">open</option>
             <option [value]="false">close</option>
           </select>
@@ -84,7 +90,7 @@
       </div>
     </form>
 
-<!-- Date and Month of tour -->
+    <!-- Date and Month of tour -->
     <div *ngIf="currentStep === 4" [formGroup]="monthForm">
       <h5>Date and Month of tour</h5>
       <div formArrayName="months">
@@ -97,19 +103,19 @@
             </div>
             <div class="col-md-4">
               <label>Year</label>
-              <input formControlName="year" class="form-control"  placeholder="Enter the Year Like: 25"/>
+              <input formControlName="year" class="form-control" placeholder="Enter the Year Like: 25" />
             </div>
             <div class="col-md-4 text-end">
               <button type="button" class="btn btn-danger btn-sm" (click)="removeMonth(i)">Remove Month</button>
             </div>
           </div>
-          
+
         </div>
         <button type="button" class="btn btn-primary" (click)="addMonth()">+ Add Month</button>
       </div>
     </div>
 
-       <div *ngIf="currentStep === 5" [formGroup]="monthForm">
+    <div *ngIf="currentStep === 5" [formGroup]="monthForm">
       <h5>Date and Month of tour</h5>
       <div formArrayName="months">
         <div *ngFor="let monthGroup of monthsArray.controls; let i = index" [formGroupName]="i"
@@ -117,11 +123,11 @@
           <div class="row g-3 align-items-end">
             <div class="col-md-4">
               <label>Month</label>
-              <input formControlName="month" class="form-control" />
+              <input formControlName="month" class="form-control-plaintext" readonly />
             </div>
             <div class="col-md-4">
               <label>Year</label>
-              <input formControlName="year" class="form-control" />
+              <input formControlName="year" class="form-control-plaintext" readonly />
             </div>
             <div class="col-md-4 text-end">
               <button type="button" class="btn btn-danger btn-sm" (click)="removeMonth(i)">Remove Month</button>
@@ -155,38 +161,38 @@
             <button type="button" class="btn btn-secondary btn-sm mt-2" (click)="addDate(i)">+ Add Date</button>
           </div>
         </div>
-        <!-- <button type="button" class="btn btn-primary" (click)="addMonth()">+ Add Month</button> -->
       </div>
     </div>
-    
+
     <!-- Transport -->
-<form *ngIf="currentStep === 6" [formGroup]="transportForm" class="p-3 border rounded shadow-sm bg-light">
-  <div class="mb-3">
-    <label for="modeSelect" class="form-label fw-bold">Transport Mode</label>
-    <select id="modeSelect" class="form-select" formControlName="mode">
-      <option value="" disabled>Select a transport mode</option>
-      <option *ngFor="let option of transportOptions" [value]="option">
-        {{ option }}
-      </option>
-    </select>
-    <div *ngIf="transportForm.get('mode')?.touched && transportForm.get('mode')?.invalid" class="text-danger mt-1">
-      Please select a transport mode.
-    </div>
-  </div>
+    <form *ngIf="currentStep === 6" [formGroup]="transportForm" class="p-3 border rounded shadow-sm bg-light">
+      <div class="mb-3">
+        <label for="modeSelect" class="form-label fw-bold">Transport Mode</label>
+        <select id="modeSelect" class="form-select" formControlName="mode">
+          <option value="" disabled>Select a transport mode</option>
+          <option *ngFor="let option of transportOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+        <div *ngIf="transportForm.get('mode')?.touched && transportForm.get('mode')?.invalid" class="text-danger mt-1">
+          Please select a transport mode.
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <label for="detailsTextarea" class="form-label fw-bold">Transport Details</label>
-    <textarea id="detailsTextarea" formControlName="details" class="form-control" rows="4"
-      placeholder="Enter transport details..."></textarea>
-    <div *ngIf="transportForm.get('details')?.touched && transportForm.get('details')?.invalid" class="text-danger mt-1">
-      Please provide transport details.
-    </div>
-  </div>
-</form>
+      <div class="mb-3">
+        <label for="detailsTextarea" class="form-label fw-bold">Transport Details</label>
+        <textarea id="detailsTextarea" formControlName="details" class="form-control" rows="4"
+          placeholder="Enter transport details..."></textarea>
+        <div *ngIf="transportForm.get('details')?.touched && transportForm.get('details')?.invalid"
+          class="text-danger mt-1">
+          Please provide transport details.
+        </div>
+      </div>
+    </form>
 
 
 
-    
+
     <div *ngIf="currentStep === 7">
       <p class="text-success fs-5">Click Finish to save all data and exit form.</p>
     </div>
@@ -227,6 +233,7 @@
         <td>
           <button class="btn btn-sm btn-warning me-2" (click)="showForm(true, pack)">Edit</button>
           <button class="btn btn-sm btn-danger" (click)="deletePackage(pack.package_id)">Delete</button>
+          <button   class="btn btn-sm e" style="background-color: rgb(39, 39, 131); color: white;" (click)="send(pack.package_id)" >About_Trip</button>
         </td>
       </tr>
     </tbody>

@@ -19,7 +19,8 @@ export class UserServices {
 
   constructor(private http: HttpClient) { }
 
-  paticualarid:any;
+  subdestinationid:any;
+  currentpackageId:any;
   toggle() {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
     this.stateSubject.next(newState);
@@ -132,17 +133,35 @@ getperticular(sub_des_id: number) {
   updateItinerary(id: number, data: any) {
     return this.http.post(`http://localhost:8000/api/itineraries/update/${id}`, data); // Use PUT/PATCH as per your backend
   }
-  updateMonthTour(id: number, data: FormData) {
-    return this.http.post(`http://localhost:8000/api/months/update/multiple/${id}`, data); // Use PUT/PATCH as per your backend
+  updateMonthTour( data: any) {
+    return this.http.post(`http://localhost:8000/api/months/update/multiple`, data); // Use PUT/PATCH as per your backend
+  }
+  getDateWithMonthId( data: any) {
+    return this.http.post(`http://localhost:8000/api/getdatemore`, data); // Use PUT/PATCH as per your backend
   }
   updateDateTour( data: any) {
     return this.http.post(`http://localhost:8000/api/dateOfTour/multipleupdate`, data); // Use PUT/PATCH as per your backend
   }
-  updateTransport(id: any, data: any) {
+  updateTransport(id: number, data: any) {
     return this.http.post(`http://localhost:8000/api/transports/update/${id}`, data); // Use PUT/PATCH as per your backend
   }
 
+  get4card(){
 
+    return this.http.get("http://localhost:8000/api/four-cards");
+  }
+  
+  update4card(id:number,data:any){
+    return this.http.post(`http://localhost:8000/api/four-cards/${id}`,data);
+    
+  }
+  gettopimage(){
+    return this.http.get("http://localhost:8000/api/topimagess");
+
+  }
+  updatetopimage(id:number,data:FormData){
+    return this.http.post(`http://localhost:8000/api/topimg/update/${id}`,data);
+  }
 
 
 

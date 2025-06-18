@@ -1,0 +1,43 @@
+<div class="container py-4">
+  <h2 class="text-center text-primary fw-bold mb-4">🖼️ Image Gallery </h2>
+
+  <!-- Edit Image Form -->
+  <div class="card shadow p-4 mb-5 bg-white rounded" *ngIf="selectedCard">
+    <h5 class="text-success mb-3">Replace Image</h5>
+    <form (ngSubmit)="saveCard()">
+      <div class="row g-4 align-items-center">
+        <!-- Current Image -->
+        <div class="col-md-4 text-center">
+          <img [src]="'http://localhost:8000/storage/'+selectedCard.topimage"
+            class="img-thumbnail shadow border border-2" style="height: 200px; object-fit: cover;" alt="Selected" />
+        </div>
+
+        <!-- File Input & Actions -->
+        <div class="col-md-8">
+          <label class="form-label fw-semibold">Upload New Image</label>
+          <input type="file" class="form-control mb-3" (change)="onFileSelected($event)" required />
+
+          <div class="d-flex gap-3">
+            <button class="btn btn-success px-4" type="submit">💾 Save</button>
+            <button class="btn btn-outline-secondary px-4" type="button" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Image Cards Only -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-3" *ngFor="let card of cards">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+        <img [src]="'http://localhost:8000/storage/'+card.topimage" class="w-100"
+          style="height: 250px; object-fit: cover;" alt="Image" />
+        <div class="card-body text-center p-2">
+          <button class="btn btn-sm btn-primary w-100" (click)="editCard(card)">
+            ✏️ Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

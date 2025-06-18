@@ -1,0 +1,73 @@
+
+
+<div class="container" *ngIf="packages?.length">
+
+  <!-- PACKAGE INFO -->
+  <div class="card" *ngIf="packages[0] as pkg">
+    <div class="card-body image-row">
+      <img
+        [src]="'http://localhost:8000/storage/' + pkg.images[0]?.img"
+        alt="Package Image"
+        width="300"
+        height="200"
+      />
+      <div class="package-info">
+        <h5>{{ pkg.place_name }}</h5>
+        <p>🌄 {{ pkg.about_trip }}</p>
+        <p><strong>Duration:</strong> {{ pkg.duration_days }} Days</p>
+        <p><strong>Price:</strong> ₹{{ pkg.price_trip }}</p>
+        <p><strong>Departure:</strong> {{ pkg.departure_point }}</p>
+        <p><strong>Origin:</strong> {{ pkg.origin }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITINERARIES -->
+
+
+  <div class="card" *ngIf="itineries?.length">
+  <div class="card-header" style="color:black;">🗓️ Itinerary</div>
+  <div class="card-body">
+    <ul class="list">
+      <li *ngFor="let itin of itineries">
+        <div *ngFor="let detail of itin.day_wise_details">
+          <p>
+            <strong>{{ detail.day }}:</strong>
+            <span *ngIf="detail.title">{{ detail.title }} - </span>
+          {{ detail.detail }}  
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+  <!-- TOUR DATES -->
+  <div class="card" *ngIf="monthDate?.length">
+    <div class="card-header" style="color:black;">📅 Tour Dates</div>
+    <div class="card-body">
+      <div *ngFor="let month of monthDate">
+        <h6>{{ month.month }} {{ month.year }}</h6>
+        <div *ngFor="let date of month.datestours" class="date-row">
+          <span>Start: {{ date.start_date }} | End: {{ date.end_date }}</span>
+          <span class="badge" [ngClass]="{
+            'open': date.availability === 'open',
+            'hurry': date.availability === 'hurry',
+            'closed': date.availability === 'close'
+          }">{{ date.availability | titlecase }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSPORT -->
+  <div class="card" *ngIf="transport?.length">
+    <div class="card-header" style="color:black;">🚍 Transport</div>
+    <div class="card-body">
+      <ul class="list">
+        <li><strong>Modes:</strong> {{ transport[0]?.mode?.join(', ') }}</li>
+        <li><strong>Details:</strong> {{ transport[0]?.details }}</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
