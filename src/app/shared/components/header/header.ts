@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserServices } from '../../../core/services/user-services';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Auth } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +13,23 @@ import { CommonModule } from '@angular/common';
 })
 export class Header implements OnInit{
 
+  public isMobileView: boolean =true ;
+  name:any;
+
   ngOnInit(): void {
-    
+    this.name=localStorage.getItem('name')
   }
-    constructor(private user:UserServices) {}
+
+
+
+
+    constructor(private user:UserServices,private auth:Auth) {}
 
   toggleTarget() {
+    // this.togel=!this.togel;
+    this.isMobileView=!this.isMobileView;
+    console.log(this.isMobileView);
+   
     this.user.toggle();
   }
 
@@ -58,6 +70,10 @@ export class Header implements OnInit{
     if (!this.packagesBySub[sub.id]) {
       this.packagesBySub[sub.id] = this.allPackages[sub.id] || [];
     }
+  }
+
+  logoutt(){
+    this.auth.logout();
   }
 
 }

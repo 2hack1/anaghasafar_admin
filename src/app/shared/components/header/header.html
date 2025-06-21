@@ -1,6 +1,8 @@
 <nav id="sidebar">
-    <div class="sidebar-header">
-        <img src="img/logo.svg" class="img-fluid" />
+    <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; " *ngIf="isMobileView">
+        <!-- <img src="img/logo.svg" class="img-fluid"  *ngIf="isMobileView"/> -->
+       <h3 class="img-fluid">{{name}}</h3>  
+       <button class="btn btn-sm btn-danger " (onclick)="logoutt()" >Logout</button>
     </div>
     <ul class="list-unstyled components">
         <li class="active">
@@ -192,8 +194,8 @@
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none"
                     (click)="toggleTarget()">
-                    <span class="material-icons">arrow_back_ios</span>
-                </button>
+                    <span class="material-icons">arrow_back_ios</span> 
+                 </button>
 
                 <a class="navbar-brand" href="#"> Dashboard </a>
 

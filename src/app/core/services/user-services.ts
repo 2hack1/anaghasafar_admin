@@ -167,4 +167,10 @@ DeleteUserPlanTrip(id:any){
 
 }
 
+// ********************LOGIN ADMIN ************************
+
+loginAdmin(data:FormData){
+
+  return this.http.post(`http://localhost:8000/api/login`,data);
+}
 }

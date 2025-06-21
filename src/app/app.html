@@ -11,8 +11,8 @@
     <div class="wrapper" [ngClass]="{ 'full-screen': isLoginPage }">
         <div class="body-overlay" *ngIf="!isLoginPage"></div>
         <app-header *ngIf="!isLoginPage"></app-header>
-        
-        <div id="content" [ngClass]="status">
+        <router-outlet *ngIf="isLoginPage"></router-outlet>
+        <div id="content" [ngClass]="status" *ngIf="!isLoginPage">
             <router-outlet></router-outlet>
         </div>
     </div>
