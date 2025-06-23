@@ -27,9 +27,6 @@ export class Destinations {
   ngOnInit() {
     this.loadData();
   }
-
-
-  
   
   sendId(entry: AdminEntry):void {
   if (entry?.id) {
@@ -41,11 +38,6 @@ export class Destinations {
 
   }
 
-
-
-
-
-  
   loadData() {
     this.adminService.getAll().subscribe((data: any[]) => {
     this.entries = data.map(d => ({
@@ -81,6 +73,7 @@ export class Destinations {
     }
   }
 
+  
   deleteEntry(entry: AdminEntry) {
     if (entry.id && confirm('Are you sure you want to delete this entry?')) {
       this.adminService.delete(entry.id).subscribe(() => this.loadData());
