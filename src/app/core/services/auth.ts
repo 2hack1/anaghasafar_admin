@@ -8,10 +8,10 @@ export class Auth {
 
 
 
-   constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+    const token =  sessionStorage.getItem('token');
     return !!token; // true if token exists, false if null
   }
 
@@ -22,7 +22,8 @@ export class Auth {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+     sessionStorage.removeItem('token');
+     sessionStorage.clear()
     this.router.navigate(['/login']);
   }
 }

@@ -16,7 +16,7 @@ import { NotifierModule, NotifierService } from 'angular-notifier';
 export class Packages implements OnInit {
 
   currentStep = 1;
-  maxSteps = 7;
+  maxSteps = 8;
 
   packageForm: FormGroup;
   imageForm: FormGroup;
@@ -40,12 +40,19 @@ export class Packages implements OnInit {
   transportOptions: string[] = ['Bus', 'Train', 'Flight', 'Car'];
   selectedModes: string[] = [];
 
+  multimageForm: FormGroup;
+  previewImages: string[] = [];
+  imageFiles: File[] = [];
+  uploadedImageUrls: string[] = [];
+
+
   constructor(
     private fb: FormBuilder,
     private service: UserServices,
     private route: ActivatedRoute,
     private router:Router,
     private  readonly notifier:NotifierService,
+    
  
   ) {
 
@@ -82,6 +89,11 @@ export class Packages implements OnInit {
       end_date: ['', Validators.required],
       availability: [true, Validators.required],
     });
+
+   
+     this. multimageForm = this.fb.group({
+      images: ['']
+    });
   }
 
   ngOnInit(): void {
@@ -96,6 +108,26 @@ export class Packages implements OnInit {
 
   }
 
+  onFileChangeMultiImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files) {
+      Array.from(input.files).forEach(file => {
+        this.imageFiles.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => this.previewImages.push(e.target.result);
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  removeImage(index: number) {
+    this.imageFiles.splice(index, 1);
+    this.previewImages.splice(index, 1);
+  }
+ 
+  
   send(currentpacId:any){
     //   console.log('Navigating to ID:', entry.sub_destination_id);
     if (currentpacId) {
@@ -257,6 +289,17 @@ export class Packages implements OnInit {
     });
   }
 
+
+  // currently checking mode**************************************
+loadmultimage( package_id:any){
+
+  this.service.loadimagereplaceGallary(package_id).subscribe((res:any)=>{
+//  multimageForm
+    console.log(res);
+  })
+
+}
+
   loadPackagesTransport(packageId: any) {
 
     if (!packageId) return;
@@ -368,6 +411,12 @@ export class Packages implements OnInit {
         // this.nextStep();
         break;
       case 7:
+        if (this.transportForm.invalid) return alert("Please enter transport details.");
+        console.log("Step 6 working");
+        this.submitImages();
+        this.nextStep();
+        break;
+      case 8:
         if (!this.a) {
           alert("Please fill all date fields.");
           break;
@@ -389,6 +438,9 @@ export class Packages implements OnInit {
   }
 
   // ******************************** save data in the db ***************************
+
+
+  
 
 
   savePackageInfo() {
@@ -447,6 +499,80 @@ export class Packages implements OnInit {
   }
 
 
+    submitImages() {
+   
+const formDat = new FormData();
+ if (this.isEditing) {
+
+      if (!this.service.currentpackageId) {
+        alert("Package ID is missing. Cannot upload image.");
+        return;
+      }
+      
+    this.imageFiles.forEach(file => {
+      formDat.append('image[]', file); // must match Laravel field
+      formDat.append('img_path',"Packagegallery");
+    });
+      // Update API – send image update request
+      this.service.imagereplaceGallary( formDat,this.service.currentpackageId).subscribe({
+        next: (res) => {
+       this.notifier.notify('success',' 7st Form Details Successfully Updated!');
+          this.nextStep();
+        },
+        error: (err) => {
+          // alert("Failed to update image.");
+           this.notifier.notify('error',' Somthing Wants wrong!| Please check this Form Data');
+        }
+      });
+    } else {
+      if (!this.currentId) {
+        alert("not have package id");
+        return;
+      }
+       
+    
+    this.imageFiles.forEach(file => {
+      formDat.append('image[]', file); // must match Laravel field
+      formDat.append('img_path',"Packagegallery");
+    });
+      // Create API – send image upload request
+      this.service.imageGallary(formDat, this.currentId).subscribe({
+        next: (res) => {
+          console.log("multi image",res);
+            this.notifier.notify('success',' 7st Form Details Successfully Upload!');
+          this.nextStep();
+        },
+        error: (err) => {
+           this.notifier.notify('error',' Failed to upload image!......');
+        }
+      });
+    }
+    
+    // if(!this.currentId){
+    //   alert("Somthing wants worng")
+    // }
+   
+    // console.log(this.service.currentpackageId);
+    // console.log(this.service.subdestinationid);
+    // console.log(this.currentId);
+    // this.service.imageGallary(formDat,this.currentId).subscribe((res:any)=>{
+
+    //   console.log("multi image",res);
+    // })
+    
+    // Demo backend call - replace with your real API
+    // this.http.post<any>('http://localhost:8000/api/upload-images', formData).subscribe({
+    //   next: (response) => {
+    //     this.uploadedImageUrls = response.images; // e.g., ["gallery/img1.jpg", "gallery/img2.jpg"]
+    //     this.imageFiles = [];
+    //     this.previewImages = [];
+    //     alert('Images pushed successfully!');
+    //   },
+    //   error: () => {
+    //     alert('Upload failed');
+    //   }
+    // });
+  }
 
   saveImage() {
     if (!this.selectedFile) {

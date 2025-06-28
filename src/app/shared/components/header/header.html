@@ -1,8 +1,9 @@
 <nav id="sidebar">
-    <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; " *ngIf="isMobileView">
+    <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; "
+        *ngIf="isMobileView">
         <!-- <img src="img/logo.svg" class="img-fluid"  *ngIf="isMobileView"/> -->
-       <h3 class="img-fluid">{{name}}</h3>  
-       <button class="btn btn-sm btn-danger " (onclick)="logoutt()" >Logout</button>
+        <h3 class="img-fluid">{{name}}</h3>
+        <button class="btn btn-sm btn-danger " (click)="logoutt()">Logout</button>
     </div>
     <ul class="list-unstyled components">
         <li class="active">
@@ -15,7 +16,7 @@
                     <i class="material-icons">notifications</i><span> 4 notification</span></a>
                 <ul class="collapse list-unstyled menu" id="homeSubmenu0">
                     <li>
-                        <a >You have 5 new messages</a>
+                        <a>You have 5 new messages</a>
                     </li>
                     <li>
                         <a href="#">You're now friend with Mike</a>
@@ -53,8 +54,8 @@
 
                 <ul class="collapse list-unstyled menu" id="allDestinations">
                     <li *ngFor="let dest of destinations">
-                        <a [attr.href]="'#dest' + dest.id" [routerLink]="['/destination']" data-toggle="collapse" class="dropdown-toggle"
-                            (click)="loadSubDestinations(dest)">
+                        <a [attr.href]="'#dest' + dest.id" [routerLink]="['/destination']" data-toggle="collapse"
+                            class="dropdown-toggle" (click)="loadSubDestinations(dest)">
                             {{ dest.name }}
                         </a>
 
@@ -80,9 +81,9 @@
                 <i class="material-icons">home</i><span>Home</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu2">
                 <li>
-                    <a [routerLink]="['/topImage']" >Top images</a>
+                    <a [routerLink]="['/topImage']">Top images</a>
                 </li>
-                
+
                 <li>
                     <a [routerLink]="['/HomeCards']">Four-Cards</a>
                 </li>
@@ -93,7 +94,7 @@
                 <li>
                     <a [routerLink]="['/checkit']">check It</a>
                 </li>
-                
+
             </ul>
         </li>
 
@@ -194,8 +195,8 @@
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none"
                     (click)="toggleTarget()">
-                    <span class="material-icons">arrow_back_ios</span> 
-                 </button>
+                    <span class="material-icons">arrow_back_ios</span>
+                </button>
 
                 <a class="navbar-brand" href="#"> Dashboard </a>
 

@@ -173,4 +173,17 @@ loginAdmin(data:FormData){
 
   return this.http.post(`http://localhost:8000/api/login`,data);
 }
+
+
+// image gallary*************
+imageGallary(data:FormData,id:any){
+   return this.http.post(`http://localhost:8000/api/gellery/${id}`,data);
+}
+imagereplaceGallary(data:FormData,id:any){
+  return this.http.post(`http://localhost:8000/api/gellery/${id}/replace`,data);
+}
+loadimagereplaceGallary(id:any){
+  return this.http.get(`http://localhost:8000/api/gellery/${id}`);
+}
+
 }
