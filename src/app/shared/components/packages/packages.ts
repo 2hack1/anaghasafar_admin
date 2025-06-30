@@ -5,14 +5,15 @@ import { CommonModule } from '@angular/common';
 import { UserServices } from '../../../core/services/user-services';
 import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { NotifierModule, NotifierService } from 'angular-notifier';
-
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-packages',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,NotifierModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NotifierModule],
   templateUrl: './packages.html',
   styleUrl: './packages.scss'
 })
+
 export class Packages implements OnInit {
 
   currentStep = 1;
@@ -41,19 +42,25 @@ export class Packages implements OnInit {
   selectedModes: string[] = [];
 
   multimageForm: FormGroup;
-  previewImages: string[] = [];
+  previewImages: any[] = [];
   imageFiles: File[] = [];
   uploadedImageUrls: string[] = [];
+
+  newUploadedImages: any[] = []
+  newUploadedIndex = 0;
+  isRemoveImages = false;
+  removedImages: any[] = []
+  env = environment
 
 
   constructor(
     private fb: FormBuilder,
     private service: UserServices,
     private route: ActivatedRoute,
-    private router:Router,
-    private  readonly notifier:NotifierService,
-    
- 
+    private router: Router,
+    private readonly notifier: NotifierService,
+
+
   ) {
 
     this.packageForm = this.fb.group({
@@ -90,17 +97,21 @@ export class Packages implements OnInit {
       availability: [true, Validators.required],
     });
 
-   
-     this. multimageForm = this.fb.group({
-      images: ['']
+
+    //  this. multimageForm = this.fb.group({
+    //   images: ['']
+    // });
+    this.multimageForm = this.fb.group({
+      images: this.fb.array([]) // ✅ now it's a FormArray
     });
   }
 
   ngOnInit(): void {
     this.destinationId = this.route.snapshot.paramMap.get('id');
-    this.service.subdestinationid =this.destinationId;
+    this.service.subdestinationid = this.destinationId;
     this.loadPackages();
     //  this.toaseter.success('Hello world!', 'Toastr fun!');
+
   }
   // month2Array:any;
   get monthsArray(): FormArray {
@@ -114,28 +125,42 @@ export class Packages implements OnInit {
     if (input.files) {
       Array.from(input.files).forEach(file => {
         this.imageFiles.push(file);
+        this.newUploadedImages.push(file);
 
         const reader = new FileReader();
-        reader.onload = (e: any) => this.previewImages.push(e.target.result);
+        reader.onload = (e: any) => this.previewImages.push({
+          url: e.target.result,
+          id: this.newUploadedIndex
+        });
+
+        this.newUploadedIndex++
         reader.readAsDataURL(file);
       });
     }
   }
 
-  removeImage(index: number) {
+
+
+  removeImage(index: number, id: any) {
+    this.isRemoveImages = true
+    this.removedImages.push(id);
     this.imageFiles.splice(index, 1);
     this.previewImages.splice(index, 1);
+
+    // NEED EXTRA WORK
+    // this.newUploadedImages.splice(index, 1)
+    // console.log(this.newUploadedImages)
   }
- 
-  
-  send(currentpacId:any){
+
+
+  send(currentpacId: any) {
     //   console.log('Navigating to ID:', entry.sub_destination_id);
     if (currentpacId) {
-    this.router.navigate(['/aboutTripOfPackage',currentpacId]);  // Cleaner and more reliable
-  } else {
-    console.warn('Invalid entry:', currentpacId);
+      this.router.navigate(['/aboutTripOfPackage', currentpacId]);  // Cleaner and more reliable
+    } else {
+      console.warn('Invalid entry:', currentpacId);
+    }
   }
-   }
 
   getDateControls(monthGroup: any): FormGroup[] {
     return (monthGroup.get('dates') as FormArray).controls as FormGroup[];
@@ -291,14 +316,32 @@ export class Packages implements OnInit {
 
 
   // currently checking mode**************************************
-loadmultimage( package_id:any){
+  loadmultimage(package_id: any) {
 
-  this.service.loadimagereplaceGallary(package_id).subscribe((res:any)=>{
-//  multimageForm
-    console.log(res);
-  })
+    this.service.loadimagereplaceGallary(package_id).subscribe({
+      next: (res: any) => {
+        const imageArray = this.multimageForm.get('images') as FormArray;
+        imageArray.clear();
 
-}
+        const gallery = res?.data?.[0];
+        if (gallery?.images?.length) {
+          this.uploadedImageUrls = []; // reset preview if needed
+
+          gallery.images.forEach((img: any) => {
+            const d = {
+              id: img.id,
+              url: this.env.backendUrl + '/storage/' + img.url
+            }
+            imageArray.push(this.fb.group(d));
+
+            // this.uploadedImageUrls.push(img.url); // to show in HTML preview
+            this.previewImages.push(d); // 
+          });
+        }
+      },
+      error: (err) => console.error('Error loading images:', err)
+    });
+  }
 
   loadPackagesTransport(packageId: any) {
 
@@ -311,7 +354,6 @@ loadmultimage( package_id:any){
           details: transport.details
         });
       }
-
     });
   }
 
@@ -335,6 +377,7 @@ loadmultimage( package_id:any){
       this.loadPackagesitinaries(this.currentId);
       this.loadPackagesMonth(this.currentId);
       this.loadPackagesTransport(this.currentId);
+      this.loadmultimage(this.currentId);
     } else {
 
       this.currentId = null;
@@ -350,6 +393,7 @@ loadmultimage( package_id:any){
     this.monthForm.setControl('months', this.fb.array([]));
     this.transportForm.reset();
     this.dateForm.reset();
+    this.multimageForm.reset();
   }
 
 
@@ -440,7 +484,7 @@ loadmultimage( package_id:any){
   // ******************************** save data in the db ***************************
 
 
-  
+
 
 
   savePackageInfo() {
@@ -459,18 +503,18 @@ loadmultimage( package_id:any){
       this.service.updatePackage(this.currentId, formData).subscribe({
         next: (res: any) => {
           this.currentId = res.package_id; // Update currentId from response
-          this.notifier.notify('success',' 1st Form Details Successfully Updated!');
+          this.notifier.notify('success', ' 1st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err) => {
           // console.error('Error updating package info:', err);
           // alert("Failed to update package info.");
-           this.notifier.notify('error',' Somthing Wants wrong!');
- 
+          this.notifier.notify('error', ' Somthing Wants wrong!');
+
         }
-        
+
       });
-    
+
     } else {
       // New package creation
 
@@ -480,78 +524,97 @@ loadmultimage( package_id:any){
           // console.log("Created successfully:", res);
           this.currentId = res.package_id;
           this.loadPackages(); // Refresh list
-          this.notifier.notify('success',' 1st Form Details Successfully Uploaded!');
+          this.notifier.notify('success', ' 1st Form Details Successfully Uploaded!');
 
           this.nextStep();
         },
         error: (err) => {
           // console.error('Error creating package:', err);
           // alert("Failed to create package.");
-         this.notifier.notify('error',' Somthing Wants wrong!');
+          this.notifier.notify('error', ' Somthing Wants wrong!');
 
         }
-    
-      });
-         
 
-  
+      });
     }
   }
 
 
-    submitImages() {
-   
-const formDat = new FormData();
- if (this.isEditing) {
+  submitImages() {
 
+    const formDat = new FormData();
+    const removedFormData = new FormData();
+
+    if (this.isEditing) {
       if (!this.service.currentpackageId) {
         alert("Package ID is missing. Cannot upload image.");
         return;
       }
-      
-    this.imageFiles.forEach(file => {
-      formDat.append('image[]', file); // must match Laravel field
-      formDat.append('img_path',"Packagegallery");
-    });
-      // Update API – send image update request
-      this.service.imagereplaceGallary( formDat,this.service.currentpackageId).subscribe({
+
+      if (this.isRemoveImages) {
+        this.removedImages.forEach(id => {
+          formDat.append('deleted_images[]', id);
+        })
+      }
+
+      this.newUploadedImages.forEach((file: any) => {
+        formDat.append('images[]', file);
+      });
+
+      // this.previewImages.forEach(file => {
+      //   // formDat.append('image[]', file); // ✅ Only actual File objects
+      //   formDat.append('existing_images[]', file); // ✅ Only actual File objects
+      // });
+
+      for (const pair of formDat.entries()) {
+        console.log(" that is image :", `${pair[0]}: `, pair[1]);
+      }
+      // this.previewImages = [];
+      // this.uploadedImageUrls = [];
+
+      this.service.imagereplaceGallary(formDat, this.service.currentpackageId).subscribe({
         next: (res) => {
-       this.notifier.notify('success',' 7st Form Details Successfully Updated!');
+          this.notifier.notify('success', 'Images successfully updated!');
           this.nextStep();
+          this.previewImages = [];
+          this.uploadedImageUrls = [];
+          this.newUploadedImages = [];
         },
         error: (err) => {
-          // alert("Failed to update image.");
-           this.notifier.notify('error',' Somthing Wants wrong!| Please check this Form Data');
+          console.log(err)
+          this.notifier.notify('error', 'Something went wrong during image update.');
         }
       });
-    } else {
+
+    }
+    else {
       if (!this.currentId) {
         alert("not have package id");
         return;
       }
-       
-    
-    this.imageFiles.forEach(file => {
-      formDat.append('image[]', file); // must match Laravel field
-      formDat.append('img_path',"Packagegallery");
-    });
+
+
+      this.imageFiles.forEach(file => {
+        formDat.append('image[]', file); // must match Laravel field
+        formDat.append('img_path', "Packagegallery");
+      });
       // Create API – send image upload request
       this.service.imageGallary(formDat, this.currentId).subscribe({
         next: (res) => {
-          console.log("multi image",res);
-            this.notifier.notify('success',' 7st Form Details Successfully Upload!');
+          console.log("multi image", res);
+          this.notifier.notify('success', ' 7st Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
-           this.notifier.notify('error',' Failed to upload image!......');
+          this.notifier.notify('error', ' Failed to upload image!......');
         }
       });
     }
-    
+
     // if(!this.currentId){
     //   alert("Somthing wants worng")
     // }
-   
+
     // console.log(this.service.currentpackageId);
     // console.log(this.service.subdestinationid);
     // console.log(this.currentId);
@@ -559,7 +622,7 @@ const formDat = new FormData();
 
     //   console.log("multi image",res);
     // })
-    
+
     // Demo backend call - replace with your real API
     // this.http.post<any>('http://localhost:8000/api/upload-images', formData).subscribe({
     //   next: (response) => {
@@ -594,12 +657,12 @@ const formDat = new FormData();
       // Update API – send image update request
       this.service.updatePackageImage(this.service.currentpackageId, formData).subscribe({
         next: (res) => {
-       this.notifier.notify('success',' 2st Form Details Successfully Updated!');
+          this.notifier.notify('success', ' 2st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err) => {
           // alert("Failed to update image.");
-           this.notifier.notify('error',' Somthing Wants wrong!| Please check this Form Data');
+          this.notifier.notify('error', ' Somthing Wants wrong!| Please check this Form Data');
         }
       });
     } else {
@@ -611,13 +674,13 @@ const formDat = new FormData();
       this.service.uploadPackageImage(formData, this.currentId).subscribe({
         next: (res) => {
           // console.log("✅ Image uploaded:", res);
-            this.notifier.notify('success',' 3st Form Details Successfully Upload!');
+          this.notifier.notify('success', ' 3st Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
           // console.error("❌ Image upload failed:", err);
           // alert("Failed to upload image.");
-           this.notifier.notify('error',' Failed to upload image!......');
+          this.notifier.notify('error', ' Failed to upload image!......');
         }
       });
     }
@@ -636,11 +699,11 @@ const formDat = new FormData();
       this.service.updateItinerary(this.service.currentpackageId, body).subscribe({
         next: (res: any) => {
           console.log("✅ Itinerary updated:", res);
-            this.notifier.notify('success',' 4st Form Details Successfully Updated!');
+          this.notifier.notify('success', ' 4st Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err: any) => {
-        this.notifier.notify('error',' Failed to update itinerary !......');
+          this.notifier.notify('error', ' Failed to update itinerary !......');
 
         }
       });
@@ -653,12 +716,12 @@ const formDat = new FormData();
       this.service.saveItinerary(body, this.currentId).subscribe({
         next: (res) => {
           console.log("✅ Itinerary created:", res);
-          this.notifier.notify('success',' 4st Form Details Successfully Upload!');
+          this.notifier.notify('success', ' 4st Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
-        
-        this.notifier.notify('error',' Failed to Upload itinerary !......');
+
+          this.notifier.notify('error', ' Failed to Upload itinerary !......');
 
         }
       });
@@ -686,12 +749,12 @@ const formDat = new FormData();
         next: (res: any) => {
           // console.log("✅ Month tours updated:", res);
           this.loadPackagesMonth(this.service.currentpackageId);
-           this.notifier.notify('success','  Form Details Successfully Updated!');
+          this.notifier.notify('success', '  Form Details Successfully Updated!');
           this.nextStep();
         },
         error: (err: any) => {
-        
-            this.notifier.notify('error',' Failed to update month tours.!......');
+
+          this.notifier.notify('error', ' Failed to update month tours.!......');
         }
       });
     } else {
@@ -709,12 +772,12 @@ const formDat = new FormData();
         next: (res: any) => {
           console.log("📦 Saved months:", res);
           this.loadPackagesMonth(this.currentId);
-       this.notifier.notify('success',' Form Details Successfully Upload!');
+          this.notifier.notify('success', ' Form Details Successfully Upload!');
           this.nextStep();
         },
         error: (err) => {
 
-           this.notifier.notify('error','Failed to save month of tours.!......');
+          this.notifier.notify('error', 'Failed to save month of tours.!......');
         }
       });
     }
@@ -723,11 +786,11 @@ const formDat = new FormData();
   saveDate() {
     // if (!this.currentId) return;
     const allDates: any[] = [];
-    
+
     this.monthsArray.controls.forEach((monthCtrl) => {
       const datesArray = (monthCtrl.get('dates') as FormArray).value || [];
       const tourMonthId = monthCtrl.get('tour_month_id')?.value;
-      
+
       datesArray.forEach((date: any) => {
         if (date.start_date && date.end_date && date.availability) {
           allDates.push({
@@ -740,7 +803,7 @@ const formDat = new FormData();
         }
       });
     });
-    
+
     if (allDates.length === 0) {
       // if (!this.service.currentpackageId) return;
       alert("No valid dates to save.");
@@ -749,27 +812,28 @@ const formDat = new FormData();
 
     if (this.isEditing) {
       this.service.updateDateTour(allDates).subscribe({
-        next: () =>{
-          this.notifier.notify('success','Form Details Successfully Updated!');
+        next: () => {
+          this.notifier.notify('success', 'Form Details Successfully Updated!');
           this.nextStep()
         },
         error: (err: any) => {
           // console.error("❌ Error updating dates:", err);
           // alert("Failed to update date tours.");
-         this.notifier.notify('error','Failed to update date of tours!......');
+          this.notifier.notify('error', 'Failed to update date of tours!......');
 
         }
       });
     } else {
       this.service.saveDateTour(allDates).subscribe({
-        next: () =>{
+        next: () => {
 
-       this.notifier.notify('success','Form Details Successfully Upload!');
-           this.nextStep()},
+          this.notifier.notify('success', 'Form Details Successfully Upload!');
+          this.nextStep()
+        },
         error: (err) => {
           // console.error("❌ Error saving dates:", err);
           // alert("the end date must be ferther of start date");
-         this.notifier.notify('error','the end date must be further of start date!......');
+          this.notifier.notify('error', 'the end date must be further of start date!......');
         }
       });
     }
@@ -811,11 +875,11 @@ const formDat = new FormData();
       this.service.updateTransport(this.service.currentpackageId, body).subscribe({
         next: () => {
           this.nextStep();
-          this.notifier.notify('success','Form Details Successfully Updated!');
+          this.notifier.notify('success', 'Form Details Successfully Updated!');
 
         },
         error: (err: any) => {
-          this.notifier.notify('error','Update transport failed!......');
+          this.notifier.notify('error', 'Update transport failed!......');
         }
       });
     } else {
@@ -824,13 +888,13 @@ const formDat = new FormData();
         next: (res) => {
           // console.log("✅ Transport saved:", res);
           this.loadPackagesMonth(this.currentId);
-        this.notifier.notify('success','Form Details Successfully Uploaded!');
+          this.notifier.notify('success', 'Form Details Successfully Uploaded!');
           this.nextStep();
         },
         error: (err) => {
           // console.error("❌ Transport save failed:", err);
           // alert("Save transport failed. Please try again.");
-           this.notifier.notify('error','Save transport failed!......');
+          this.notifier.notify('error', 'Save transport failed!......');
 
         }
       });
@@ -843,7 +907,7 @@ const formDat = new FormData();
   deletePackage(id: number) {
     if (confirm('Are you sure to delete this package?')) {
       this.service.deletePackage(id).subscribe(() => {
-       this.notifier.notify('success',' Tour Package Successfully Deleted....');
+        this.notifier.notify('success', ' Tour Package Successfully Deleted....');
         this.loadPackages();
       });
     }

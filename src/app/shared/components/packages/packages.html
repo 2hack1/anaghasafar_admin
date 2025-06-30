@@ -14,7 +14,8 @@
   <div *ngIf="formVisible" class="card p-4 mb-4">
     <div class="d-flex align-items-center ">
       <h4>Step {{ currentStep }} of {{ maxSteps }}</h4>
-      <button type="button"  style="border: none; background: none; margin-left: auto; font-size: 1.3rem; " (click)="closeForm()">×</button>
+      <button type="button" style="border: none; background: none; margin-left: auto; font-size: 1.3rem; "
+        (click)="closeForm()">×</button>
     </div>
 
 
@@ -191,32 +192,36 @@
       </div>
     </form>
 
-<div *ngIf="currentStep === 7">
-  <label>Package Images</label>
-  <input type="file" multiple (change)="onFileChangeMultiImage($event)" class="form-control" />
+    <div *ngIf="currentStep === 7">
+      <label>Package Images</label>
+      <input type="file" multiple (change)="onFileChangeMultiImage($event)" class="form-control" />
 
-  <div *ngIf="previewImages.length > 0" class="mt-3">
-    <p>Selected Images:</p>
-    <div style="display: flex; flex-wrap: wrap;">
-      <div *ngFor="let img of previewImages; let i = index" style="margin: 10px;">
-        <img [src]="img" alt="Selected" width="120" style="border: 1px solid #ccc;" />
-        <br />
-        <button type="button" class="btn btn-sm btn-danger mt-1" (click)="removeImage(i)">Remove</button>
+      <div *ngIf="previewImages.length > 0" class="mt-3">
+        <p>Selected Images:</p>
+        <div style="display: flex; flex-wrap: wrap;">
+
+          <div *ngFor="let img of previewImages; let i = index" style="margin: 10px;">
+            <img [src]="`${img.url}`" alt="Selected" width="120" style="border: 1px solid #ccc;" />
+            <br />
+            <button type="button" class="btn btn-sm btn-danger mt-1" (click)="removeImage(i,img.id)">Remove</button>
+          </div>
+
+
+
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="uploadedImageUrls.length > 0" class="mt-4">
-    <p>Uploaded Images (from DB):</p>
-    <div style="display: flex; flex-wrap: wrap;">
-      <div *ngFor="let img of uploadedImageUrls" style="margin: 10px;">
-        <img [src]="'http://localhost:8000/storage/' + img" width="120" style="border: 1px solid #ccc;" />
+      <div *ngIf="uploadedImageUrls.length > 0" class="mt-4">
+        <p>Uploaded Images (from DB):</p>
+        <div style="display: flex; flex-wrap: wrap;">
+          <div *ngFor="let img of uploadedImageUrls" style="margin: 10px;">
+            <img [src]="img" width="120" style="border: 1px solid #ccc;" />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- <button class="btn btn-primary mt-3" (click)="submitImages()">Push Images</button> -->
-</div>
+      <!-- <button class="btn btn-primary mt-3" (click)="submitImages()">Push Images</button> -->
+    </div>
 
 
     <div *ngIf="currentStep === 8">
@@ -259,7 +264,8 @@
         <td>
           <button class="btn btn-sm btn-warning me-2" (click)="showForm(true, pack)">Edit</button>
           <button class="btn btn-sm btn-danger" (click)="deletePackage(pack.package_id)">Delete</button>
-          <button   class="btn btn-sm e" style="background-color: rgb(39, 39, 131); color: white;" (click)="send(pack.package_id)" >About_Trip</button>
+          <button class="btn btn-sm e" style="background-color: rgb(39, 39, 131); color: white;"
+            (click)="send(pack.package_id)">About_Trip</button>
         </td>
       </tr>
     </tbody>
