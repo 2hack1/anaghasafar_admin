@@ -47,7 +47,7 @@ export class Packages implements OnInit {
   uploadedImageUrls: string[] = [];
 
   newUploadedImages: any[] = []
-  newUploadedIndex = 0;
+  newUploadedIndex = 1000;
   isRemoveImages = false;
   removedImages: any[] = []
   env = environment
@@ -62,7 +62,7 @@ export class Packages implements OnInit {
 
 
   ) {
-
+    console.log(this.generateId())
     this.packageForm = this.fb.group({
       package_code: ['', Validators.required],
       place_name: ['', Validators.required],
@@ -124,16 +124,20 @@ export class Packages implements OnInit {
 
     if (input.files) {
       Array.from(input.files).forEach(file => {
+        let id = this.generateId()
+
         this.imageFiles.push(file);
-        this.newUploadedImages.push(file);
+        this.newUploadedImages.push({
+          id,
+          file
+        });
 
         const reader = new FileReader();
         reader.onload = (e: any) => this.previewImages.push({
           url: e.target.result,
-          id: this.newUploadedIndex
+          id: id
         });
 
-        this.newUploadedIndex++
         reader.readAsDataURL(file);
       });
     }
@@ -146,6 +150,8 @@ export class Packages implements OnInit {
     this.removedImages.push(id);
     this.imageFiles.splice(index, 1);
     this.previewImages.splice(index, 1);
+
+    this.newUploadedImages = this.newUploadedImages.filter((img: any) => img.id !== id)
 
     // NEED EXTRA WORK
     // this.newUploadedImages.splice(index, 1)
@@ -557,20 +563,14 @@ export class Packages implements OnInit {
         })
       }
 
-      this.newUploadedImages.forEach((file: any) => {
-        formDat.append('images[]', file);
+      this.newUploadedImages.forEach((obj: any) => {
+        formDat.append('images[]', obj.file);
       });
-
-      // this.previewImages.forEach(file => {
-      //   // formDat.append('image[]', file); // ✅ Only actual File objects
-      //   formDat.append('existing_images[]', file); // ✅ Only actual File objects
-      // });
 
       for (const pair of formDat.entries()) {
         console.log(" that is image :", `${pair[0]}: `, pair[1]);
       }
-      // this.previewImages = [];
-      // this.uploadedImageUrls = [];
+     
 
       this.service.imagereplaceGallary(formDat, this.service.currentpackageId).subscribe({
         next: (res) => {
@@ -579,6 +579,7 @@ export class Packages implements OnInit {
           this.previewImages = [];
           this.uploadedImageUrls = [];
           this.newUploadedImages = [];
+          this.removedImages=[];
         },
         error: (err) => {
           console.log(err)
@@ -917,5 +918,10 @@ export class Packages implements OnInit {
     return this.allPackages.filter((p) =>
       p.place_name.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+
+  generateId() {
+    return ++this.newUploadedIndex;
   }
 }
