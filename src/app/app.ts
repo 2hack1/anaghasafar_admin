@@ -19,8 +19,6 @@ export class App {
     this.user.state$.subscribe(state => {
       this.status = state as 'active' | 'deactive';
     });
-
-    
     console.log("status", this.status);
      this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -28,5 +26,4 @@ export class App {
       }
     });
   }
-
 }

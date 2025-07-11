@@ -10,6 +10,7 @@ import { HomefourCard } from './shared/components/homefour-card/homefour-card';
 import { Topimage } from './shared/components/topimage/topimage';
 import { Login } from './shared/components/login/login';
 import { authGuard } from './auth-guard';
+import { UserTourOrder } from './shared/components/user-tour-order/user-tour-order';
 export const routes: Routes = [
 
     {
@@ -42,55 +43,32 @@ export const routes: Routes = [
     component: AboutPackage,
     canActivate: [authGuard]
   },
+
   {
     path: "HomeCards",
     component: HomefourCard,
     canActivate: [authGuard]
   },
+
   {
     path: "PlanenewTrip",
     component: HomePlaneNewTrip,
     canActivate: [authGuard]
   },
+
   {
     path: "topImage",
     component: Topimage,
     canActivate: [authGuard]
   },
+
   {
     path: "login",
     component: Login 
+  },
+  {
+    path:"userOrder",
+    component:UserTourOrder
   }
-
-    // {
-    //      path: " ",
-    //     component: DeskBoard
-    // }, {
-    //     path: "destination",
-    //     component: Destinations
-    // }, {
-    //     path: "sub-des/:id",
-    //     component: Destination
-    // }, {
-    //     path: "packages/:id",
-    //     component: Packages
-    // }, {
-    //     path: "checkit",
-    //     component: Check
-    // }, {
-    //     path: "aboutTripOfPackage/:id",
-    //     component: AboutPackage
-    // }, {
-    //     path: "HomeCards",
-    //     component: HomefourCard
-    // }, {
-    //     path: "PlanenewTrip",
-    //     component: HomePlaneNewTrip
-    // }, {
-    //     path: "topImage",
-    //     component: Topimage
-    // }, {
-    //     path: "login",
-    //     component: Login
-    // },
+  
 ];

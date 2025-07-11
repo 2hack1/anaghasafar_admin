@@ -1,0 +1,30 @@
+<div class="admin-body">
+
+    
+    <h2 class="admin-title">User Order Management</h2>
+
+    <div class="admin-table-wrapper">
+        <table class="user-table">
+            <thead class="user-table-header">
+                <tr>
+                    <th>User Name</th>
+                    <th>Place</th>
+                    <th>Created Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="user-table-body">
+                <tr *ngFor="let user of users">
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.place }}</td>
+                    <td>{{ user.created }}</td>
+                    <td>
+                        <button class="user-action-btn btn-about" (click)="showUser(user)">About</button>
+                        <button class="user-action-btn btn-delete" (click)="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+
+</div>
