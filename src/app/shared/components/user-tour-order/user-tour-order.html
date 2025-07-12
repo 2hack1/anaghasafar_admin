@@ -2,25 +2,35 @@
 
     
     <h2 class="admin-title">User Order Management</h2>
-
+<div class="search-box-container">
+  <input
+    type="text"
+    placeholder="Search by user name..."
+    [(ngModel)]="searchText"
+    class="search-input"
+  />
+</div>
     <div class="admin-table-wrapper">
         <table class="user-table">
             <thead class="user-table-header">
                 <tr>
                     <th>User Name</th>
+                    <th>Email</th>
                     <th>Place</th>
-                    <th>Created Time</th>
+                    <th>Order Time</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody class="user-table-body">
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of filteredUsers">
                     <td>{{ user.name }}</td>
+                    <td>{{user.email}}</td>
                     <td>{{ user.place }}</td>
-                    <td>{{ user.created }}</td>
+                    <td>{{ user.created | date: 'dd MMM yyyy, hh:mm a' }}</td>
                     <td>
-                        <button class="user-action-btn btn-about" (click)="showUser(user)">About</button>
+                        <button class="user-action-btn btn-primary" (click)="showUser(user.order_id)">About</button>
                         <button class="user-action-btn btn-delete" (click)="deleteUser(user)">Delete</button>
+                        <button class="user-action-btn btn-about" (click)="confirm(user.order_id)">Confirm</button>
                     </td>
                 </tr>
             </tbody>

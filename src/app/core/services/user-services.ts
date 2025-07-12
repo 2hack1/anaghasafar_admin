@@ -62,7 +62,7 @@ export class UserServices {
     return this.http.post(`${this.apiUrl}ssubdestination/update/${id}`, formData);
   }
 
-
+  
   // 🔹 Delete Sub Destination
   deleteSubDestination(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}ssubdestination/delete/${id}`);
@@ -185,5 +185,10 @@ imagereplaceGallary(data:FormData,id:any){
 loadimagereplaceGallary(id:any){
   return this.http.get(`http://localhost:8000/api/gellery/${id}`);
 }
+
+
+getOrderData(){
+  return this.http.get(`http://localhost:8000/api/order`);
+} 
 
 }
