@@ -77,9 +77,42 @@ export class Check implements OnInit {
     return stepMap[step] || [];
   }
 
-  onImageChange(event: any) {
-    this.images = Array.from(event.target.files);
+  // onImageChange(event: any) {
+  //   this.images = Array.from(event.target.files);
+  // }
+
+  hotelImages: { file: File; preview: string }[] = [];
+
+onImageChange(event: any): void {
+  const files: FileList = event.target.files;
+
+  if (files && files.length > 0) {
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.hotelImages.push({ file, preview: e.target.result });
+      };
+      reader.readAsDataURL(file);
+    });
   }
+}
+
+removeImage(index: number, imageInput: HTMLInputElement): void {
+  this.hotelImages.splice(index, 1);
+
+  // Rebuild FileList and reset input
+  const dataTransfer = new DataTransfer();
+  this.hotelImages.forEach(image => dataTransfer.items.add(image.file));
+  imageInput.files = dataTransfer.files;
+}
+
+gstInvalid = false;
+
+validateGST(event: any) {
+  const gstValue = event.target.value.toUpperCase();
+  const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
+  this.gstInvalid = gstValue && !gstRegex.test(gstValue);
+}
 
   onSubmit() {
     this.submitted = true;
