@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserServices } from '../../../core/services/user-services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-tour-order',
@@ -15,7 +16,7 @@ export class UserTourOrder implements OnInit {
   ngOnInit(): void {
     this.getorderdata();
   }
-  constructor(private us_: UserServices) { }
+  constructor(private us_: UserServices,private route:Router) { }
   get filteredUsers() {
 
     if (!this.searchText.trim()) {
@@ -40,12 +41,21 @@ export class UserTourOrder implements OnInit {
       },
     })
   }
+  
   showUser(user: any) {
-    alert(`User Details:\n\nName: ${user.name}\nPlace: ${user.place}\nCreated At: ${user.created}`);
+
+    console.log(user,"userId")
+    this.route.navigateByUrl(`/orderAbout/${user}`);
   }
 
-  deleteUser(user: any) {
-    // this.users = this.users.filter(u => u !== user);
-  }
+deleteUser(user: Number) {
+  const confirmDelete = confirm(`Are you sure you want to delete order ID ${user}?`);
 
+  if (confirmDelete) {
+    this.us_.deleteOrderById(user).subscribe((res: any) => {
+      console.log('Deleted:', res);
+    });
+   this.getorderdata();
+  }
+}
 }

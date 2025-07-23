@@ -11,6 +11,7 @@ import { Topimage } from './shared/components/topimage/topimage';
 import { Login } from './shared/components/login/login';
 import { authGuard } from './auth-guard';
 import { UserTourOrder } from './shared/components/user-tour-order/user-tour-order';
+import { AboutUserTourOrder } from './shared/components/about-user-tour-order/about-user-tour-order';
 export const routes: Routes = [
 
     {
@@ -69,6 +70,11 @@ export const routes: Routes = [
   {
     path:"userOrder",
     component:UserTourOrder
+  },
+  {
+    path:"orderAbout/:id",
+    component:AboutUserTourOrder
   }
   
+
 ];

@@ -29,7 +29,7 @@
                     <td>{{ user.created | date: 'dd MMM yyyy, hh:mm a' }}</td>
                     <td>
                         <button class="user-action-btn btn-primary" (click)="showUser(user.order_id)">About</button>
-                        <button class="user-action-btn btn-delete" (click)="deleteUser(user)">Delete</button>
+                        <button class="user-action-btn btn-delete" (click)="deleteUser(user.order_id)">Delete</button>
                         <button class="user-action-btn btn-about" (click)="confirm(user.order_id)">Confirm</button>
                     </td>
                 </tr>

@@ -191,4 +191,11 @@ getOrderData(){
   return this.http.get(`http://localhost:8000/api/order`);
 } 
 
+getOrderById(id:Number){
+   return this.http.get(`http://localhost:8000/api/orderbyid/${id}`);
+}
+
+deleteOrderById(id:any){
+  return this.http.delete(`http://localhost:8000/api/delete_order/${id}`)
+}
 }

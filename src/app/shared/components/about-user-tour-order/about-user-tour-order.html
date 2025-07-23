@@ -1,0 +1,96 @@
+
+<div class="ckeck" >
+
+  <div class="container order-page">
+    <div class="order-card">
+
+      <h2 class="text-center mb-5"><i class="bi bi-receipt-cutoff"></i> Order Details</h2>
+      
+      <!-- User Info -->
+      <div class="mb-4">
+        <div class="section-heading"><i class="bi bi-person-circle"></i> User Information</div>
+        <div class="row">
+          <div class="col-md-6 info-box">
+            <div class="info-label">Name</div>
+            <div class="info-value">{{ orderData[0]?.userdata[0]?.name }}</div>
+          </div>
+          <div class="col-md-6 info-box">
+            <div class="info-label">Email</div>
+            <div class="info-value">{{ orderData[0]?.userdata[0]?.email }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Order Summary -->
+      <div class="mb-4">
+        <div class="section-heading"><i class="bi bi-list-check"></i> Order Summary</div>
+        <div class="row">
+          <div class="col-md-3 info-box"><div class="info-label">Adults</div><div class="info-value">{{ orderData[0]?.order_id.adult}}</div></div>
+          <div class="col-md-3 info-box"><div class="info-label">Children</div><div class="info-value">{{ orderData[0]?.order_id.children}}</div></div>
+          <div class="col-md-3 info-box"><div class="info-label">Infants</div><div class="info-value">{{ orderData[0]?.order_id.infant}}</div></div>
+        </div>
+      </div>
+
+      <!-- Package Info -->
+      <div class="mb-4">
+        <div class="section-heading"><i class="bi bi-box"></i> Package Details</div>
+        <div class="row">
+          <div class="col-md-4 info-box"><div class="info-label">Package Code</div><div class="info-value">{{ orderData[0]?.packageId.package_code}} </div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Place</div><div class="info-value">{{ orderData[0]?.packageId.place_name}} </div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Origin</div><div class="info-value">{{ orderData[0]?.packageId.origin}} </div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Departure</div><div class="info-value">{{ orderData[0]?.packageId.departure_point}} </div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Price</div><div class="info-value">₹{{ orderData[0]?.packageId.price_trip}} </div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Duration</div><div class="info-value">{{ orderData[0]?.packageId.duration_days}} </div></div>
+          <div class="col-12 info-box"><div class="info-label">About Trip</div><div class="info-value">{{ orderData[0]?.packageId.about_trip}} </div></div>
+        </div>
+      </div>
+
+      
+<div class="mb-4" *ngIf="orderData[0]?.iteneris?.length">
+  <div class="section-heading"> <i class="bi bi-calendar-check-fill"></i> Itinerary </div>
+
+  <div *ngFor="let itinerary of orderData[0].iteneris">
+    <div *ngFor="let day of itinerary.day_wise_details" class="row mb-3">
+      <div class="col-md-4 info-box">
+        <div class="info-label">Day</div>
+        <div class="info-value">{{ day.day }}</div>
+      </div>
+      <div class="col-md-4 info-box">
+        <div class="info-label">Title</div>
+        <div class="info-value">{{ day.title }}</div>
+      </div>
+      <div class="col-md-4 info-box">
+        <div class="info-label">Detail</div>
+        <div class="info-value">{{ day.detail }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Travel Dates -->
+      <div class="mb-4">
+        <div class="section-heading"><i class="bi bi-calendar-range-fill"></i> Travel Dates</div>
+        <div class="row">
+          <div class="col-md-4 info-box"><div class="info-label">Start Date</div><div class="info-value">{{ orderData[0]?.['date date']?.[0]?.start_date }}</div></div>
+          <div class="col-md-4 info-box"><div class="info-label">End Date</div><div class="info-value">{{ orderData[0]?.['date date']?.[0]?.end_date }}</div></div>
+          <div class="col-md-4 info-box"><div class="info-label">Availability</div><div class="info-value"> {{ orderData[0]?.['date date']?.[0]?.availability }} </div></div>
+        </div>
+      </div>
+
+      <!-- Transport -->
+      <div class="mb-3">
+        <div class="section-heading"><i class="bi bi-truck-front"></i> Transport</div>
+        <div class="row">
+          <div class="col-md-6 info-box"><div class="info-label">Mode</div><div class="info-value">{{ orderData[0]?.transport[0]?.mode}}</div></div>
+          <div class="col-md-6 info-box"><div class="info-label">Details</div><div class="info-value">{{ orderData[0]?.transport[0]?.details}}</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+ 
+  
+  
+</div>

@@ -490,9 +490,6 @@ export class Packages implements OnInit {
   // ******************************** save data in the db ***************************
 
 
-
-
-
   savePackageInfo() {
     const formData = new FormData();
     // Append form data
