@@ -37,7 +37,7 @@ export const routes: Routes = [
   {
     path: "checkit",
     component: Check,
-    canActivate: [authGuard]
+    // canActivate: [authGuard]
   },
   {
     path: "aboutTripOfPackage/:id",
