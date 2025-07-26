@@ -10,9 +10,15 @@
 
     <div class="wrapper" [ngClass]="{ 'full-screen': isLoginPage }">
         <div class="body-overlay" *ngIf="!isLoginPage"></div>
-        <app-header *ngIf="!isLoginPage"></app-header>
+        <!-- <app-header *ngIf="!isLoginPage"></app-header>
+        <app-hotel-vendor-header *ngIf="!isLoginPagefor"></app-hotel-vendor-header> -->
+          <app-header *ngIf="!isLoginPage && !isHotelVendor"></app-header>
+
+  <!-- Show hotel vendor header -->
+  <app-hotel-vendor-header *ngIf="!isLoginPage && isHotelVendor"></app-hotel-vendor-header>
         <router-outlet *ngIf="isLoginPage"></router-outlet>
         <div id="content" [ngClass]="status" *ngIf="!isLoginPage">
             <router-outlet></router-outlet>
         </div>
+        
     </div>

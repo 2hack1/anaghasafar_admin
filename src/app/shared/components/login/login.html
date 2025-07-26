@@ -19,10 +19,23 @@
         <label>Password</label>
         <input type="password" placeholder="Enter your Password" formControlName="pass">
       </div>
-
-      <a href="#" class="forgot-link">Forgot password?</a> <a [routerLink]="['/checkit']" class="register-link" style="font-size: 13px; text-decoration: none;"> Hotel vendor Sign up</a>
+<div class="form-group mb-3">
+  <label for="role" class="form-label">Select User Role</label>
+  <select
+    id="role"
+    class="form-select"
+    formControlName="role"
+    style="border: 1px solid #ced4da; border-radius: 8px; padding: 5px 5px; font-size: 12px;">
+    
+    <!-- <option value="">Select a role</option> -->
+     
+    <option value="admin">Web Admin</option>
+    <option value="hotel_vendor">Hotel Admin</option>
+  </select>
+   </div>
+      <a href="#" class="forgot-link">Forgot password?</a> <a [routerLink]="['/hotelVendorForm']" class="register-link" style="font-size: 13px; text-decoration: none;"> Hotel vendor Sign up</a>
       <button type="submit" class="login-btn">Login</button>
-   </form>
+       </form>
     </div>
     
   </div>

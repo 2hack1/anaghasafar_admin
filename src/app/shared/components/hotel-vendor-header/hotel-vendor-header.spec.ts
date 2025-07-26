@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VendorForm } from './vendor-form';
+import { HotelVendorHeader } from './hotel-vendor-header';
 
-describe('VendorForm', () => {
-  let component: VendorForm;
-  let fixture: ComponentFixture<VendorForm>;
+describe('HotelVendorHeader', () => {
+  let component: HotelVendorHeader;
+  let fixture: ComponentFixture<HotelVendorHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VendorForm]
+      imports: [HotelVendorHeader]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VendorForm);
+    fixture = TestBed.createComponent(HotelVendorHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

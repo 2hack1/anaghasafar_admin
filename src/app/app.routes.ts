@@ -12,6 +12,8 @@ import { Login } from './shared/components/login/login';
 import { authGuard } from './auth-guard';
 import { UserTourOrder } from './shared/components/user-tour-order/user-tour-order';
 import { AboutUserTourOrder } from './shared/components/about-user-tour-order/about-user-tour-order';
+import { HotelVendorForm } from './shared/components/hotel-vendor-form/hotel-vendor-form';
+import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel-vendor-header';
 export const routes: Routes = [
 
     {
@@ -74,6 +76,12 @@ export const routes: Routes = [
   {
     path:"orderAbout/:id",
     component:AboutUserTourOrder
+  },{
+    path:"hotelVendorForm",
+    component:HotelVendorForm
+  },{
+    path: "deskboard",
+    component: HotelVendorHeader
   }
   
 

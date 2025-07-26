@@ -20,7 +20,9 @@ export class Login implements OnInit {
 
     this.loginform = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]]
+      pass: ['', [Validators.required]],
+      role: ['',[Validators.required]]
+
     })
   }
   ngOnInit(): void {
@@ -31,24 +33,24 @@ export class Login implements OnInit {
   //  logindata:any;
   onlogin() {
     if (this.loginform.valid) {
+       this.service.role = this.loginform.value.role;
       const logindata = new FormData();
       logindata.append("password", this.loginform.value.pass);
       logindata.append("email", this.loginform.value.email);
-      logindata.append("role", "admin");
-
-      this.service.loginAdmin(logindata).subscribe({
-
-
+      if( this.loginform.value.role === 'admin') {
+         logindata.append("role", this.loginform.value.role); 
+          this.service.loginAdmin(logindata).subscribe({
         next: (res: any) => {
           console.log(res.access_token);
           if (res.access_token) {
-
-            // localStorage.setItem('token',res.access_token);
-            // localStorage.setItem('name',res.user.name);
-            // localStorage.setItem('email',res.user.email);
+         console.log("login success",res);
+  
             sessionStorage.setItem('token', res.access_token);
             sessionStorage.setItem('name', res.user.name);
             sessionStorage.setItem('email', res.user.email);
+            sessionStorage.setItem('role',res.user.role);
+            // check again when hotel login
+           
             this.router.navigate(['/']);
           }
           this.loginform.reset()
@@ -57,6 +59,62 @@ export class Login implements OnInit {
           alert("this is not valide data")
         }
       });
+            //  api for vendor login
+
+      }else{
+         logindata.append("role", this.loginform.value.role);
+        sessionStorage.setItem('token','121');
+          sessionStorage.setItem('role','hotel_vendor');
+             this.router.navigate(['/']);
+      //  logindata.append("role", this.loginform.value.role); 
+      // this.service.loginAdmin(logindata).subscribe({
+
+      //   next: (res: any) => {
+      //     console.log(res.access_token);
+      //     if (res.access_token) {
+      //    console.log("login success",res);
+  
+      //       sessionStorage.setItem('token', res.access_token);
+      //       sessionStorage.setItem('name', res.user.name);
+      //       sessionStorage.setItem('email', res.user.email);
+      //       sessionStorage.setItem('role',res.user.role);
+      //       // check again when hotel login
+      //       this.service.role = res.user.role;
+      //       this.router.navigate(['/']);
+      //     }
+      //     this.loginform.reset()
+      //   },
+      //   error: (err) => {
+      //     alert("this is not valide data")
+      //   }
+      // });
+    
+    }
+
+      logindata.append("role", this.loginform.value.role);
+
+      // this.service.loginAdmin(logindata).subscribe({
+
+
+      //   next: (res: any) => {
+      //     console.log(res.access_token);
+      //     if (res.access_token) {
+      //    console.log("login success",res);
+  
+      //       sessionStorage.setItem('token', res.access_token);
+      //       sessionStorage.setItem('name', res.user.name);
+      //       sessionStorage.setItem('email', res.user.email);
+      //       sessionStorage.setItem('role',res.user.role);
+      //       // check again when hotel login
+      //       this.service.role = res.user.role;
+      //       this.router.navigate(['/']);
+      //     }
+      //     this.loginform.reset()
+      //   },
+      //   error: (err) => {
+      //     alert("this is not valide data")
+      //   }
+      // });
 
     } else {
       this.checkform = false;

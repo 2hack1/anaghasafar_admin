@@ -1,0 +1,19 @@
+.progress-bar {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+h5 {
+  margin-bottom: 1rem;
+  color: #0d6efd;
+}
+
+label {
+  font-weight: 500;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}

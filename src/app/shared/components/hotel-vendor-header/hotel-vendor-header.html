@@ -1,0 +1,252 @@
+<nav id="sidebar">
+    <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; "
+        *ngIf="isMobileView">
+        <!-- <img src="img/logo.svg" class="img-fluid"  *ngIf="isMobileView"/> -->
+        <h3 class="img-fluid">{{name}}</h3>
+        <button class="btn btn-sm btn-danger " (click)="logoutt()">Logout</button>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="active">
+            <a [routerLink]="['/']" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
+        </li>
+
+        <div class="small-screen navbar-display">
+            <li class="dropdown d-lg-none d-md-block d-xl-none d-sm-block">
+                <a href="#homeSubmenu0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="material-icons">notifications</i><span> 4 notification</span></a>
+                <ul class="collapse list-unstyled menu" id="homeSubmenu0">
+                    <li>
+                        <a>You have 5 new messages</a>
+                    </li>
+                    <li>
+                        <a href="#">You're now friend with Mike</a>
+                    </li>
+                    <li>
+                        <a href="#">Wish Mary on her birthday!</a>
+                    </li>
+                    <li>
+                        <a href="#">5 warnings in Server Console</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="d-lg-none d-md-block d-xl-none d-sm-block">
+                <a href="#"><i class="material-icons">apps</i><span>apps</span></a>
+            </li>
+
+            <li class="d-lg-none d-md-block d-xl-none d-sm-block">
+                <a href="#"><i class="material-icons">person</i><span>user</span></a>
+            </li>
+
+            <li class="d-lg-none d-md-block d-xl-none d-sm-block">
+                <a href="#"><i class="material-icons">settings</i><span>setting</span></a>
+            </li>
+        </div>
+
+        <!-- ***********************************************  it woring **************************************************** -->
+        <!-- <ul class=" list-unstyled list-unstyled">
+            <li>
+                <a href="#allDestinations" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                    (click)="loadDestinations()">
+                    <i class="material-icons">location_on</i>
+                    <span>All Destinations</span>
+                </a>
+
+                <ul class="collapse list-unstyled menu" id="allDestinations">
+                    <li *ngFor="let dest of destinations">
+                        <a [attr.href]="'#dest' + dest.id" [routerLink]="['/destination']" data-toggle="collapse"
+                            class="dropdown-toggle" (click)="loadSubDestinations(dest)">
+                            {{ dest.name }}
+                        </a>
+
+                        <ul class="collapse list-unstyled" [attr.id]="'dest' + dest.id">
+                            <li *ngFor="let sub of subsByDestination[dest.id]">
+                                <a [attr.href]="'#sub' + sub.id" data-toggle="collapse" class="dropdown-toggle"
+                                    (click)="loadPackages(sub)">
+                                    {{ sub.name }}
+                                </a>
+
+                                <ul class="collapse list-unstyled" [attr.id]="'sub' + sub.id">
+                                    <li *ngFor="let pkg of packagesBySub[sub.id]">{{ pkg.name }}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul> -->
+
+        <!-- <li class="dropdown">
+            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">home</i><span>Home</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu2">
+                <li>
+                    <a [routerLink]="['/topImage']">Top images</a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['/HomeCards']">Four-Cards</a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['/PlanenewTrip']"> Plan MyTrip (request)</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/checkit']">check It</a>
+                </li>
+
+            </ul>
+        </li> -->
+
+        <li class="dropdown">
+            <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">equalizer</i>
+
+                <span>User Activity</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu3">
+                <li>
+                    <a [routerLink]="['/userOrder']">User Tour Order</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">extension</i><span>ui element</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu4">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">border_color</i><span>forms</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu5">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">grid_on</i><span>tables</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu6">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="material-icons">content_copy</i><span>Pages</span></a>
+            <ul class="collapse list-unstyled menu" id="pageSubmenu7">
+                <li>
+                    <a href="#">Page 1</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="">
+            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
+        </li>
+
+        <li class="">
+            <a href="#"><i class="material-icons">library_books</i><span>Calender</span></a>
+        </li>
+    </ul>
+</nav>
+
+<div id="content">
+    <div class="top-navbar">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none"
+                    (click)="toggleTarget()">
+                    <span class="material-icons">arrow_back_ios</span>
+                </button>
+
+                <a class="navbar-brand" href="#"> Dashboard </a>
+
+                <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="material-icons">more_vert</span>
+                </button>
+
+                <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none"
+                    id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="dropdown nav-item active">
+                            <a href="#" class="nav-link" data-toggle="dropdown">
+                                <span class="material-icons">notifications</span>
+                                <span class="notification">4</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">You have 5 new messages</a>
+                                </li>
+                                <li>
+                                    <a href="#">You're now friend with Mike</a>
+                                </li>
+                                <li>
+                                    <a href="#">Wish Mary on her birthday!</a>
+                                </li>
+                                <li>
+                                    <a href="#">5 warnings in Server Console</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span class="material-icons">apps</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span class="material-icons">person</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span class="material-icons">settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
