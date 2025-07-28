@@ -14,6 +14,7 @@ import { UserTourOrder } from './shared/components/user-tour-order/user-tour-ord
 import { AboutUserTourOrder } from './shared/components/about-user-tour-order/about-user-tour-order';
 import { HotelVendorForm } from './shared/components/hotel-vendor-form/hotel-vendor-form';
 import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel-vendor-header';
+import { Pagenotfound } from './shared/components/pagenotfound/pagenotfound';
 export const routes: Routes = [
 
     {
@@ -72,16 +73,23 @@ export const routes: Routes = [
   {
     path:"userOrder",
     component:UserTourOrder
+    ,canActivate: [authGuard]
   },
   {
     path:"orderAbout/:id",
-    component:AboutUserTourOrder
+    component:AboutUserTourOrder,
+     canActivate: [authGuard]
   },{
     path:"hotelVendorForm",
     component:HotelVendorForm
+  
   },{
     path: "deskboard",
-    component: HotelVendorHeader
+    component: HotelVendorHeader,
+     canActivate: [authGuard]
+  },{
+    path:"notfounderror404",
+    component:Pagenotfound
   }
   
 

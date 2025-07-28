@@ -15,7 +15,6 @@ export class App {
 
  
   protected title = 'adminfrontend';
-// isLoginPagefor = true;
   status: 'active' | 'deactive' = 'deactive';
     isLoginPage = false;
 isHotelVendor = false;
@@ -30,21 +29,49 @@ isHotelVendor = false;
     console.log("status", this.status);
      this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-     const loginLikePages = ['/login', '/hotelVendorForm']; // add more if needed
+     const loginLikePages = ['/login', '/hotelVendorForm','/deskboard','/notfounderror404']; // add more if needed
        this.isLoginPage = loginLikePages.includes(event.urlAfterRedirects);
 
-          const role = sessionStorage.getItem('role');
-    this.isHotelVendor = role === 'hotel_vendor';
-      } 
-      //  else if (this.user.role === 'hotel_vendor') {
-      //   console.log("check it");
-      //    this.router.navigate(['/hotelVendor']);
-      //     this.isLoginPagefor = false;
-      //     this.isLoginPage = true;
-      //   sessionStorage.setItem('token', '12321');
+        
+  const adminStaticRoutes = ['/', '/destination', '/checkit',  , '/HomeCards', '/PlanenewTrip', '/topimage', '/userTourOrder','/userOrder' ];
+   // Routes that start with a path (e.g., dynamic :id)
+    const adminDynamicRoutePrefixes = ['/orderAbout/','/sub-des/','/packages/','/aboutTripOfPackage/' ];
 
-      //   }
+    // Check if current URL matches any of the routes
+    const isAdminRoute =
+      adminStaticRoutes.includes(event.urlAfterRedirects) ||
+      adminDynamicRoutePrefixes.some(prefix =>
+        event.urlAfterRedirects.startsWith(prefix)
+      );
+
+
+         if (isAdminRoute) {
+      const token = sessionStorage.getItem('token');
+      const name = sessionStorage.getItem('name');
+      const email = sessionStorage.getItem('email');
+     
+      if (token && name === 'admin' && email === 'admin123@gmail.com') {
+        console.log('Access granted to /des');
+      } else {
+        console.log('Invalid session. Redirecting...');
+        this.router.navigate(['/notfounderror404']); // or show error message
+      }
+
+      } else if (event.urlAfterRedirects === '/deskboard' ) {
+                     
+       const token = sessionStorage.getItem('token');
+      const name = sessionStorage.getItem('name');
+      const email = sessionStorage.getItem('email');
+      const role = sessionStorage.getItem('role');
     
+       if (token && name && email && role === 'hotel_vendor') {
+        console.log('Access granted to /desbord');
+      } else {
+        this.router.navigate(['/notfounderror404']); // or show error message
+      }
+      }
+    }
+  
     });
   }
 }

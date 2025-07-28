@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserServices } from '../../../core/services/user-services';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-vendor-form',
@@ -18,23 +20,26 @@ vendorForm: FormGroup;
   ngOnInit(): void {
     
   }
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private userService: UserServices,private router: Router) {
     this.vendorForm = this.fb.group({
       vendor_name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', Validators.required],
-      password: ['', Validators.required],
-      hotel_name: ['', Validators.required],
-      hotel_type: ['', Validators.required],
-      total_rooms: ['', Validators.required],
+      vendor_email: ['', [Validators.required, Validators.email]],
+      Mobilenumber: ['', Validators.required],
+      vendor_password: ['', Validators.required],
+      vendor_password_confirmation: ['', Validators.required],
+      hotelname: ['', Validators.required],
+      hoteltype: ['', Validators.required],
+      totalrooms: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
       pincode: ['', Validators.required],
-      price: ['', Validators.required],
-      gst_number: ['']
+      baseprice: ['', Validators.required],
+      address: ['', Validators.required],
+      gstnumber: ['']
     });
   }
 
+  
   isInvalid(field: string): boolean {
     const control = this.vendorForm.get(field);
     return Boolean(control?.invalid && (control?.dirty || control?.touched || this.submitted));
@@ -67,16 +72,21 @@ vendorForm: FormGroup;
 
   getFieldsForStep(step: number): string[] {
     const stepMap: { [key: number]: string[] } = {
-      0: ['vendor_name', 'email', 'mobile', 'password'],
-      1: ['hotel_name', 'hotel_type', 'total_rooms'],
-      2: ['city', 'state', 'pincode', 'price']
+      0: ['vendor_name', 'vendor_email', 'Mobilenumber', 'vendor_password'],
+      1: ['hotelname', 'hoteltype', 'totalrooms'],
+      2: ['city', 'state', 'pincode', 'gstnumber']
     };
     return stepMap[step] || [];
   }
 
-  // onImageChange(event: any) {
-  //   this.images = Array.from(event.target.files);
-  // }
+licenseFile: File | null = null;
+
+onLicenseFileChange(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    this.licenseFile = file;
+  }
+}
 
   hotelImages: { file: File; preview: string }[] = [];
 
@@ -88,10 +98,14 @@ onImageChange(event: any): void {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.hotelImages.push({ file, preview: e.target.result });
+         this.updateImageFiles(); // ✅ Update image list
       };
       reader.readAsDataURL(file);
     });
   }
+}
+updateImageFiles() {
+  this.images = this.hotelImages.map(img => img.file);
 }
 
 removeImage(index: number, imageInput: HTMLInputElement): void {
@@ -114,10 +128,26 @@ validateGST(event: any) {
   onSubmit() {
     this.submitted = true;
     if (this.vendorForm.valid) {
-      const data = { ...this.vendorForm.value, images: this.images };
+      const data = { ...this.vendorForm.value, images: this.images,license: this.licenseFile };
       console.log('Form submitted:', data);
+ this.userService.registerHotelVendor(data).subscribe((res:any)=>{
+  
+  console.log('its working',res);
+  if(res.access_token){
+
+    
+     sessionStorage.setItem('token', res.access_token);
+            sessionStorage.setItem('name', res.vendor.vendor_name);
+            sessionStorage.setItem('email', res.vendor.vendor_email);
+            sessionStorage.setItem('role', 'hotel_vendor');
+         this.router.navigate(['/deskboard']);
+  }
+  this.vendorForm.reset();
+})
+
       // Send to backend API
     } else {
+
       this.markCurrentStepFieldsTouched();
     }
   }

@@ -199,12 +199,12 @@ deleteOrderById(id:any){
   return this.http.delete(`http://localhost:8000/api/delete_order/${id}`)
 }
 
-// registerHotelVendor(data:FormData){
-//   return this.http.post(`http://localhost:8000/api/vendor/register`,data)
-// }
+registerHotelVendor(data:any){
+  return this.http.post(`http://localhost:8000/api/vendor/register`,data)
+}
 
-// loginHotelVendor(data:FormData){
-//   return this.http.post(`http://localhost:8000/api/vendor/login`,data)
-// }
+loginHotelVendor(data:FormData){
+  return this.http.post(`http://localhost:8000/api/vendor/login`,data)
+}
 
 }
