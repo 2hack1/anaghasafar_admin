@@ -1,3 +1,5 @@
+
+    
 <nav id="sidebar">
     <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; "
         *ngIf="isMobileView">
@@ -7,7 +9,7 @@
     </div>
     <ul class="list-unstyled components">
         <li class="active">
-            <a [routerLink]="['/']" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
+            <a [routerLink]="['/deskboard/review']" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
         </li>
 
         <div class="small-screen navbar-display">
@@ -44,39 +46,9 @@
         </div>
 
         <!-- ***********************************************  it woring **************************************************** -->
-        <!-- <ul class=" list-unstyled list-unstyled">
-            <li>
-                <a href="#allDestinations" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
-                    (click)="loadDestinations()">
-                    <i class="material-icons">location_on</i>
-                    <span>All Destinations</span>
-                </a>
+   
 
-                <ul class="collapse list-unstyled menu" id="allDestinations">
-                    <li *ngFor="let dest of destinations">
-                        <a [attr.href]="'#dest' + dest.id" [routerLink]="['/destination']" data-toggle="collapse"
-                            class="dropdown-toggle" (click)="loadSubDestinations(dest)">
-                            {{ dest.name }}
-                        </a>
-
-                        <ul class="collapse list-unstyled" [attr.id]="'dest' + dest.id">
-                            <li *ngFor="let sub of subsByDestination[dest.id]">
-                                <a [attr.href]="'#sub' + sub.id" data-toggle="collapse" class="dropdown-toggle"
-                                    (click)="loadPackages(sub)">
-                                    {{ sub.name }}
-                                </a>
-
-                                <ul class="collapse list-unstyled" [attr.id]="'sub' + sub.id">
-                                    <li *ngFor="let pkg of packagesBySub[sub.id]">{{ pkg.name }}</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul> -->
-
-        <!-- <li class="dropdown">
+        <li class="dropdown">
             <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">home</i><span>Home</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu2">
@@ -96,7 +68,7 @@
                 </li>
 
             </ul>
-        </li> -->
+        </li>
 
         <li class="dropdown">
             <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

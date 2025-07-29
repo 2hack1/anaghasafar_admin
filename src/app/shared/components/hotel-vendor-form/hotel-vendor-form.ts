@@ -73,8 +73,8 @@ vendorForm: FormGroup;
   getFieldsForStep(step: number): string[] {
     const stepMap: { [key: number]: string[] } = {
       0: ['vendor_name', 'vendor_email', 'Mobilenumber', 'vendor_password'],
-      1: ['hotelname', 'hoteltype', 'totalrooms'],
-      2: ['city', 'state', 'pincode', 'gstnumber']
+      1: ['hotelname', 'hoteltype', 'totalrooms','vendor_password_confirmation'],
+      2: ['city', 'state', 'pincode','address' ,'gstnumber']
     };
     return stepMap[step] || [];
   }
@@ -125,30 +125,70 @@ validateGST(event: any) {
   this.gstInvalid = gstValue && !gstRegex.test(gstValue);
 }
 
-  onSubmit() {
-    this.submitted = true;
-    if (this.vendorForm.valid) {
-      const data = { ...this.vendorForm.value, images: this.images,license: this.licenseFile };
-      console.log('Form submitted:', data);
- this.userService.registerHotelVendor(data).subscribe((res:any)=>{
+//   onSubmit() {
+//     this.submitted = true;
+//     if (this.vendorForm.valid) {
+//       const data = { ...this.vendorForm.value, images: this.images,license: this.licenseFile };
+//       console.log('Form submitted:', data);
+//  this.userService.registerHotelVendor(data).subscribe((res:any)=>{
   
-  console.log('its working',res);
-  if(res.access_token){
+//   console.log('its working ',res);
+//   if(res.access_token){
+//      sessionStorage.setItem('token', res.access_token);
+//             sessionStorage.setItem('name', res.vendor.vendor_name);
+//             sessionStorage.setItem('email', res.vendor.vendor_email);
+//             sessionStorage.setItem('role', 'hotel_vendor');
+//          this.router.navigate(['/deskboard']);
+//   }
+//   this.vendorForm.reset();
+// })
 
-    
-     sessionStorage.setItem('token', res.access_token);
-            sessionStorage.setItem('name', res.vendor.vendor_name);
-            sessionStorage.setItem('email', res.vendor.vendor_email);
-            sessionStorage.setItem('role', 'hotel_vendor');
-         this.router.navigate(['/deskboard']);
-  }
-  this.vendorForm.reset();
-})
+//       // Send to backend API
+//     } else {
 
-      // Send to backend API
-    } else {
+//       this.markCurrentStepFieldsTouched();
+//     }
+//   }
 
-      this.markCurrentStepFieldsTouched();
+onSubmit() {
+  this.submitted = true;
+
+  if (this.vendorForm.valid && this.licenseFile) {
+    const formData = new FormData();
+
+    // Append form fields
+    Object.entries(this.vendorForm.value).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    // Append license file
+    formData.append('licensefile', this.licenseFile);
+
+    // Append multiple hotel images
+    this.images.forEach((file, index) => {
+      formData.append('hotel_images[]', file);  // 'images[]' matches backend expectation
+    });
+
+    console.log('Sending form data...');
+
+    this.userService.registerHotelVendor(formData).subscribe((res: any) => {
+      console.log('✅ Server response:', res);
+      if (res.access_token) {
+        sessionStorage.setItem('token', res.access_token);
+        sessionStorage.setItem('name', res.vendor.vendor_name);
+        sessionStorage.setItem('email', res.vendor.vendor_email);
+        sessionStorage.setItem('role', 'hotel_vendor');
+        this.router.navigate(['/deskboard']);
+      }
+      this.vendorForm.reset();
+    });
+
+  } else {
+    if (!this.licenseFile) {
+      alert('License file is required');
     }
+    this.markCurrentStepFieldsTouched();
   }
+}
+
 }

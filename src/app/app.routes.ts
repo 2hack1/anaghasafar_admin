@@ -15,6 +15,11 @@ import { AboutUserTourOrder } from './shared/components/about-user-tour-order/ab
 import { HotelVendorForm } from './shared/components/hotel-vendor-form/hotel-vendor-form';
 import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel-vendor-header';
 import { Pagenotfound } from './shared/components/pagenotfound/pagenotfound';
+import { VendorDeskboard } from './shared/components/vendor-deskboard/vendor-deskboard';
+import { Review } from './shared/components/review/review';
+
+
+
 export const routes: Routes = [
 
     {
@@ -83,14 +88,18 @@ export const routes: Routes = [
     path:"hotelVendorForm",
     component:HotelVendorForm
   
+  },
+  { 
+    path:"deskboard",
+  component: VendorDeskboard 
   },{
-    path: "deskboard",
-    component: HotelVendorHeader,
-     canActivate: [authGuard]
-  },{
+
+     path:"deskboard/review",
+  component: Review
+  }
+  ,{
     path:"notfounderror404",
     component:Pagenotfound
   }
-  
 
 ];

@@ -27,51 +27,108 @@ isHotelVendor = false;
    console.log("form check",this.isLoginPage);
 
     console.log("status", this.status);
-     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-     const loginLikePages = ['/login', '/hotelVendorForm','/deskboard','/notfounderror404']; // add more if needed
-       this.isLoginPage = loginLikePages.includes(event.urlAfterRedirects);
 
-        
-  const adminStaticRoutes = ['/', '/destination', '/checkit',  , '/HomeCards', '/PlanenewTrip', '/topimage', '/userTourOrder','/userOrder' ];
-   // Routes that start with a path (e.g., dynamic :id)
-    const adminDynamicRoutePrefixes = ['/orderAbout/','/sub-des/','/packages/','/aboutTripOfPackage/' ];
+//   this.router.events.subscribe(event => {
+//   if (event instanceof NavigationEnd) {
+//     const url = event.urlAfterRedirects;
 
-    // Check if current URL matches any of the routes
-    const isAdminRoute =
-      adminStaticRoutes.includes(event.urlAfterRedirects) ||
-      adminDynamicRoutePrefixes.some(prefix =>
-        event.urlAfterRedirects.startsWith(prefix)
-      );
+//     // 🔹 Login & Standalone Pages
+//     const loginLikePages = ['/login', '/hotelVendorForm', '/notfounderror404'];
+//     this.isLoginPage = loginLikePages.includes(url);
 
+//     // 🔹 Hotel Vendor Pages (start with /deskboard)
+//     // this.isHotelVendor = url.startsWith('/deskboard');
 
-         if (isAdminRoute) {
-      const token = sessionStorage.getItem('token');
-      const name = sessionStorage.getItem('name');
-      const email = sessionStorage.getItem('email');
-     
-      if (token && name === 'admin' && email === 'admin123@gmail.com') {
-        console.log('Access granted to /des');
-      } else {
-        console.log('Invalid session. Redirecting...');
-        this.router.navigate(['/notfounderror404']); // or show error message
-      }
+//     // 🔹 Admin Pages (start with any of the following)
+//     const adminPrefixes = [
+//       '/PlanenewTrip/', '/HomeCards/', '/checkit/', '/destination/',
+//       '/desk', '/orderAbout/', '/sub-des/', '/topimage/',
+//       '/userOrder', '/userTourOrder/', '/packages/', '/aboutTripOfPackage/'
+//     ];
 
-      } else if (event.urlAfterRedirects === '/deskboard' ) {
-                     
-       const token = sessionStorage.getItem('token');
-      const name = sessionStorage.getItem('name');
-      const email = sessionStorage.getItem('email');
-      const role = sessionStorage.getItem('role');
+//     const isAdminRoute = adminPrefixes.some(prefix => url.startsWith(prefix));
+
     
-       if (token && name && email && role === 'hotel_vendor') {
-        console.log('Access granted to /desbord');
-      } else {
-        this.router.navigate(['/notfounderror404']); // or show error message
+//     // 🔒 Admin Access Check
+//     if (isAdminRoute) {
+//       const token = sessionStorage.getItem('token');
+//       const name = sessionStorage.getItem('name');
+//       const email = sessionStorage.getItem('email');
+//           const role = sessionStorage.getItem('role');
+//       if (!(token && name && email  && role === 'admin')) {
+//         this.router.navigate(['/notfounderror404']);
+//         console.log('Invalid session. Redirecting to 404');
+//         return;
+//       }
+//     }else if (url.startsWith('/deskboard')) {
+//       const token = sessionStorage.getItem('token');
+//       const name = sessionStorage.getItem('name');
+//       const email = sessionStorage.getItem('email');
+//       const role = sessionStorage.getItem('role');
+
+//       if (!(token && name && email && role === 'hotel_vendor')) {
+//         this.router.navigate(['/notfounderror404']);
+//         return;
+//       }
+//     }
+
+    
+//   }
+// });
+
+this.router.events.subscribe(event => {
+  if (event instanceof NavigationEnd) {
+    const url = event.urlAfterRedirects;
+
+    // 🔹 Pages where no header is shown (login, hotel form, 404)
+    const loginLikePages = ['/login', '/hotelVendorForm', '/notfounderror404'];
+    this.isLoginPage = loginLikePages.includes(url);
+    this.isHotelVendor = loginLikePages.includes(url);
+
+    // 🔹 Check if current route starts with /deskboard
+    const isHotelVendorRoute = url.startsWith('/deskboard');
+
+
+
+
+
+    // 🔹 Check if current route starts with any admin prefix
+    const adminPrefixes = [
+      '/PlanenewTrip', '/HomeCards', '/checkit', '/destination',
+      '/desk', '/orderAbout', '/sub-des', '/topimage',
+      '/userOrder', '/userTourOrder', '/packages', '/aboutTripOfPackage'
+    ];
+    const isAdminRoute = adminPrefixes.some(prefix => url.startsWith(prefix));
+
+    const token = sessionStorage.getItem('token');
+    const name = sessionStorage.getItem('name');
+    const email = sessionStorage.getItem('email');
+    const role = sessionStorage.getItem('role');
+
+    // 🔒 Admin route access
+    if (isAdminRoute) {
+      if (!(token && name && email && role === 'admin')) {
+        this.router.navigate(['/notfounderror404']);
+        return;
       }
-      }
+      this.isHotelVendor = false; // ensure correct header
     }
-  
-    });
+
+    // 🔒 Hotel vendor access
+    else if (isHotelVendorRoute) {
+      if (!(token && name && email && role === 'hotel_vendor')) {
+        this.router.navigate(['/notfounderror404']);
+        return;
+      }
+      this.isHotelVendor = true;
+    }
+
+    // 🔹 For all other non-admin and non-vendor routes
+    else {
+      this.isHotelVendor = false;
+    }
+  }
+});
+
   }
 }

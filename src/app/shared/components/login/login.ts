@@ -75,11 +75,12 @@ export class Login implements OnInit {
             sessionStorage.setItem('token', res.access_token);
             sessionStorage.setItem('name', res.user.vendor_name);
             sessionStorage.setItem('email', res.user.vendor_email);
-            
+               sessionStorage.setItem('role', 'hotel_vendor');
+               this.router.navigate(['/deskboard/review']);
           }
-             this.router.navigate(['/deskboard']);
+             
         })
-      sessionStorage.setItem('role', 'hotel_vendor');
+   
         this.loginform.reset()
      
 
