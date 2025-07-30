@@ -1,0 +1,110 @@
+<div class="bodies">
+  <div class="header">
+    <div>
+      <h1>Booking Management</h1>
+      <p>Track and manage all your hotel bookings</p>
+    </div>
+    <div class="actions">
+      <button class="btn filter">Advanced Filter</button>
+      <button class="btn export">Export</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h4>Total Bookings</h4>
+      <div class="value">5</div>
+    </div>
+    <div class="card">
+      <h4>Total Revenue</h4>
+      <div class="value">₹33,900</div>
+    </div>
+    <div class="card">
+      <h4>Pending Payments</h4>
+      <div class="value">₹10,800</div>
+    </div>
+    <div class="card">
+      <h4>Confirmed</h4>
+      <div class="value">2</div>
+    </div>
+  </div>
+
+  <div class="search-filter">
+    <input type="text" placeholder="Search by guest name, booking ID, or room type..." />
+    <div class="status-buttons">
+      <button class="active">All</button>
+      <button>Confirmed</button>
+      <button>Pending</button>
+      <button>Completed</button>
+      <button>Cancelled</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Guest Details</th>
+          <th>Room Type</th>
+          <th>Check-in/Out</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>BK001</td>
+          <td>
+            <strong>Rahul Sharma</strong><br>
+            📞 +91 9876543210<br>
+            📧 rahulemail.com
+          </td>
+          <td>
+            Deluxe Double<br>
+            2 guests • 2 nights
+          </td>
+          <td>
+            2024-07-25<br>
+            2024-07-27
+          </td>
+          <td>₹5,400<br><small>Booked: 2024-07-20</small></td>
+          <td>
+            <span class="badge confirmed">Confirmed</span>
+            <span class="badge paid">Paid</span>
+          </td>
+          <td class="actions-icons">
+            <i class="material-icons" title="Edit">edit</i>
+            <i class="material-icons" title="Delete">delete</i>
+          </td>
+        </tr>
+        <tr>
+          <td>BK002</td>
+          <td>
+            <strong>Priya Patel</strong><br>
+            📞 +91 9876543211<br>
+            📧 priyaemail.com
+          </td>
+          <td>
+            Executive Suite<br>
+            3 guests • 3 nights
+          </td>
+          <td>
+            2024-07-26<br>
+            2024-07-29
+          </td>
+          <td>₹8,100<br><small>Booked: 2024-07-21</small></td>
+          <td>
+            <span class="badge pending">Pending</span>
+            <span class="badge unpaid">Unpaid</span>
+          </td>
+          <td class="actions-icons">
+            <i class="material-icons" title="Edit">edit</i>
+            <i class="material-icons" title="Delete">delete</i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

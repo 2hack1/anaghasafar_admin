@@ -1,61 +1,130 @@
-<div class="room-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-  <div>
-    <h1 class="fw-bold m-0">Room Management</h1>
-    <p class="text-muted mb-0">Manage your hotel rooms, pricing, and availability</p>
+<div class="bodies">
+
+  <div class="top-bar">
+    <div>
+      <h1>Room Management</h1>
+      <p class="sub-heading">Manage your hotel rooms, pricing, and availability</p>
+    </div>
+    <button class="add-btn">+ Add New Room</button>
   </div>
-  <button class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i> Add New Room</button>
-</div>
 
-<div class="search-filter-box bg-white p-3 rounded shadow-sm mb-4 d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3">
-  <input type="text" class="form-control flex-grow-1" placeholder="Search rooms..." />
-  <div class="btn-group flex-wrap">
-    <button class="btn btn-primary">All Rooms</button>
-    <button class="btn btn-outline-secondary">Single</button>
-    <button class="btn btn-outline-secondary">Double</button>
-    <button class="btn btn-outline-secondary">Suite</button>
-  </div>
-</div>
-
-<div class="row gy-4">
-  <!-- Room Card -->
-  <div class="col-md-6 col-lg-4">
-    <div class="card h-100 shadow-sm rounded room-card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between">
-          <div>
-            <h5 class="fw-semibold mb-0">Deluxe Single</h5>
-            <small class="text-muted">R001</small>
-          </div>
-          <div>
-            <i class="fa-regular fa-pen-to-square me-2 text-primary cursor-pointer"></i>
-            <i class="fa-regular fa-trash-can text-danger cursor-pointer"></i>
-          </div>
-        </div>
-
-        <div class="image-box bg-light rounded d-flex flex-column align-items-center justify-content-center mt-3 mb-3">
-          <i class="fa-solid fa-camera fa-2x text-primary"></i>
-          <p class="text-muted mb-0 mt-2">3 images</p>
-        </div>
-
-        <p class="mb-1 fs-6">₹ <strong>2,500</strong> / night</p>
-        <p class="text-muted mb-1">
-          <i class="fa-solid fa-user-group me-1"></i> 1 guest &nbsp;
-          <i class="fa-solid fa-bed me-1"></i> 5/8 available
-        </p>
-        <p class="text-muted mb-1">
-          Status: <span class="badge bg-success">Available</span>
-        </p>
-
-        <p class="mb-1">Amenities:</p>
-        <div class="d-flex flex-wrap gap-2">
-          <span class="badge bg-light border">WiFi</span>
-          <span class="badge bg-light border">AC</span>
-          <span class="badge bg-light border">TV</span>
-          <span class="badge bg-light border">+1 more</span>
-        </div>
-      </div>
+  <div class="search-filter">
+    <input type="text" placeholder="Search rooms..." class="search-box" />
+    <div class="filter-btns">
+      <button class="active">All Rooms</button>
+      <button>Single</button>
+      <button>Double</button>
+      <button>Suite</button>
     </div>
   </div>
 
-  <!-- Duplicate and edit this block for other rooms -->
+  <div class="room-grid">
+
+    <!-- Room 1 -->
+
+    <div class="room-card">
+      <div class="room-header">
+        <div>
+          <h3>Deluxe Single</h3>
+          <p style="font-size: 12px; color: gray;">R001</p>
+        </div>
+        <div class="icons">
+          <i class="material-icons">edit</i>
+
+          <!-- Delete Icon -->
+          <i class="material-icons">delete</i>
+        </div>
+      </div>
+      <div class="image-box">
+        📷<br>3 images
+      </div>
+      <div class="price">₹2,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
+      <div class="availability"> 1 guests |  5/8 available</div>
+      <div class="status">Status: <span class="badge">Available</span></div>
+      <p style="font-size: 14px;">Amenities:</p>
+      <div class="amenities">
+        <span>WiFi</span><span>AC</span><span>TV</span><span>+1 more</span>
+      </div>
+    </div>
+
+    <!-- Room 2 -->
+    <div class="room-card">
+      <div class="room-header">
+        <div>
+          <h3>Deluxe Double</h3>
+          <p style="font-size: 12px; color: gray;">R002</p>
+        </div>
+        <div class="icons">
+          <i class="material-icons">edit</i>
+
+          <!-- Delete Icon -->
+          <i class="material-icons">delete</i>
+        </div>
+      </div>
+      <div class="image-box">
+        📷<br>4 images
+      </div>
+      <div class="price">₹3,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
+      <div class="availability"> 2 guests |  3/6 available</div>
+      <div class="status">Status: <span class="badge">Available</span></div>
+      <p style="font-size: 14px;">Amenities:</p>
+      <div class="amenities">
+        <span>WiFi</span><span>AC</span><span>TV</span><span>+2 more</span>
+      </div>
+    </div>
+
+    <!-- Room 3 -->
+    <div class="room-card">
+      <div class="room-header">
+        <div>
+          <h3>Executive Suite</h3>
+          <p style="font-size: 12px; color: gray;">R003</p>
+        </div>
+        <div class="icons">
+          <!-- Edit Icon -->
+          <i class="material-icons">edit</i>
+
+          <!-- Delete Icon -->
+          <i class="material-icons">delete</i>
+
+        </div>
+      </div>
+      <div class="image-box">
+        📷<br>5 images
+      </div>
+      <div class="price">₹6,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
+      <div class="availability"> 4 guests |  1/2 available</div>
+      <div class="status">Status: <span class="badge">Available</span></div>
+      <p style="font-size: 14px;">Amenities:</p>
+      <div class="amenities">
+        <span>WiFi</span><span>AC</span><span>TV</span><span>+3 more</span>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-header">
+        <div>
+          <h3>Executive Suite</h3>
+          <p style="font-size: 12px; color: gray;">R003</p>
+        </div>
+        <div class="icons">
+          <i class="material-icons">edit</i>
+
+          <!-- Delete Icon -->
+          <i class="material-icons">delete</i>
+        </div>
+      </div>
+      <div class="image-box">
+        📷<br>5 images
+      </div>
+      <div class="price">₹6,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
+      <div class="availability"> 4 guests | 1/2 available</div>
+      <div class="status">Status: <span class="badge">Available</span></div>
+      <p style="font-size: 14px;">Amenities:</p>
+      <div class="amenities">
+        <span>WiFi</span><span>AC</span><span>TV</span><span>+3 more</span>
+      </div>
+    </div>
+
+  </div>
+
 </div>

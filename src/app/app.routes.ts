@@ -18,6 +18,7 @@ import { Pagenotfound } from './shared/components/pagenotfound/pagenotfound';
 import { VendorDeskboard } from './shared/components/vendor-deskboard/vendor-deskboard';
 import { Review } from './shared/components/review/review';
 import { HotelRoomsManagement } from './shared/components/hotel-rooms-management/hotel-rooms-management';
+import { Hotelbooking } from './shared/components/hotelbooking/hotelbooking';
 
 
 
@@ -103,6 +104,11 @@ export const routes: Routes = [
     path:"notfounderror404",
     component:Pagenotfound
   },{
+     path:"deskboard/booking",
+      component: Hotelbooking
+  },
+  
+  {
   path: '**',
  component:Pagenotfound
 }
