@@ -1,0 +1,30 @@
+.room-header h1 {
+  font-size: 1.75rem;
+}
+
+.search-filter-box {
+  border: 1px solid #dee2e6;
+}
+
+.image-box {
+  height: 130px;
+  text-align: center;
+}
+
+.room-card {
+  transition: all 0.3s ease;
+}
+
+.room-card:hover {
+  box-shadow: 0 0 0 2px #0d6efd33;
+  transform: scale(1.01);
+}
+
+.badge.bg-light {
+  font-weight: 500;
+  padding: 5px 10px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

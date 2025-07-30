@@ -6,25 +6,38 @@
         <router-outlet></router-outlet>
     </div>
 </div> -->
-<!-- <div class="wrapper">
-    <div class="body-overlay"></div>
-    <app-header></app-header>
-
-    <div id="content" class="{{status}}">
-        <router-outlet></router-outlet>
-    </div>
-</div> -->
 
 
     <div class="wrapper" [ngClass]="{ 'full-screen': isLoginPage }">
         <div class="body-overlay" *ngIf="!isLoginPage"></div>
           <app-header *ngIf="!isLoginPage && !isHotelVendor"></app-header>
 
-  <!-- Show hotel vendor header -->
   <app-hotel-vendor-header *ngIf="!isLoginPage && isHotelVendor"></app-hotel-vendor-header>
         <router-outlet *ngIf="isLoginPage"></router-outlet>
         <div id="content" [ngClass]="status" *ngIf="!isLoginPage">
             <router-outlet></router-outlet>
         </div>
         
-    </div>
+    </div> -->
+
+    <!-- Wrapper for entire page -->
+<div class="wrapper" [ngClass]="{ 'full-screen': isLoginPage }">
+
+  <!-- No header if login page -->
+  <div class="body-overlay" *ngIf="!isLoginPage"></div>
+
+  <!-- Admin header -->
+  <app-header *ngIf="!isLoginPage && !isHotelVendor"></app-header>
+
+  <!-- Hotel vendor header -->
+  <app-hotel-vendor-header *ngIf="!isLoginPage && isHotelVendor"></app-hotel-vendor-header>
+
+  <!-- Only login-like pages show router-outlet directly -->
+  <router-outlet *ngIf="isLoginPage"></router-outlet>
+
+  <!-- All other pages inside content div -->
+  <div id="content" [ngClass]="status" *ngIf="!isLoginPage">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

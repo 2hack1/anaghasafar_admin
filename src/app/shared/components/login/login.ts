@@ -63,12 +63,12 @@ export class Login implements OnInit {
         //  api for vendor login
 
       } else {
-
+        
         const logindata = new FormData();
         logindata.append("vendor_email", this.loginform.value.email);
         logindata.append("vendor_password", this.loginform.value.pass);
         this.service.loginHotelVendor(logindata).subscribe((res: any) => {
-          // console.log("vendor login", res);
+        
           if (res.access_token) {
             console.log("login success", res);
 
@@ -76,16 +76,11 @@ export class Login implements OnInit {
             sessionStorage.setItem('name', res.user.vendor_name);
             sessionStorage.setItem('email', res.user.vendor_email);
                sessionStorage.setItem('role', 'hotel_vendor');
-               this.router.navigate(['/deskboard/review']);
-          }
-             
+               this.router.navigate(['/deskboard']);
+         }
         })
-   
-        this.loginform.reset()
-     
-
+        this.loginform.reset();
       }
-
     } else {
       this.checkform = false;
     }

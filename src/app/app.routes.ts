@@ -17,6 +17,7 @@ import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel
 import { Pagenotfound } from './shared/components/pagenotfound/pagenotfound';
 import { VendorDeskboard } from './shared/components/vendor-deskboard/vendor-deskboard';
 import { Review } from './shared/components/review/review';
+import { HotelRoomsManagement } from './shared/components/hotel-rooms-management/hotel-rooms-management';
 
 
 
@@ -88,18 +89,22 @@ export const routes: Routes = [
     path:"hotelVendorForm",
     component:HotelVendorForm
   
-  },
-  { 
+  },{ 
     path:"deskboard",
   component: VendorDeskboard 
   },{
 
      path:"deskboard/review",
   component: Review
-  }
-  ,{
+  },{
+       path:"deskboard/rooms",
+      component: HotelRoomsManagement
+  },{
     path:"notfounderror404",
     component:Pagenotfound
-  }
+  },{
+  path: '**',
+ component:Pagenotfound
+}
 
 ];
