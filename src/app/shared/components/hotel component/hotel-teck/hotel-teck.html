@@ -1,0 +1,150 @@
+<p>hotel-teck works!</p>
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="room-form">
+
+  <!-- 1. Basic Info -->
+  <fieldset>
+    <legend>Basic Room Information</legend>
+    <div class="form-group">
+      <label>Room Name / Type</label>
+      <select formControlName="roomType" >
+        <option value="">Select Room Name</option>
+        <option *ngFor="let type of roomTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group ">
+      <label>Number of Rooms Available</label>
+      <input type="number" formControlName="numRooms" placeholder="Number of Rooms Available" />
+    </div>
+
+  </fieldset>
+
+  <!-- 3. Occupancy Info -->
+  <fieldset>
+    <legend>Occupancy</legend>
+
+    <div class="form-group">
+      <label>Max Adults</label>
+      <input type="number" formControlName="maxAdults" placeholder="Max Adults" />
+    </div>
+
+    <div class="form-group">
+      <label>Max Children</label>
+      <input type="number" formControlName="maxChildren" placeholder="Max Children" />
+    </div>
+
+    <div class="form-group">
+      <label>Number of Beds</label>
+      <input type="number" formControlName="numberOfBeds" placeholder="Number of Beds" />
+    </div>
+
+    <div class="form-group">
+      <label>Bed Type</label>
+      <select formControlName="bedType">
+        <option value="">-- Select Bed Type --</option>
+        <option *ngFor="let bed of bedTypes" [value]="bed">{{ bed }}</option>
+      </select>
+    </div>
+  </fieldset>
+
+  <!-- 2. Pricing -->
+  <fieldset>
+    <legend>Pricing Details</legend>
+
+    <div class="form-group">
+      <label>Base Price (Per Night)</label>
+      <input type="number" formControlName="basePrice" placeholder="Base Price" />
+    </div>
+
+    <div class="form-group">
+      <label>Discount (%)</label>
+      <input type="number" formControlName="discount" placeholder="Discount %" />
+    </div>
+
+    <div class="form-group">
+      <label>Final Price</label>
+      <input type="number" formControlName="finalPrice" placeholder="Final Price" readonly />
+    </div>
+
+    <div class="form-group">
+      <label>Extra Bed Charges</label>
+      <input type="number" formControlName="extraBedCharge" placeholder="Extra Bed Charges" />
+    </div>
+
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" formControlName="taxIncluded" /> Tax Included</label>
+    </div>
+  </fieldset>
+
+  <!-- 4. Media -->
+  <fieldset>
+    <legend>Media</legend>
+
+    <div class="form-group">
+      <label>Room Images</label>
+      <input type="file" formControlName="roomImages" multiple />
+    </div>
+
+   
+  </fieldset>
+
+  <!-- 5. Amenities -->
+  <fieldset class="amenities">
+    <legend>Room Features / Amenities</legend>
+    <div class="checkbox-list">
+      <label *ngFor="let amenity of amenitiesList">
+        <input type="checkbox" [value]="amenity" (change)="onAmenityChange($event)" />
+        {{ amenity }}
+      </label>
+    </div>
+  </fieldset>
+
+  <!-- 6. Availability -->
+  <fieldset>
+    <legend>Availability</legend>
+
+    <div class="form-group">
+      <label>Booking Status</label>
+      <select formControlName="bookingStatus">
+        <option value="">-- Select Booking Status --</option>
+        <option *ngFor="let status of bookingStatuses" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" formControlName="visibility" /> Visible on Website</label>
+    </div>
+  </fieldset>
+
+  <!-- 7. Optional -->
+  <fieldset>
+    <legend>Additional Details</legend>
+
+    <div class="form-group">
+      <label>Room Description</label>
+      <textarea formControlName="description" placeholder="Room Description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Cancellation Policy</label>
+      <textarea formControlName="cancellationPolicy" placeholder="Cancellation Policy"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Check-in Time</label>
+      <input type="time" formControlName="checkInTime" />
+    </div>
+
+    <div class="form-group">
+      <label>Check-out Time</label>
+      <input type="time" formControlName="checkOutTime" />
+    </div>
+
+</fieldset>
+
+  <!-- Submit Button -->
+  <div class="submit-btn-container">
+    <button type="submit" class="submit-btn" >Submit Room</button>
+  </div>
+
+</form>

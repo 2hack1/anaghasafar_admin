@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-rooms-management',
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class HotelRoomsManagement {
 
+  constructor(private route:Router){}
+  resirect() {
+  
+    this.route.navigate(['deskboard/hotel-rooms']);
+  }
 }

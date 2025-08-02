@@ -12,13 +12,15 @@ import { Login } from './shared/components/login/login';
 import { authGuard } from './auth-guard';
 import { UserTourOrder } from './shared/components/user-tour-order/user-tour-order';
 import { AboutUserTourOrder } from './shared/components/about-user-tour-order/about-user-tour-order';
-import { HotelVendorForm } from './shared/components/hotel-vendor-form/hotel-vendor-form';
-import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel-vendor-header';
+import { HotelVendorForm } from './shared/components/hotel component/hotel-vendor-form/hotel-vendor-form';
+import { HotelVendorHeader } from './shared/components/hotel component/hotel-vendor-header/hotel-vendor-header';
 import { Pagenotfound } from './shared/components/pagenotfound/pagenotfound';
 import { VendorDeskboard } from './shared/components/vendor-deskboard/vendor-deskboard';
 import { Review } from './shared/components/review/review';
-import { HotelRoomsManagement } from './shared/components/hotel-rooms-management/hotel-rooms-management';
-import { Hotelbooking } from './shared/components/hotelbooking/hotelbooking';
+import { HotelRoomsManagement } from './shared/components/hotel component/hotel-rooms-management/hotel-rooms-management';
+import { Hotelbooking } from './shared/components/hotel component/hotelbooking/hotelbooking';
+import { HotelTeck } from './shared/components/hotel component/hotel-teck/hotel-teck';
+import { AddRooms } from './shared/components/hotel component/add-rooms/add-rooms';
 
 
 
@@ -106,8 +108,13 @@ export const routes: Routes = [
   },{
      path:"deskboard/booking",
       component: Hotelbooking
+  },{
+    path:"deskboard/check",
+    component:HotelTeck
+  },{
+    path:"deskboard/hotel-rooms",
+    component:AddRooms
   },
-  
   {
   path: '**',
  component:Pagenotfound

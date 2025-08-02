@@ -3,7 +3,7 @@ import {  Router, RouterOutlet,NavigationEnd, Event as RouterEvent, NavigationSt
 import { Header } from './shared/components/header/header';
 import { UserServices } from './core/services/user-services';
 import { CommonModule } from '@angular/common';
-import { HotelVendorHeader } from './shared/components/hotel-vendor-header/hotel-vendor-header';
+import { HotelVendorHeader } from './shared/components/hotel component/hotel-vendor-header/hotel-vendor-header';
 
 @Component({
   selector: 'app-root',

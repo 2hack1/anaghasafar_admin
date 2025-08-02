@@ -13,7 +13,7 @@ import { Route, Router, RouterLink } from '@angular/router';
 })
 export class Login implements OnInit {
   loginform: FormGroup;
-
+    loading = false;
   checkform = true;
 
   constructor(private fb: FormBuilder, private service: UserServices, private auth: Auth, private router: Router) {
@@ -30,60 +30,121 @@ export class Login implements OnInit {
 
   }
 
-  //  logindata:any;
-  onlogin() {
-    if (this.loginform.valid) {
-      this.service.role = this.loginform.value.role;
-      const logindata = new FormData();
-      logindata.append("password", this.loginform.value.pass);
-      logindata.append("email", this.loginform.value.email);
-      if (this.loginform.value.role === 'admin') {
-        logindata.append("role", this.loginform.value.role);
-        this.service.loginAdmin(logindata).subscribe({
-          next: (res: any) => {
-            console.log(res.access_token);
-            if (res.access_token) {
-              console.log("login success", res);
+  // //  logindata:any;
+  // onlogin() {
+  //   if (this.loginform.valid) {
+  //     this.service.role = this.loginform.value.role;
+  //     const logindata = new FormData();
+  //     logindata.append("password", this.loginform.value.pass);
+  //     logindata.append("email", this.loginform.value.email);
+  //     if (this.loginform.value.role === 'admin') {
+  //       logindata.append("role", this.loginform.value.role);
+  //       this.service.loginAdmin(logindata).subscribe({
+  //         next: (res: any) => {
+  //           console.log(res.access_token);
+  //           if (res.access_token) {
+  //             console.log("login success", res);
 
-              sessionStorage.setItem('token', res.access_token);
-              sessionStorage.setItem('name', res.user.name);
-              sessionStorage.setItem('email', res.user.email);
-              sessionStorage.setItem('role', res.user.role);
+  //             sessionStorage.setItem('token', res.access_token);
+  //             sessionStorage.setItem('name', res.user.name);
+  //             sessionStorage.setItem('email', res.user.email);
+  //             sessionStorage.setItem('role', res.user.role);
               
-              this.router.navigate(['/']);
-            }
-            this.loginform.reset()
+  //             this.router.navigate(['/']);
+  //           }
+  //           this.loginform.reset()
 
 
-          },
-          error: (err) => {
-            alert("this is not valide data")
-          }
-        });
-        //  api for vendor login
+  //         },
+  //         error: (err) => {
+  //           alert("this is not valide data")
+  //         }
+  //       });
+  //       //  api for vendor login
 
-      } else {
+  //     } else {
         
-        const logindata = new FormData();
-        logindata.append("vendor_email", this.loginform.value.email);
-        logindata.append("vendor_password", this.loginform.value.pass);
-        this.service.loginHotelVendor(logindata).subscribe((res: any) => {
+  //       const logindata = new FormData();
+  //       logindata.append("vendor_email", this.loginform.value.email);
+  //       logindata.append("vendor_password", this.loginform.value.pass);
+  //       this.service.loginHotelVendor(logindata).subscribe((res: any) => {
         
+  //         if (res.access_token) {
+  //           console.log("login success", res);
+
+  //           sessionStorage.setItem('token', res.access_token);
+  //           sessionStorage.setItem('name', res.user.vendor_name);
+  //           sessionStorage.setItem('email', res.user.vendor_email);
+  //              sessionStorage.setItem('role', 'hotel_vendor');
+  //              this.router.navigate(['/deskboard']);
+  //        }
+  //       })
+  //       this.loginform.reset();
+  //     }
+  //   } else {
+  //     this.checkform = false;
+  //   }
+  // }
+
+
+onlogin() {
+  this.checkform = true;
+
+  if (this.loginform.valid) {
+    this.loading = true;
+
+    this.service.role = this.loginform.value.role;
+    const logindata = new FormData();
+    logindata.append("password", this.loginform.value.pass);
+    logindata.append("email", this.loginform.value.email);
+
+    if (this.loginform.value.role === 'admin') {
+      logindata.append("role", this.loginform.value.role);
+      this.service.loginAdmin(logindata).subscribe({
+        next: (res: any) => {
           if (res.access_token) {
-            console.log("login success", res);
+            sessionStorage.setItem('token', res.access_token);
+            sessionStorage.setItem('name', res.user.name);
+            sessionStorage.setItem('email', res.user.email);
+            sessionStorage.setItem('role', res.user.role);
+            this.router.navigate(['/']);
+          }
+          this.loginform.reset();
+          this.loading = false;
+        },
+        error: (err) => {
+          alert("Invalid login credentials.");
+          this.loading = false;
+        }
+      });
 
+    } else {
+      const vendorData = new FormData();
+      vendorData.append("vendor_email", this.loginform.value.email);
+      vendorData.append("vendor_password", this.loginform.value.pass);
+      this.service.loginHotelVendor(vendorData).subscribe({
+        next: (res: any) => {
+          if (res.access_token) {
             sessionStorage.setItem('token', res.access_token);
             sessionStorage.setItem('name', res.user.vendor_name);
             sessionStorage.setItem('email', res.user.vendor_email);
-               sessionStorage.setItem('role', 'hotel_vendor');
-               this.router.navigate(['/deskboard']);
-         }
-        })
-        this.loginform.reset();
-      }
-    } else {
-      this.checkform = false;
+            sessionStorage.setItem('role', 'hotel_vendor');
+            this.router.navigate(['/deskboard']);
+          }
+          this.loginform.reset();
+          this.loading = false;
+        },
+        error: () => {
+          alert("Login failed");
+          this.loading = false;
+        }
+      });
     }
+  } else {
+    this.checkform = false;
   }
+}
+
+
 
 }

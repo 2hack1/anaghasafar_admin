@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserServices } from '../../../core/services/user-services';
+import { UserServices } from '../../../../core/services/user-services';
 import {  Router } from '@angular/router';
 
 @Component({
@@ -125,30 +125,7 @@ validateGST(event: any) {
   this.gstInvalid = gstValue && !gstRegex.test(gstValue);
 }
 
-//   onSubmit() {
-//     this.submitted = true;
-//     if (this.vendorForm.valid) {
-//       const data = { ...this.vendorForm.value, images: this.images,license: this.licenseFile };
-//       console.log('Form submitted:', data);
-//  this.userService.registerHotelVendor(data).subscribe((res:any)=>{
-  
-//   console.log('its working ',res);
-//   if(res.access_token){
-//      sessionStorage.setItem('token', res.access_token);
-//             sessionStorage.setItem('name', res.vendor.vendor_name);
-//             sessionStorage.setItem('email', res.vendor.vendor_email);
-//             sessionStorage.setItem('role', 'hotel_vendor');
-//          this.router.navigate(['/deskboard']);
-//   }
-//   this.vendorForm.reset();
-// })
 
-//       // Send to backend API
-//     } else {
-
-//       this.markCurrentStepFieldsTouched();
-//     }
-//   }
 
 onSubmit() {
   this.submitted = true;

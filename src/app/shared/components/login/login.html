@@ -34,7 +34,14 @@
   </select>
    </div>
       <a href="#" class="forgot-link">Forgot password?</a> <a [routerLink]="['/hotelVendorForm']" class="register-link" style="font-size: 13px; text-decoration: none;"> Hotel vendor Sign up</a>
-      <button type="submit" class="login-btn">Login</button>
+      <!-- <button type="submit" class="login-btn">Login</button> -->
+       <button type="submit" class="login-btn btn btn-primary w-100" [disabled]="loading">
+  <span *ngIf="!loading">Login</span>
+  <span *ngIf="loading">
+    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    Logging in...
+  </span>
+</button>
        </form>
     </div>
     
