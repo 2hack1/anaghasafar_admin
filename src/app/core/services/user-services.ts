@@ -186,7 +186,7 @@ loadimagereplaceGallary(id:any){
   return this.http.get(`http://localhost:8000/api/gellery/${id}`);
 }
 
-
+ 
 getOrderData(){
   return this.http.get(`http://localhost:8000/api/order`);
 } 
@@ -204,7 +204,19 @@ registerHotelVendor(data:any){
 }
 
 loginHotelVendor(data:FormData){
-  return this.http.post(`http://localhost:8000/api/vendor/login`,data)
+  return this.http.post('http://localhost:8000/api/vendor/login',data)
+}
+
+addhotelrooms(data:FormData){
+ return this.http.post('http://localhost:8000/api/hotel-rooms',data);
+}
+
+gethotelroom(id:any){
+  return this.http.get(`http://localhost:8000/api/hotel-rooms/${id}`);
+}
+
+getAllHotelRooms(){
+  return this.http.get(`http://localhost:8000/api/hotel-rooms`);
 }
 
 }

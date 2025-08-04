@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
+import { UserServices } from '../../../../core/services/user-services';
+import { NotifierContainerComponent, NotifierModule, NotifierService } from 'angular-notifier';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-add-rooms',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,NotifierModule],
   templateUrl: './add-rooms.html',
   styleUrl: './add-rooms.scss'
 })
@@ -15,21 +18,21 @@ export class AddRooms {
   images: File[] = [];
   roomForm!: FormGroup;
   showcancellation: boolean = false;
-  formErrors: string[] = [];
+  // formErrors: string[] = [];
   roomTypes = ['Deluxe King Room', 'Superior Twin Room', 'Executive Suite', 'Family Room – Ocean View'];
   bedTypes = ['Single', 'Double', 'King', 'Twin'];
   bookingStatuses = ['Available', 'Booked', 'Under Maintenance'];
   amenitiesList = [
     'AC / Non-AC', 'Wi-Fi', 'TV', 'Room Service', 'Attached Bathroom',
     'Mini Bar', 'Safe Locker', 'Work Desk', 'Balcony', 'Smoking Allowed', 'Pets Allowed'
-  ];
-
+      ];
+  
   tagCtrl = new FormControl('');
   allTags: string[] = ['Mountain View', 'Sea Facing', 'Private Balcony', 'Free WiFi', 'Air Conditioning', 'Mini Bar'];
   filteredTags!: Observable<string[]>;
   selectedTags: string[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: UserServices,private readonly notifier: NotifierService,private route:Router) {
     this.roomForm = this.fb.group({
 
       roomType: ['', Validators.required],
@@ -38,7 +41,7 @@ export class AddRooms {
       discount: [0],
       finalPrice: [0],
       extraBedCharge: [0],
-      taxIncluded: [false],
+      taxIncluded: [true],
       maxAdults: [1, Validators.required],
       maxChildren: [0],
       numberOfBeds: [1, Validators.required],
@@ -57,20 +60,19 @@ export class AddRooms {
     });
   }
 
+
   ngOnInit(): void {
 
+
+    // this.service.gethotelroom(1).subscribe((res: any) => {
+    //   console.log("check res;", res)
+    // })
 
     this.roomForm.get('cancellation')?.valueChanges.subscribe((value: boolean) => {
       this.showcancellation = value;
     });
+    
 
-
-
-    if (this.roomForm.valid) {
-      console.log('Form submitted successfully!');
-    } else {
-      this.roomForm.markAllAsTouched(); // ✅ This ensures touched state = true
-    }
 
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
@@ -150,99 +152,87 @@ export class AddRooms {
   removeImage(index: number, imageInput: HTMLInputElement): void {
     this.hotelImages.splice(index, 1);
 
-    // Rebuild FileList and reset input
     const dataTransfer = new DataTransfer();
     this.hotelImages.forEach(image => dataTransfer.items.add(image.file));
     imageInput.files = dataTransfer.files;
+
   }
 
-
-
   onSubmit(): void {
-    this.formErrors = []; // clear old errors
+    // this.formErrors = []; // clear old errors
 
     if (this.roomForm.valid) {
-      const formData = new FormData();
+      let formDat = new FormData();
 
 
 
       this.images.forEach((file, index) => {
-        formData.append('rooms_image[]', file);  // 'images[]' matches backend expectation
+        formDat.append('rooms_image[]', file);  // 'images[]' matches backend expectation
 
       });
 
       this.amenities.controls.forEach(control => {
-        formData.append('amenities[]', control.value);
+        formDat.append('amenities[]', control.value);
       });
 
+      const checkInTime = this.roomForm.get('checkInTime')?.value;
+      const checkOutTime = this.roomForm.get('checkOutTime')?.value;
 
-      formData.append('roomType', this.roomForm.get('roomType')?.value || '');
-      formData.append('numRooms', this.roomForm.get('numRooms')?.value.toString() || '1');
-      formData.append('basePrice', this.roomForm.get('basePrice')?.value.toString() || '0');
-      formData.append('discount', this.roomForm.get('discount')?.value.toString() || '0');
-      formData.append('finalPrice', this.roomForm.get('finalPrice')?.value.toString() || '0');
-      formData.append('extraBedCharge', this.roomForm.get('extraBedCharge')?.value.toString() || '0');
-      formData.append('taxIncluded', this.roomForm.get('taxIncluded')?.value ? 'true' : 'false');
-      formData.append('maxAdults', this.roomForm.get('maxAdults')?.value.toString() || '1');
-      formData.append('maxChildren', this.roomForm.get('maxChildren')?.value.toString() || '0');
-      formData.append('numberOfBeds', this.roomForm.get('numberOfBeds')?.value.toString() || '1');
-      formData.append('bedType', this.roomForm.get('bedType')?.value || '');
-      formData.append('bookingStatus', this.roomForm.get('bookingStatus')?.value || '');
-      formData.append('visibility', this.roomForm.get('visibility')?.value ? 'true' : 'false');
-      formData.append('description', this.roomForm.get('description')?.value || '');
-      formData.append('cancellationPolicy', this.roomForm.get('cancellationPolicy')?.value || '');
-      formData.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString() || '0');
-      formData.append('checkInTime', this.roomForm.get('checkInTime')?.value || '');
-      formData.append('checkOutTime', this.roomForm.get('checkOutTime')?.value || '');
-      for (let [key, value] of formData.entries()) {
+      formDat.append('checkInTime', this.convertTo24HourFormat(checkInTime));
+      formDat.append('checkOutTime', this.convertTo24HourFormat(checkOutTime));
+      formDat.append('roomType', this.roomForm.get('roomType')?.value || '');
+      formDat.append('numRooms', this.roomForm.get('numRooms')?.value.toString() || '1');
+      formDat.append('basePrice', this.roomForm.get('basePrice')?.value.toString() || '0');
+      formDat.append('discount', this.roomForm.get('discount')?.value.toString() || '0');
+      formDat.append('finalPrice', this.roomForm.get('finalPrice')?.value.toString() || '0');
+      formDat.append('extraBedCharge', this.roomForm.get('extraBedCharge')?.value.toString() || '0');
+      formDat.append('taxIncluded', this.roomForm.get('taxIncluded')?.value ? '1' : '0');
+      formDat.append('maxAdults', this.roomForm.get('maxAdults')?.value.toString() || '1');
+      formDat.append('maxChildren', this.roomForm.get('maxChildren')?.value.toString() || '0');
+      formDat.append('numberOfBeds', this.roomForm.get('numberOfBeds')?.value.toString() || '1');
+      formDat.append('bedType', this.roomForm.get('bedType')?.value || '');
+      formDat.append('bookingStatus', this.roomForm.get('bookingStatus')?.value || '');
+      formDat.append('visibility', this.roomForm.get('visibility')?.value ? '1' : '0');
+      formDat.append('description', this.roomForm.get('description')?.value || '');
+      formDat.append('cancellationPolicy', this.roomForm.get('cancellationPolicy')?.value || '');
+      formDat.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString() || '0');
+      formDat.append('hotel_vendor_id', String(1211));
+
+      for (let [key, value] of formDat.entries()) {
         console.log(`${key}:`, value);
       }
+      // this.amenity
+      this.service.addhotelrooms(formDat).subscribe((res: any) => {
+        this.route.navigate(["deskboard/rooms"])
+      })
+
     } else {
       this.roomForm.markAllAsTouched();
-
-      // Collect all validation errors
-      for (const controlName in this.roomForm.controls) {
-        const control = this.roomForm.get(controlName);
-        if (control && control.errors) {
-          if (control.errors['required']) {
-            this.formErrors.push(`${this.getFieldLabel(controlName)} is required.`);
-          }
-          if (control.errors['min']) {
-            this.formErrors.push(`${this.getFieldLabel(controlName)} must be at least ${control.errors['min'].min}.`);
-          }
-        }
-      }
+        this.notifier.notify('error', ' all field are required ....!');
+     
     }
   }
 
 
-  getFieldLabel(fieldName: string): string {
-    const labels: { [key: string]: string } = {
-      roomType: 'Room Type',
-      numRooms: 'Number of Rooms',
-      basePrice: 'Base Price',
-      discount: 'Discount',
-      finalPrice: 'Final Price',
-      extraBedCharge: 'Extra Bed Charge',
-      taxIncluded: 'Tax Included',
-      maxAdults: 'Max Adults',
-      maxChildren: 'Max Children',
-      numberOfBeds: 'Number of Beds',
-      bedType: 'Bed Type',
-      bookingStatus: 'Booking Status',
-      visibility: 'Visibility',
-      description: 'Description',
-      cancellation: 'Cancellation',
-      cancellation_charges: 'Cancellation Charges',
-      checkInTime: 'Check-In Time',
-      checkOutTime: 'Check-Out Time'
-    };
-    return labels[fieldName] || fieldName;
+  
+
+
+
+  convertTo24HourFormat(time: string): string {
+    if (!time) return '';
+
+    // If already in 24-hour (e.g., 14:00), return as is
+    if (/^\d{2}:\d{2}$/.test(time)) return time;
+
+    // Convert 12-hour time to 24-hour
+    const [raw, modifier] = time.split(' ');
+    let [hours, minutes] = raw.split(':').map(Number);
+
+    if (modifier.toLowerCase() === 'pm' && hours < 12) hours += 12;
+    if (modifier.toLowerCase() === 'am' && hours === 12) hours = 0;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
-
-
-
-
 
 
 
