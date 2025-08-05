@@ -33,6 +33,10 @@ export class AddRooms {
   filteredTags!: Observable<string[]>;
   selectedTags: string[] = [];
   editalldata:any;
+
+  editMode: boolean = false;
+roomId: string | null = null;
+
   constructor(private fb: FormBuilder, private service: UserServices,private readonly notifier: NotifierService,private route:Router,private activate:ActivatedRoute) {
     this.roomForm = this.fb.group({
 
@@ -60,70 +64,32 @@ export class AddRooms {
 
     });
   }
+ngOnInit(): void {
+  this.roomId = this.activate.snapshot.paramMap.get('id');
+  this.editMode = !!this.roomId;
+ const apiImagePath='http://localhost:8000/storage/';
+  if (this.editMode) {
+    this.service.gethotelroom(this.roomId).subscribe((res: any) => {
+      const data = res.data;
 
-
-  ngOnInit(): void {
-    if (this.activate.snapshot.paramMap.get('id')) {
-      const roomId = this.activate.snapshot.paramMap.get('id');
-      
-      this.service.gethotelroom(roomId).subscribe((res: any) => {
-        const data = res.data;
-        
-        const apiImagePath='http://localhost:8000/storage/';
-    // ✅ Patch basic form fields
-    this.roomForm.patchValue({
-      roomType: data.roomType,
-      numRooms: data.numRooms,
-      basePrice: data.basePrice,
-      discount: data.discount,
-      finalPrice: data.finalPrice,
-      extraBedCharge: data.extraBedCharge,
-      taxIncluded: data.taxIncluded,
-      maxAdults: data.maxAdults,
-      maxChildren: data.maxChildren,
-      numberOfBeds: data.numberOfBeds,
-      bedType: data.bedType,
-      bookingStatus: data.bookingStatus,
-      visibility: data.visibility,
-      description: data.description,
-      cancellationPolicy: data.cancellationPolicy,
-      cancellation: data.cancellation,
-      cancellation_charges: data.cancellation_charges,
-      checkInTime: data.checkInTime,
-      checkOutTime: data.checkOutTime
+      // Patch form values (you're already doing this)
+      this.roomForm.patchValue({ ...data });
+      this.setAmenities(data.amenities);
+      this.hotelImages = (data.rooms_image || []).map((img: string) => ({
+        preview: apiImagePath + img,
+        file: null,
+        existing: true,
+        name: img
+      }));
+      this.showcancellation = data.cancellation === true;
+      this.updateFinalPrice();
+      this.updateImageFiles();
     });
-
-    // ✅ Patch amenities FormArray
-    this.setAmenities(data.amenities); // Example: ['TV', 'WiFi', 'AC']
-
-   this.hotelImages = (data.rooms_image || []).map((img: string) => ({
-  preview: apiImagePath + img,
-  file: null,
-  existing: true,
-  name: img  // needed for backend reference
-}));
-
-
-console.log( this.hotelImages);
- 
-    this.showcancellation = data.cancellation === true;
-
-    this.updateFinalPrice();
-
-   
-    this.updateImageFiles();
-  });
-}
-
-
-    this.filteredTags = this.tagCtrl.valueChanges.pipe(
-      startWith(null),
-      map((tag: string | null) => tag ? this._filter(tag) : this.allTags.slice())
-    );
-
-    this.roomForm.get('basePrice')?.valueChanges.subscribe(() => this.updateFinalPrice());
-    this.roomForm.get('discount')?.valueChanges.subscribe(() => this.updateFinalPrice());
   }
+
+  this.roomForm.get('basePrice')?.valueChanges.subscribe(() => this.updateFinalPrice());
+  this.roomForm.get('discount')?.valueChanges.subscribe(() => this.updateFinalPrice());
+}
 
   get amenities(): FormArray {
     return this.roomForm.get('amenities') as FormArray;
@@ -141,15 +107,6 @@ updateImageFiles() {
     .filter(img => img.file)        // only new uploads
     .map(img => img.file!);
 }
-
-//   setAmenities(amenities: string[]) {
-//   const amenitiesArray = this.roomForm.get('amenities') as FormArray;
-//   amenitiesArray.clear(); // clear if editing
-
-//   amenities.forEach((a: string) => {
-//     amenitiesArray.push(this.fb.control(a));
-//   });
-// }
 
   onAmenityChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
@@ -211,18 +168,7 @@ hotelImages: { file: File | null; preview: string; existing?: boolean; name?: st
       });
     }
   }
-  // updateImageFiles() {
-  //   this.images = this.hotelImages.map(img => img.file);
-  // }
 
-  // removeImage(index: number, imageInput: HTMLInputElement): void {
-  //   this.hotelImages.splice(index, 1);
-
-  //   const dataTransfer = new DataTransfer();
-  //   this.hotelImages.forEach(image => dataTransfer.items.add(image.file));
-  //   imageInput.files = dataTransfer.files;
-
-  // }
   removeImage(index: number): void {
   this.hotelImages.splice(index, 1);
   this.updateImageFiles();
@@ -317,6 +263,71 @@ hotelImages: { file: File | null; preview: string; existing?: boolean; name?: st
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 
+update(): void {
+  if (this.roomForm.valid && this.roomId) {
+    const formDat = new FormData();
+
+    
+
+    // Append existing image names
+    this.hotelImages
+      .filter(img => img.existing && img.name)
+      .forEach(img => formDat.append('existing_images[]', img.name!));
+
+
+
+      this.hotelImages
+      .filter(img => img.file)
+      .forEach((img, index) => {
+        formDat.append('rooms_image[]', img.file!);
+      });
+
+    
+
+
+
+
+    // Append all other fields like in onSubmit
+    this.amenities.controls.forEach(control => {
+      formDat.append('amenities[]', control.value);
+    });
+
+    const checkInTime = this.roomForm.get('checkInTime')?.value;
+    const checkOutTime = this.roomForm.get('checkOutTime')?.value;
+
+    formDat.append('roomType', this.roomForm.get('roomType')?.value || '');
+    formDat.append('numRooms', this.roomForm.get('numRooms')?.value.toString());
+    formDat.append('basePrice', this.roomForm.get('basePrice')?.value.toString());
+    formDat.append('discount', this.roomForm.get('discount')?.value.toString());
+    formDat.append('finalPrice', this.roomForm.get('finalPrice')?.value.toString());
+    formDat.append('extraBedCharge', this.roomForm.get('extraBedCharge')?.value.toString());
+    formDat.append('taxIncluded', this.roomForm.get('taxIncluded')?.value ? '1' : '0');
+    formDat.append('maxAdults', this.roomForm.get('maxAdults')?.value.toString());
+    formDat.append('maxChildren', this.roomForm.get('maxChildren')?.value.toString());
+    formDat.append('numberOfBeds', this.roomForm.get('numberOfBeds')?.value.toString());
+    formDat.append('bedType', this.roomForm.get('bedType')?.value);
+    formDat.append('bookingStatus', this.roomForm.get('bookingStatus')?.value);
+    formDat.append('visibility', this.roomForm.get('visibility')?.value ? '1' : '0');
+    formDat.append('description', this.roomForm.get('description')?.value);
+    formDat.append('cancellationPolicy', this.roomForm.get('cancellationPolicy')?.value);
+    formDat.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString());
+    formDat.append('checkInTime', this.convertTo24HourFormat(checkInTime));
+    formDat.append('checkOutTime', this.convertTo24HourFormat(checkOutTime));
+    formDat.append('hotel_vendor_id', String(1211)); // Update if needed
+
+    // this.service.updatehotelroom(this.roomId, formDat).subscribe((res: any) => {
+    //   this.route.navigate(["deskboard/rooms"]);
+    // });
+  for (let [key, value] of formDat.entries()) {
+      console.log("all data check",`${key}:`, value);
+    }
+    console.log("room id",this.roomId);
+
+  } else {
+    this.roomForm.markAllAsTouched();
+    this.notifier.notify('error', 'All fields are required!');
+  }
+}
 
 
 }

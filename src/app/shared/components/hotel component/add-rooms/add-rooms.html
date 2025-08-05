@@ -195,9 +195,14 @@
 </fieldset>
 
   <!-- Submit Button -->
-  <div class="submit-btn-container">
+  <!-- <div class="submit-btn-container">
     <button type="submit" class="submit-btn" >Submit Room</button>
-  </div>
+  </div> -->
+
+  <div class="submit-btn-container">
+  <button *ngIf="!editMode" type="submit" class="submit-btn">Submit Room</button>
+  <button *ngIf="editMode" type="button" class="submit-btn" (click)="update()">Update Room</button>
+</div>
 
 </form>
 </div>
