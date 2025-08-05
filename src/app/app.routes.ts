@@ -114,8 +114,11 @@ export const routes: Routes = [
   },{
     path:"deskboard/hotel-rooms",
     component:AddRooms
-  },
-  {
+  },{
+   path:"deskboard/hotel-rooms/edit/:id",
+    component:AddRooms
+  }
+  ,{
   path: '**',
  component:Pagenotfound
 }

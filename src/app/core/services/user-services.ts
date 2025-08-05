@@ -21,6 +21,7 @@ export class UserServices {
   role:any;
   subdestinationid: any;
   currentpackageId: any;
+
   toggle() {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
     this.stateSubject.next(newState);
@@ -80,7 +81,6 @@ export class UserServices {
   createPackage(data: FormData, sub_des_id: any) {
     return this.http.post(`http://localhost:8000/api/packages/${sub_des_id}`, data);
   }
-
 
   deletePackage(id: number) {
     return this.http.delete(`http://localhost:8000/api/packages/delete/${id}`);
@@ -218,5 +218,7 @@ gethotelroom(id:any){
 getAllHotelRooms(){
   return this.http.get(`http://localhost:8000/api/hotel-rooms`);
 }
+
+
 
 }

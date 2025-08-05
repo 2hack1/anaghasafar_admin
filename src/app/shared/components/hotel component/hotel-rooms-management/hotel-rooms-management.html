@@ -20,110 +20,57 @@
 
   <div class="room-grid">
 
-    <!-- Room 1 -->
 
-    <div class="room-card">
+    <div class="room-card" *ngFor="let a of alldata; let i = index">
       <div class="room-header">
         <div>
-          <h3>Deluxe Single</h3>
-          <p style="font-size: 12px; color: gray;">R001</p>
+          <h3>{{ a.bedType }}</h3>
+          <p style="font-size: 12px; color:  gray;">R001</p>
         </div>
         <div class="icons">
-          <i class="material-icons">edit</i>
-
-          <!-- Delete Icon -->
+          <i class="material-icons" title="Edit" (click)="redirect(a.hotel_roomId)"> edit</i>
           <i class="material-icons">delete</i>
         </div>
       </div>
+
       <div class="image-box">
-        📷<br>3 images
+        <img [src]="'http://localhost:8000/storage/' + a.mainImageUrl" alt="Main Room Image" class="main-img" />
       </div>
-      <div class="price">₹2,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
-      <div class="availability"> 1 guests |  5/8 available</div>
-      <div class="status">Status: <span class="badge">Available</span></div>
+
+      <div style="display: flex; align-items: center; gap: 5px;">
+        <ng-container *ngFor="let thumb of a.rooms_image.slice(0, 3); let i = index">
+          <div class="imag" (mouseover)="changeMainImage(a,thumb)">
+            <img class="thumbnail" [src]="'http://localhost:8000/storage/' + thumb" />
+            <div class="plus-overlay" *ngIf="i === 2 && a.rooms_image.length > 3">
+              +{{ a.rooms_image.length - 2 }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="price">₹{{ a.basePrice }} <span style="color: gray; font-weight: normal;">/night</span></div>
+      <div class="availability">{{ a.maxAdults + a.maxChildren }} guests | 5/8 {{ a.bookingStatus }}</div>
+      <div class="status">Status: <span class="badge">{{ a.bookingStatus }}</span></div>
+
       <p style="font-size: 14px;">Amenities:</p>
       <div class="amenities">
-        <span>WiFi</span><span>AC</span><span>TV</span><span>+1 more</span>
+        <ng-container *ngIf="!showAllAmenities">
+          <span *ngFor="let amenity of a.amenities.slice(0, 3)">{{ amenity }}</span>
+          <span *ngIf="a.amenities.length > 3" (click)="toggleAmenities()" class="more-btn">
+            +{{ a.amenities.length - 3 }} more
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="showAllAmenities">
+          <span *ngFor="let amenity of a.amenities">{{ amenity }}</span>
+          <span (click)="toggleAmenities()" class="more-btn">Show less</span>
+        </ng-container>
       </div>
     </div>
 
-    <!-- Room 2 -->
-    <div class="room-card">
-      <div class="room-header">
-        <div>
-          <h3>Deluxe Double</h3>
-          <p style="font-size: 12px; color: gray;">R002</p>
-        </div>
-        <div class="icons">
-          <i class="material-icons">edit</i>
 
-          <!-- Delete Icon -->
-          <i class="material-icons">delete</i>
-        </div>
-      </div>
-      <div class="image-box">
-        📷<br>4 images
-      </div>
-      <div class="price">₹3,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
-      <div class="availability"> 2 guests |  3/6 available</div>
-      <div class="status">Status: <span class="badge">Available</span></div>
-      <p style="font-size: 14px;">Amenities:</p>
-      <div class="amenities">
-        <span>WiFi</span><span>AC</span><span>TV</span><span>+2 more</span>
-      </div>
-    </div>
 
-    <!-- Room 3 -->
-    <div class="room-card">
-      <div class="room-header">
-        <div>
-          <h3>Executive Suite</h3>
-          <p style="font-size: 12px; color: gray;">R003</p>
-        </div>
-        <div class="icons">
-          <!-- Edit Icon -->
-          <i class="material-icons">edit</i>
 
-          <!-- Delete Icon -->
-          <i class="material-icons">delete</i>
-
-        </div>
-      </div>
-      <div class="image-box">
-        📷<br>5 images
-      </div>
-      <div class="price">₹6,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
-      <div class="availability"> 4 guests |  1/2 available</div>
-      <div class="status">Status: <span class="badge">Available</span></div>
-      <p style="font-size: 14px;">Amenities:</p>
-      <div class="amenities">
-        <span>WiFi</span><span>AC</span><span>TV</span><span>+3 more</span>
-      </div>
-    </div>
-    <div class="room-card">
-      <div class="room-header">
-        <div>
-          <h3>Executive Suite</h3>
-          <p style="font-size: 12px; color: gray;">R003</p>
-        </div>
-        <div class="icons">
-          <i class="material-icons">edit</i>
-
-          <!-- Delete Icon -->
-          <i class="material-icons">delete</i>
-        </div>
-      </div>
-      <div class="image-box">
-        📷<br>5 images
-      </div>
-      <div class="price">₹6,500 <span style="color: gray; font-weight: normal;">/ night</span></div>
-      <div class="availability"> 4 guests | 1/2 available</div>
-      <div class="status">Status: <span class="badge">Available</span></div>
-      <p style="font-size: 14px;">Amenities:</p>
-      <div class="amenities">
-        <span>WiFi</span><span>AC</span><span>TV</span><span>+3 more</span>
-      </div>
-    </div>
 
   </div>
 
