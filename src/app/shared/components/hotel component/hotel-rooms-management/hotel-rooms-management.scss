@@ -260,3 +260,24 @@
   object-fit: cover;
   border-radius: 6px;
 }
+
+
+.see-room-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px; // separates from last item
+}
+
+.see-room-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.see-room-btn:hover {
+  background-color: #0056b3;
+}

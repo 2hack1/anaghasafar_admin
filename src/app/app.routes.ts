@@ -21,6 +21,7 @@ import { HotelRoomsManagement } from './shared/components/hotel component/hotel-
 import { Hotelbooking } from './shared/components/hotel component/hotelbooking/hotelbooking';
 import { HotelTeck } from './shared/components/hotel component/hotel-teck/hotel-teck';
 import { AddRooms } from './shared/components/hotel component/add-rooms/add-rooms';
+import { ShowRoomDetails } from './shared/components/hotel component/show-room-details/show-room-details';
 
 
 
@@ -118,7 +119,12 @@ export const routes: Routes = [
    path:"deskboard/hotel-rooms/edit/:id",
     component:AddRooms
   }
-  ,{
+  ,
+  {
+    path:"deskboard/hotel-rooms-details/:id",
+    component:ShowRoomDetails
+  }
+ ,{
   path: '**',
  component:Pagenotfound
 }

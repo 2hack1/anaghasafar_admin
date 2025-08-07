@@ -1,3 +1,4 @@
+<notifier-container></notifier-container>
 <div class="bodies">
 
   <div class="top-bar">
@@ -9,19 +10,20 @@
   </div>
 
   <div class="search-filter">
-    <input type="text" placeholder="Search rooms..." class="search-box" />
+    <input type="text" [(ngModel)]="searchText" placeholder="Search rooms..." class="search-box" />
     <div class="filter-btns">
-      <button class="active">All Rooms</button>
-      <button>Single</button>
-      <button>Double</button>
-      <button>Suite</button>
+      <button [class.active]="selectedType === 'all'" (click)="filterByType('all')">All Rooms</button>
+      <button [class.active]="selectedType === 'Single'" (click)="filterByType('Single')">Single</button>
+      <button [class.active]="selectedType === 'Double'" (click)="filterByType('Double')">Double</button>
+      <button [class.active]="selectedType === 'Suite'" (click)="filterByType('Suite')">Suite</button>
     </div>
   </div>
+
 
   <div class="room-grid">
 
 
-    <div class="room-card" *ngFor="let a of alldata; let i = index">
+    <div class="room-card" *ngFor="let a of filteredRooms; let i = index">
       <div class="room-header">
         <div>
           <h3>{{ a.bedType }}</h3>
@@ -29,7 +31,7 @@
         </div>
         <div class="icons">
           <i class="material-icons" title="Edit" (click)="redirect(a.hotel_roomId)"> edit</i>
-          <i class="material-icons">delete</i>
+          <i class="material-icons" (click)="deleteroom(a.hotel_roomId)">delete</i>
         </div>
       </div>
 
@@ -54,24 +56,26 @@
 
       <p style="font-size: 14px;">Amenities:</p>
       <div class="amenities">
-        <ng-container *ngIf="!showAllAmenities">
+        <ng-container *ngIf="!showAmenitiesMap[a.hotel_roomId]">
           <span *ngFor="let amenity of a.amenities.slice(0, 3)">{{ amenity }}</span>
-          <span *ngIf="a.amenities.length > 3" (click)="toggleAmenities()" class="more-btn">
+          <span *ngIf="a.amenities.length > 3" (click)="toggleAmenities(a.hotel_roomId)" class="more-btn">
             +{{ a.amenities.length - 3 }} more
           </span>
         </ng-container>
 
-        <ng-container *ngIf="showAllAmenities">
+        <ng-container *ngIf="showAmenitiesMap[a.hotel_roomId]">
           <span *ngFor="let amenity of a.amenities">{{ amenity }}</span>
-          <span (click)="toggleAmenities()" class="more-btn">Show less</span>
+          <span (click)="toggleAmenities(a.hotel_roomId)" class="more-btn">Show less</span>
         </ng-container>
       </div>
+      <!-- <div class="room-card" *ngFor="let a of alldata; let i = index"> -->
+      <!-- your existing card content -->
+
+      <div class="see-room-btn-wrapper">
+        <button class="see-room-btn"(click)="redirected(a.hotel_roomId)">See Room Data</button>
+      </div>
+      <!-- </div> -->
     </div>
-
-
-
-
-
   </div>
 
 </div>

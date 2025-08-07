@@ -1,0 +1,31 @@
+<div class="room-detail-container">
+  <div class="room-images">
+    <img [src]="'http://localhost:8000/storage/'+mainImage" alt="Main Room" class="main-image" />
+
+    <div class="thumbnail-list">
+      <img *ngFor="let thumb of data.rooms_image" [src]="'http://localhost:8000/storage/'+thumb" (click)="updateMainImage(thumb)" class="thumbnail"
+        [class.active]="thumb === mainImage" />
+    </div>
+   
+  </div>
+
+  <div class="room-info">
+    <h2> Rooms Details</h2>
+    <p class="description">{{ data.description }}</p>
+    <div class="price-rating">
+      <h3 class="price">₹{{ data.basePrice }}</h3>
+    </div>
+
+
+
+    <div class="room-meta">
+  <div class="detail-row" *ngFor="let item of alldata">
+    <div class="label">{{ item.label }}</div>
+    <div class="value">{{ item.value }}</div>
+  </div>
+</div>
+<div class="button-container">
+  <button class="see-room-btn"(click)="edit(data.hotel_roomId)">Edit Room Data</button>
+</div>
+  </div>
+</div>

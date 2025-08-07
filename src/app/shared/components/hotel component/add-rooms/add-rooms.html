@@ -171,14 +171,14 @@
     </div>
 
     <div class="form-group">
-      <label>Cancellation Policy</label>
+      <label>Cancellation Policy  <strong>(optional)</strong></label>
       <textarea formControlName="cancellationPolicy" placeholder="Cancellation Policy"></textarea>
     </div>
       <div class="form-group checkbox-group">
-      <label><input  type="checkbox" formControlName="cancellation" /> if have any Cancellation Charges</label>
+      <label><input  type="checkbox" formControlName="cancellation" (click)="chcek()"/> if have any Cancellation Charges  <strong>(optional)</strong></label>
       </div>
 <div class="form-group" *ngIf="showcancellation">
-      <label>Cancellation Charges</label>
+      <label>Cancellation Charges <strong>(optional)</strong> </label>
       <input type="number" formControlName="cancellation_charges" />
     </div>
 

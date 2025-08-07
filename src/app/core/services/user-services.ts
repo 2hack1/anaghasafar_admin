@@ -21,6 +21,7 @@ export class UserServices {
   role:any;
   subdestinationid: any;
   currentpackageId: any;
+  norifilerrun=0;
 
   toggle() {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
@@ -219,6 +220,14 @@ getAllHotelRooms(){
   return this.http.get(`http://localhost:8000/api/hotel-rooms`);
 }
 
+updateRoomData(data:FormData,id:any){
 
+  return this.http.post(`http://localhost:8000/api/hotel-rooms/${id}`,data)
+}
+
+deleteRoomData(id:any){
+
+  return this.http.delete(`http://localhost:8000/api/hotel-rooms/${id}`)
+}
 
 }

@@ -17,7 +17,7 @@ import { ActivatedRoute, CanActivate, Router } from '@angular/router';
 export class AddRooms {
   images: File[] = [];
   roomForm!: FormGroup;
-  showcancellation: boolean = false;
+  showcancellation: boolean = true;
   // formErrors: string[] = [];
   
   roomTypes = ['Deluxe King Room', 'Superior Twin Room', 'Executive Suite', 'Family Room – Ocean View'];
@@ -57,18 +57,21 @@ roomId: string | null = null;
       visibility: [true],
       description: [''],
       cancellationPolicy: [''],
-      cancellation: [false],
+      cancellation: [true],
       cancellation_charges: [0],
       checkInTime: [''],
       checkOutTime: [''],
 
     });
   }
+
 ngOnInit(): void {
   this.roomId = this.activate.snapshot.paramMap.get('id');
   this.editMode = !!this.roomId;
  const apiImagePath='http://localhost:8000/storage/';
   if (this.editMode) {
+    //  this.showcancellation=true;
+    //  console.log(this.showcancellation)
     this.service.gethotelroom(this.roomId).subscribe((res: any) => {
       const data = res.data;
 
@@ -81,7 +84,7 @@ ngOnInit(): void {
         existing: true,
         name: img
       }));
-      this.showcancellation = data.cancellation === true;
+      // this.showcancellation = data.cancellation === true;
       this.updateFinalPrice();
       this.updateImageFiles();
     });
@@ -94,6 +97,11 @@ ngOnInit(): void {
   get amenities(): FormArray {
     return this.roomForm.get('amenities') as FormArray;
   }
+
+ chcek(){
+   this.showcancellation=! this.showcancellation
+ }
+
 setAmenities(amenities: string[]) {
   const amenitiesArray = this.roomForm.get('amenities') as FormArray;
   amenitiesArray.clear();
@@ -235,7 +243,8 @@ hotelImages: { file: File | null; preview: string; existing?: boolean; name?: st
     this.service.addhotelrooms(formDat).subscribe((res: any) => {
       this.route.navigate(["deskboard/rooms"]);
     });
-
+    
+   
   } else {
     this.roomForm.markAllAsTouched();
     this.notifier.notify('error', 'All fields are required!');
@@ -267,14 +276,10 @@ update(): void {
   if (this.roomForm.valid && this.roomId) {
     const formDat = new FormData();
 
-    
-
     // Append existing image names
     this.hotelImages
       .filter(img => img.existing && img.name)
       .forEach(img => formDat.append('existing_images[]', img.name!));
-
-
 
       this.hotelImages
       .filter(img => img.file)
@@ -282,12 +287,7 @@ update(): void {
         formDat.append('rooms_image[]', img.file!);
       });
 
-    
-
-
-
-
-    // Append all other fields like in onSubmit
+  
     this.amenities.controls.forEach(control => {
       formDat.append('amenities[]', control.value);
     });
@@ -310,14 +310,25 @@ update(): void {
     formDat.append('visibility', this.roomForm.get('visibility')?.value ? '1' : '0');
     formDat.append('description', this.roomForm.get('description')?.value);
     formDat.append('cancellationPolicy', this.roomForm.get('cancellationPolicy')?.value);
-    formDat.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString());
+    // formDat.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString());
+   const cancellationCharges = this.roomForm.get('cancellation_charges')?.value || 0;
+
+formDat.append('cancellation_charges', cancellationCharges.toString());
+
+// ✅ Set tab = true if charges are 0
+// this.showcancellation = +cancellationCharges === 0;
     formDat.append('checkInTime', this.convertTo24HourFormat(checkInTime));
     formDat.append('checkOutTime', this.convertTo24HourFormat(checkOutTime));
     formDat.append('hotel_vendor_id', String(1211)); // Update if needed
 
-    // this.service.updatehotelroom(this.roomId, formDat).subscribe((res: any) => {
-    //   this.route.navigate(["deskboard/rooms"]);
-    // });
+
+    
+    this.service.updateRoomData( formDat,this.roomId,).subscribe((res: any) => {
+      this.service.norifilerrun=1;
+      this.route.navigate(["deskboard/rooms"]);
+      console.log("res for user side",res);
+    });
+    //  this.showcancellation=false;
   for (let [key, value] of formDat.entries()) {
       console.log("all data check",`${key}:`, value);
     }
@@ -328,6 +339,8 @@ update(): void {
     this.notifier.notify('error', 'All fields are required!');
   }
 }
+
+
 
 
 }
