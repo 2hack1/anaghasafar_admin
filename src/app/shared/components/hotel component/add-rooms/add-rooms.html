@@ -84,7 +84,7 @@
     </div>
 
     <div class="form-group">
-      <label>Extra Bed Charges (%)</label>
+      <label>Extra Bed Charges</label>
       <input  required="true" type="number" formControlName="extraBedCharge" placeholder="Extra Bed Charges " />
     </div>
 
@@ -178,7 +178,7 @@
       <label><input  type="checkbox" formControlName="cancellation" (click)="chcek()"/> if have any Cancellation Charges  <strong>(optional)</strong></label>
       </div>
 <div class="form-group" *ngIf="showcancellation">
-      <label>Cancellation Charges <strong>(optional)</strong> </label>
+      <label>Cancellation Charges in (24-hour) <strong>(optional)</strong> </label>
       <input type="number" formControlName="cancellation_charges" />
     </div>
 

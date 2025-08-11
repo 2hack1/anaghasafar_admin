@@ -8,6 +8,7 @@ import { NotifierContainerComponent, NotifierModule, NotifierService } from 'ang
 import { ActivatedRoute, CanActivate, Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-add-rooms',
   imports: [CommonModule, ReactiveFormsModule,NotifierModule],
@@ -20,7 +21,23 @@ export class AddRooms {
   showcancellation: boolean = true;
   // formErrors: string[] = [];
   
-  roomTypes = ['Deluxe King Room', 'Superior Twin Room', 'Executive Suite', 'Family Room – Ocean View'];
+
+//   Single Room – For one person, usually one single bed.
+
+// Double Room – For two people, one double bed or two twin beds.
+
+// Twin Room – Two separate single beds.
+
+// Triple Room – For three guests, with three beds or one double + one single.
+
+// Queen Room – One queen-sized bed.
+
+// King Room – One king-sized bed.
+
+// Suite – Large, separate living area + bedroom; often more luxurious.
+
+
+  roomTypes = [' Single', 'Double', 'Suite'];
   bedTypes = ['Single', 'Double', 'King', 'Twin'];
   bookingStatuses = ['Available', 'Booked', 'Under Maintenance'];
   amenitiesList = [

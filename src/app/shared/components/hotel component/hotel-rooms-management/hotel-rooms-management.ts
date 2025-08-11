@@ -64,8 +64,8 @@ export class HotelRoomsManagement implements OnInit {
 
   applyFilters() {
     this.filteredRooms = this.alldata.filter((room: any) => {
-      const matchesType = this.selectedType === 'all' || room.bedType === this.selectedType;
-      const matchesSearch = !this.searchText || room.bedType.toLowerCase().includes(this.searchText.toLowerCase());
+      const matchesType = this.selectedType === 'all' || room.roomType === this.selectedType;
+      const matchesSearch = !this.searchText || room.roomType.toLowerCase().includes(this.searchText.toLowerCase());
       return matchesType && matchesSearch;
     });
   }

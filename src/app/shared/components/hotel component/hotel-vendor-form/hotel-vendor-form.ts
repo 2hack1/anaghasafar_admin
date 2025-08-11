@@ -129,7 +129,7 @@ validateGST(event: any) {
 
 onSubmit() {
   this.submitted = true;
-
+  console.log('Form submitted:', this.vendorForm.value);
   if (this.vendorForm.valid && this.licenseFile) {
     const formData = new FormData();
 
@@ -161,6 +161,7 @@ onSubmit() {
     });
 
   } else {
+    console.error('Form is invalid or license file is missing');
     if (!this.licenseFile) {
       alert('License file is required');
     }

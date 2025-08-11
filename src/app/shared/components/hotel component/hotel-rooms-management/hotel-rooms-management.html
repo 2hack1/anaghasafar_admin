@@ -26,8 +26,8 @@
     <div class="room-card" *ngFor="let a of filteredRooms; let i = index">
       <div class="room-header">
         <div>
-          <h3>{{ a.bedType }}</h3>
-          <p style="font-size: 12px; color:  gray;">R001</p>
+          <h3>{{ a.roomType }}</h3>
+          <p style="font-size: 12px; color:  gray;">R00{{a.hotel_roomId}}</p>
         </div>
         <div class="icons">
           <i class="material-icons" title="Edit" (click)="redirect(a.hotel_roomId)"> edit</i>
