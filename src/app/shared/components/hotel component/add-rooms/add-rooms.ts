@@ -44,7 +44,7 @@ export class AddRooms {
     'AC / Non-AC', 'Free Wi-Fi', 'TV', 'Room Service', 'Attached Bathroom',
     'Mini Bar', 'Safe Locker', 'Work Desk', 'Balcony', 'Smoking Allowed', 'Pets Allowed',
     'Swimming Pool','Caretaker','Housekeeping','Elevator/Lift','Washing Machine','Kitchenette','Paid Public Parking','Paid Public Parkin',
-      ];
+       ];
   
   tagCtrl = new FormControl('');
   allTags: string[] = ['Mountain View', 'Sea Facing', 'Private Balcony', 'Free WiFi', 'Air Conditioning', 'Mini Bar'];
