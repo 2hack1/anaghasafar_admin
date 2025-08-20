@@ -41,8 +41,9 @@ export class AddRooms {
   bedTypes = ['Single', 'Double', 'King', 'Twin'];
   bookingStatuses = ['Available', 'Booked', 'Under Maintenance'];
   amenitiesList = [
-    'AC / Non-AC', 'Wi-Fi', 'TV', 'Room Service', 'Attached Bathroom',
-    'Mini Bar', 'Safe Locker', 'Work Desk', 'Balcony', 'Smoking Allowed', 'Pets Allowed'
+    'AC / Non-AC', 'Free Wi-Fi', 'TV', 'Room Service', 'Attached Bathroom',
+    'Mini Bar', 'Safe Locker', 'Work Desk', 'Balcony', 'Smoking Allowed', 'Pets Allowed',
+    'Swimming Pool','Caretaker','Housekeeping','Elevator/Lift','Washing Machine','Kitchenette','Paid Public Parking','Paid Public Parkin',
       ];
   
   tagCtrl = new FormControl('');
@@ -356,8 +357,6 @@ formDat.append('cancellation_charges', cancellationCharges.toString());
     this.notifier.notify('error', 'All fields are required!');
   }
 }
-
-
 
 
 }
