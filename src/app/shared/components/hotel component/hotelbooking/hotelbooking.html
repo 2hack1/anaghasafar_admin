@@ -1,4 +1,3 @@
-You said:
 <div class="bodies">
   <div class="header">
     <div>
@@ -28,8 +27,7 @@ You said:
   </div>
   <div class="search-filter"> <input type="text" placeholder="Search by guest name, booking ID, or room type..." />
     <div class="status-buttons"> <button class="active">All</button> <button>Confirmed</button> <button>Pending</button>
-      <button>Completed</button> <button>Cancelled</button>
-    </div>
+      <button>Completed</button> <button>Cancelled</button> </div>
   </div>
   <div class="table-container">
     <table>
@@ -51,15 +49,11 @@ You said:
           <td> <strong>Rahul Sharma</strong><br> 📞 +91 9876543210<br> 📧 rahulemail.com </td>
           <td> Deluxe Double<br> 2 guests • 2 nights </td>
           <td> 2024-07-25<br> 2024-07-27 </td>
-          <td>
-            <span
+          <td> <span
               style=" background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModal()">
-              {{ totalGuests }}
-              <!-- <span
-              style="background-color: red; color: white; display: inline-block; width: 25px; text-align: center; padding: 2px; color: white;">No.</span> -->
-            </span>
-          </td>
+              (click)="toggleGuestsModal()"> {{ totalGuests }}
+              <!-- <span style="background-color: red; color: white; display: inline-block; width: 25px; text-align: center; padding: 2px; color: white;">No.</span> -->
+            </span> </td>
           <td>₹5,400<br><small>Booked: 2024-07-20</small></td>
           <td> <span class="badge confirmed">Confirmed</span> <span class="badge paid">Paid</span> </td>
           <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
@@ -70,13 +64,9 @@ You said:
           <td> <strong>Priya Patel</strong><br> 📞 +91 9876543211<br> 📧 priyaemail.com </td>
           <td> Executive Suite<br> 3 guests • 3 nights </td>
           <td> 2024-07-26<br> 2024-07-29 </td>
-          <td>
-            <!-- Clickable Number (Triggers Modal) -->
-            <span
-              style="background-color: green; font-size: larger; padding: 2px 6px; color: white;  cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModal()">
-              {{ totalGuests }}
-            </span>
+          <td> <!-- Clickable Number (Triggers Modal) --> <span
+              style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
+              (click)="toggleGuestsModal()"> {{ totalGuests }} </span>
           <td>₹8,100<br><small>Booked: 2024-07-21</small></td>
           <td> <span class="badge pending">Pending</span> <span class="badge unpaid">Unpaid</span> </td>
           <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
@@ -85,38 +75,19 @@ You said:
       </tbody>
     </table>
   </div>
-</div>
-
-<!-- Modal -->
+</div> <!-- Modal -->
 <div class="modal-backdrop" *ngIf="showGuestsModal">
-  <div class="modal-box">
-    <button style="
-        margin-left: 22rem;
-        color: black;
-        width: 30px;
-        height: 20px;
-        font-size: 20px;
-        background-color: white;
-        border: none;
-      " (click)="toggleGuestsModal()">
-      x
-    </button>
-
+  <div class="modal-box"> <button
+      style=" margin-left: 22rem; color: black; width: 30px; height: 20px; font-size: 20px; background-color: white; border: none; "
+      (click)="toggleGuestsModal()"> x </button>
     <h3>Select Rooms</h3>
-
-    <div class="vertical-sections">
-      <!-- Rooms Section -->
+    <div class="vertical-sections"> <!-- Rooms Section -->
       <div class="guest-section">
-        <h4>Rooms</h4>
-        <i class="bi bi-arrow-up-circle-fill arrow-btn" (click)="incRooms()" [class.disabled]="rooms >= maxRooms"></i>
-        <span class="count">{{ rooms }}</span>
-        <i class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRooms()" [class.disabled]="rooms <= 1"></i>
+        <h4>Rooms</h4> <i class="bi bi-arrow-up-circle-fill arrow-btn" (click)="incRooms()"
+          [class.disabled]="rooms >= maxRooms"></i> <span class="count">{{ rooms }}</span> <i
+          class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRooms()" [class.disabled]="rooms <= 1"></i>
       </div>
-    </div>
-
-    <!-- Modal Actions -->
-    <div class="modal-actions">
-      <button class="apply-btn" (click)="applyGuests()">Apply</button>
-    </div>
+    </div> <!-- Modal Actions -->
+    <div class="modal-actions"> <button class="apply-btn" (click)="applyGuests()">Apply</button> </div>
   </div>
 </div>
