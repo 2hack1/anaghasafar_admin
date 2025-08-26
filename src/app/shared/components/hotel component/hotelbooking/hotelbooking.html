@@ -27,7 +27,8 @@
   </div>
   <div class="search-filter"> <input type="text" placeholder="Search by guest name, booking ID, or room type..." />
     <div class="status-buttons"> <button class="active">All</button> <button>Confirmed</button> <button>Pending</button>
-      <button>Completed</button> <button>Cancelled</button> </div>
+      <button>Completed</button> <button>Cancelled</button>
+    </div>
   </div>
   <div class="table-container">
     <table>
@@ -51,7 +52,7 @@
           <td> 2024-07-25<br> 2024-07-27 </td>
           <td> <span
               style=" background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModal()"> {{ totalGuests }}
+              (click)="toggleGuestsModalFirstly()"> {{ totalGuestsFirstly }}
               <!-- <span style="background-color: red; color: white; display: inline-block; width: 25px; text-align: center; padding: 2px; color: white;">No.</span> -->
             </span> </td>
           <td>₹5,400<br><small>Booked: 2024-07-20</small></td>
@@ -64,11 +65,12 @@
           <td> <strong>Priya Patel</strong><br> 📞 +91 9876543211<br> 📧 priyaemail.com </td>
           <td> Executive Suite<br> 3 guests • 3 nights </td>
           <td> 2024-07-26<br> 2024-07-29 </td>
-          <td> <!-- Clickable Number (Triggers Modal) --> <span
-              style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModal()"> {{ totalGuests }} </span>
+          <td> <!-- Clickable Number (Triggers Modal) --> 
+            <span  style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
+              (click)="toggleGuestsModalFirstly()"> {{ totalGuestsFirstly }} </span>
           <td>₹8,100<br><small>Booked: 2024-07-21</small></td>
-          <td> <span class="badge pending">Pending</span> <span class="badge unpaid">Unpaid</span> </td>
+          <td> <span class="badge pending">Pending</span> 
+            <span class="badge unpaid">Unpaid</span> </td>
           <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
               title="Delete">delete</i> </td>
         </tr>
@@ -76,18 +78,48 @@
     </table>
   </div>
 </div> <!-- Modal -->
-<div class="modal-backdrop" *ngIf="showGuestsModal">
+<div class="modal-backdrop" *ngIf="showGuestsModalFirstly">
   <div class="modal-box"> <button
       style=" margin-left: 22rem; color: black; width: 30px; height: 20px; font-size: 20px; background-color: white; border: none; "
-      (click)="toggleGuestsModal()"> x </button>
+      (click)="toggleGuestsModalFirstly()"> x </button>
     <h3>Select Rooms</h3>
     <div class="vertical-sections"> <!-- Rooms Section -->
       <div class="guest-section">
-        <h4>Rooms</h4> <i class="bi bi-arrow-up-circle-fill arrow-btn" (click)="incRooms()"
-          [class.disabled]="rooms >= maxRooms"></i> <span class="count">{{ rooms }}</span> <i
-          class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRooms()" [class.disabled]="rooms <= 1"></i>
+        <h4>Rooms</h4> <i class="bi bi-arrow-up-circle-fill arrow-btn" (click)="incRoomsFirstly()"
+          [class.disabled]="roomsFirstly >= maxRoomsFirstly"></i> 
+          <button class="count" (click)="toggleGuestsModal()" >{{ roomsFirstly }}</button> 
+          <i class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRoomsFirstly()" [class.disabled]="roomsFirstly <= 1"></i>
       </div>
-    </div> <!-- Modal Actions -->
-    <div class="modal-actions"> <button class="apply-btn" (click)="applyGuests()">Apply</button> </div>
+    </div>
+     <!-- Modal Actions -->
+    <div class="modal-actions"> <button class="apply-btn" (click)="applyGuestsFirstly()">Apply</button> </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showGuestsModal">
+  <div class="modal-box"> <!-- Close Button --> 
+    <button class="close-btn" (click)="toggleGuestsModal()">x</button>
+    <!-- Step 1: Select Guest Range -->
+    <div *ngIf="step === 1">
+      <h3>Select Room's</h3> <!-- Ranges as Cards -->
+      <div class="cards-grid" [class.animating]="isAnimating">
+        <div class="card-option" *ngFor="let r of pagedRanges" (click)="selectRange(r.start, r.end)"> {{ r.start }} – {{
+          r.end }} </div>
+      </div> <!-- Pagination Controls --> <!-- Pagination Controls -->
+      <div class="pagination-controls"> <!-- Left Arrow -->
+         <i class="bi bi-arrow-left-circle-fill arrow-btn left"
+          (click)="prevPage()" [class.disabled]="currentPage === 0" title="Previous Page"></i> <!-- Page Info --> <span
+          class="count"></span> <!-- Right Arrow -->
+           <i class="bi bi-arrow-right-circle-fill arrow-btn right"
+          (click)="nextPage()" [class.disabled]="currentPage + 1 === totalPages" title="Next Page"></i> </div>
+    </div> <!-- Step 2: Show Numbers Table -->
+    <div *ngIf="step === 2">
+      <h3>Select Exact Number</h3>
+      <table class="numbers-table">
+        <tr *ngFor="let row of currentRange | slice:0:currentRange.length; let i = index">
+          <td *ngFor="let num of currentRange.slice(i*5, i*5+5)" (click)="selectNumber(num)"> {{ num }} </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
