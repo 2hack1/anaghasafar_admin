@@ -99,9 +99,18 @@
  <div class="quick-actions-card">
   <h3 style="margin-left: 30px;">Quick Actions</h3>
   <div class="quick-actions">
-   <button class="action-btn">Add New Room</button>
-   <button class="action-btn">View Bookings</button>
-   <button class="action-btn">Revenue Report</button>
+   <!-- <button class="action-btn">Add New Room</button> -->
+   <!-- <button class="action-btn">View Bookings</button> -->
+    <button class="action-btn" [routerLink]="['/deskboard/rooms']">
+  Add New Room
+</button>
+    <button class="action-btn" [routerLink]="['/deskboard/booking']">
+  View Bookings
+</button>
+<button class="action-btn" [routerLink]="['/notfounderror404']">
+  inbox
+</button>
+
   </div>
  </div>
 </div>

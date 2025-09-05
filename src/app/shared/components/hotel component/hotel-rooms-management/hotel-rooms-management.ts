@@ -49,7 +49,8 @@ export class HotelRoomsManagement implements OnInit {
 
   getRoomsData() {
     this.service.getAllHotelRooms().subscribe((res: any) => {
-      console.log("res:", res.data);
+      console.log("res:", res.data[0].hotel_vendor_id);
+      sessionStorage.setItem('vendorid',res.data[0].hotel_vendor_id);
       this.alldata = res.data.map((room: any) => ({
         ...room,
         mainImageUrl: room.rooms_image?.[0] || '' // Set default main image

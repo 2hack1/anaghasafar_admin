@@ -202,19 +202,24 @@ export class UserServices {
   }
 
   registerHotelVendor(data: any) {
-    return this.http.post(`http://localhost:8000/api/vendor/register`, data)
+    return this.http.post(`http://localhost:8000/api/vendor/register`,data)
   }
 
   loginHotelVendor(data: FormData) {
-    return this.http.post('http://localhost:8000/api/vendor/login', data)
+    return this.http.post('http://localhost:8000/api/vendor/login',data)
   }
 
   addhotelrooms(data: FormData) {
-    return this.http.post('http://localhost:8000/api/hotel-rooms', data);
+    return this.http.post('http://localhost:8000/api/hotel-rooms',data);
   }
+// ***************************** 
+  // gethotelroom(id: any) {
+  //   return this.http.get(`http://localhost:8000/api/hotel-rooms/${id}`);
+  // }
 
-  gethotelroom(id: any) {
-    return this.http.get(`http://localhost:8000/api/hotel-rooms/${id}`);
+  // ************************
+  gethotelroom(hotelid:any,roomid:any) {
+    return this.http.get(`http://localhost:8000/api/hotels/${hotelid}/rooms/${roomid}`);
   }
 
   getAllHotelRooms() {

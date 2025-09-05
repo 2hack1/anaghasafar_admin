@@ -90,7 +90,10 @@ ngOnInit(): void {
   if (this.editMode) {
     //  this.showcancellation=true;
     //  console.log(this.showcancellation)
-    this.service.gethotelroom(this.roomId).subscribe((res: any) => {
+  const vendorid = Number(sessionStorage.getItem('vendorid'));
+
+    console.log("sdjflsjdlf", vendorid)
+    this.service.gethotelroom(vendorid,this.roomId).subscribe((res: any) => {
       const data = res.data;
 
       // Patch form values (you're already doing this)

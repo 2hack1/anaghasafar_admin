@@ -59,20 +59,30 @@
           <td> <span class="badge confirmed">Confirmed</span> <span class="badge paid">Paid</span> </td>
           <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
               title="Delete">delete</i> </td>
+          <td class="actions-icons">
+            <div class="notify-circle"></div>
+          </td>
         </tr>
         <tr>
           <td>BK002</td>
           <td> <strong>Priya Patel</strong><br> 📞 +91 9876543211<br> 📧 priyaemail.com </td>
           <td> Executive Suite<br> 3 guests • 3 nights </td>
           <td> 2024-07-26<br> 2024-07-29 </td>
-          <td> <!-- Clickable Number (Triggers Modal) --> 
-            <span  style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
+          <td> <!-- Clickable Number (Triggers Modal) -->
+            <span
+              style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
               (click)="toggleGuestsModalFirstly()"> {{ totalGuestsFirstly }} </span>
           <td>₹8,100<br><small>Booked: 2024-07-21</small></td>
-          <td> <span class="badge pending">Pending</span> 
-            <span class="badge unpaid">Unpaid</span> </td>
+          <td> <span class="badge pending">Pending</span>
+            <span class="badge unpaid">Unpaid</span>
+          </td>
           <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
-              title="Delete">delete</i> </td>
+              title="Delete">delete</i>
+          </td>
+          <td class="actions-icons">
+            <div class="notify-circle"></div>
+          </td>
+
         </tr>
       </tbody>
     </table>
@@ -86,18 +96,19 @@
     <div class="vertical-sections"> <!-- Rooms Section -->
       <div class="guest-section">
         <h4>Rooms</h4> <i class="bi bi-arrow-up-circle-fill arrow-btn" (click)="incRoomsFirstly()"
-          [class.disabled]="roomsFirstly >= maxRoomsFirstly"></i> 
-          <button class="count" (click)="toggleGuestsModal()" >{{ roomsFirstly }}</button> 
-          <i class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRoomsFirstly()" [class.disabled]="roomsFirstly <= 1"></i>
+          [class.disabled]="roomsFirstly >= maxRoomsFirstly"></i>
+        <button class="count" (click)="toggleGuestsModal()">{{ roomsFirstly }}</button>
+        <i class="bi bi-arrow-down-circle-fill arrow-btn" (click)="decRoomsFirstly()"
+          [class.disabled]="roomsFirstly <= 1"></i>
       </div>
     </div>
-     <!-- Modal Actions -->
+    <!-- Modal Actions -->
     <div class="modal-actions"> <button class="apply-btn" (click)="applyGuestsFirstly()">Apply</button> </div>
   </div>
 </div>
 
 <div class="modal-backdrop" *ngIf="showGuestsModal">
-  <div class="modal-box"> <!-- Close Button --> 
+  <div class="modal-box"> <!-- Close Button -->
     <button class="close-btn" (click)="toggleGuestsModal()">x</button>
     <!-- Step 1: Select Guest Range -->
     <div *ngIf="step === 1">
@@ -107,11 +118,11 @@
           r.end }} </div>
       </div> <!-- Pagination Controls --> <!-- Pagination Controls -->
       <div class="pagination-controls"> <!-- Left Arrow -->
-         <i class="bi bi-arrow-left-circle-fill arrow-btn left"
-          (click)="prevPage()" [class.disabled]="currentPage === 0" title="Previous Page"></i> <!-- Page Info --> <span
-          class="count"></span> <!-- Right Arrow -->
-           <i class="bi bi-arrow-right-circle-fill arrow-btn right"
-          (click)="nextPage()" [class.disabled]="currentPage + 1 === totalPages" title="Next Page"></i> </div>
+        <i class="bi bi-arrow-left-circle-fill arrow-btn left" (click)="prevPage()" [class.disabled]="currentPage === 0"
+          title="Previous Page"></i> <!-- Page Info --> <span class="count"></span> <!-- Right Arrow -->
+        <i class="bi bi-arrow-right-circle-fill arrow-btn right" (click)="nextPage()"
+          [class.disabled]="currentPage + 1 === totalPages" title="Next Page"></i>
+      </div>
     </div> <!-- Step 2: Show Numbers Table -->
     <div *ngIf="step === 2">
       <h3>Select Exact Number</h3>
