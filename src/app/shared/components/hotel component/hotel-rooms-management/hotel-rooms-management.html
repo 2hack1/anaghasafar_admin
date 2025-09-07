@@ -36,13 +36,13 @@
       </div>
 
       <div class="image-box">
-        <img [src]="'http://localhost:8000/storage/' + a.mainImageUrl" alt="Main Room Image" class="main-img" />
+        <img [src]="`${env.backendUrl}/storage/${a.mainImageUrl}`" alt="Main Room Image" class="main-img" />
       </div>
 
       <div style="display: flex; align-items: center; gap: 5px;">
         <ng-container *ngFor="let thumb of a.rooms_image.slice(0, 3); let i = index">
           <div class="imag" (mouseover)="changeMainImage(a,thumb)">
-            <img class="thumbnail" [src]="'http://localhost:8000/storage/' + thumb" />
+            <img class="thumbnail" [src]="`${env.backendUrl}/storage/${thumb}`" />
             <div class="plus-overlay" *ngIf="i === 2 && a.rooms_image.length > 3">
               +{{ a.rooms_image.length - 2 }}
             </div>

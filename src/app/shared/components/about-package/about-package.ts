@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserServices } from '../../../core/services/user-services';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-about-package',
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './about-package.scss'
 })
 export class AboutPackage implements OnInit {
-  
+  env=environment
   packageId:any;
 packages:any;
 itineries:any;

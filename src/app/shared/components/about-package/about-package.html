@@ -6,7 +6,7 @@
   <div class="card" *ngIf="packages[0] as pkg">
     <div class="card-body image-row">
       <img
-        [src]="'http://localhost:8000/storage/' + pkg.images[0]?.img"
+        [src]="`${env.backendUrl}/storage/${pkg.images[0]?.img}`"
         alt="Package Image"
         width="300"
         height="200"

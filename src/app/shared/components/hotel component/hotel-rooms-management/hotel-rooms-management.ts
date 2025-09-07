@@ -4,6 +4,7 @@ import { UserServices } from '../../../../core/services/user-services';
 import { CommonModule } from '@angular/common';
 import { NotifierService, NotifierModule } from 'angular-notifier';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-hotel-rooms-management',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class HotelRoomsManagement implements OnInit {
   mainImageUrl = 'https://picsum.photos/id/1018/800/600'; // Default main image
-
+env=environment;
   searchText: string = '';
   selectedType: string = 'all';
   filteredRooms: any[] = [];
