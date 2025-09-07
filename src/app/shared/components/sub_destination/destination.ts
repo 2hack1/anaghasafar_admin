@@ -4,6 +4,7 @@ import { UserServices } from '../../../core/services/user-services';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-destination',
@@ -22,7 +23,7 @@ export class Destination implements OnInit {
   searchText = '';
   currentId: number | null = null;
   // subdes_id:any;
-
+env=environment
   constructor(private fb: FormBuilder, private service: UserServices, private route: ActivatedRoute,private router:Router) {
 
     this.subDestForm = this.fb.group({

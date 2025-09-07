@@ -3,6 +3,7 @@ import { UserServices } from '../../../core/services/user-services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NotifierModule, NotifierService } from 'angular-notifier';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-topimage',
@@ -11,6 +12,7 @@ import { NotifierModule, NotifierService } from 'angular-notifier';
   styleUrl: './topimage.scss',
 })
 export class Topimage implements OnInit {
+  env=environment;
   cards: any;
   selectedCard: any = null;
   selectedImage: File | null = null;

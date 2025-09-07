@@ -49,12 +49,9 @@
 
 
         <td>
-          <img *ngIf="sub.image_url" [src]="'http://localhost:8000/storage/' + sub.image_url" width="60" />
+          <img *ngIf="sub.image_url" [src]="`${env.backendUrl}/storage/'${sub.image_url}`" width="60" />
         </td>
-        <!-- <td>
-          <img *ngIf="sub.image?.img" [src]="'http://localhost:8000/storage/' + (sub.image.img.replace('//', '/'))"
-            width="60" />
-        </td> -->
+       
 
 
 

@@ -1,9 +1,9 @@
 <div class="room-detail-container">
   <div class="room-images">
-    <img [src]="'http://localhost:8000/storage/'+mainImage" alt="Main Room" class="main-image" />
+    <img [src]="`${env.backendUrl}/storage/${mainImage}`" alt="Main Room" class="main-image" />
 
     <div class="thumbnail-list">
-      <img *ngFor="let thumb of data.rooms_image" [src]="'http://localhost:8000/storage/'+thumb" (click)="updateMainImage(thumb)" class="thumbnail"
+      <img *ngFor="let thumb of data.rooms_image" [src]="`${env.backendUrl}/storage/${thumb}`" (click)="updateMainImage(thumb)" class="thumbnail"
         [class.active]="thumb === mainImage" />
     </div>
    
