@@ -30,7 +30,6 @@
               }
             ],
             "styles": [
-             
               "src/styles.scss"
             ]
           },
@@ -48,7 +47,14 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/anaghasafar_admin/dist/adminfrontend/browser/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.development.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
@@ -96,7 +102,6 @@
             ],
             "styles": [
               "src/styles.scss"
-            
             ]
           }
         }
