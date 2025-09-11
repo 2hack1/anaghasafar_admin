@@ -243,4 +243,7 @@ export class UserServices {
   }
 
 
+  chancalatiPolisy(){
+    // demo for hostign 
+  }
 }
