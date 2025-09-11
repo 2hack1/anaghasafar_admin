@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServices } from '../../../../core/services/user-services';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-show-room-details',
@@ -13,6 +14,7 @@ export class ShowRoomDetails {
   roomId: any;
   data: any;
   mainImage: any;
+  env=environment
   alldata: { label: string, value: any }[] = [];
   constructor(private route: Router, private service: UserServices, private activate: ActivatedRoute) { }
   ngOnInit(): void {
