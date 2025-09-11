@@ -246,4 +246,7 @@ export class UserServices {
   chancalatiPolisy(){
     // demo for hostign 
   }
+  privacyPolisy(){
+      // demo for hostign 
+  }
 }
