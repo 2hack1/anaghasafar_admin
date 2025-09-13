@@ -241,7 +241,15 @@ export class UserServices {
   getHotelboking() {
     return this.http.get(`${this.env.base_url}/bookings`);
   }
-
+  
+  // add room no to booking
+  setRoomno(bookingdata: any, bookingid: any){
+    return this.http.post(`${this.env.base_url}/bookings/addroomno/${bookingid}`, bookingdata);
+  }
+  
+  notifications(){
+    return this.http.get(`${this.env.base_url}/bookings/nortification/roomno`);
+   }
 
   chancalatiPolisy(){
     // demo for hostign 

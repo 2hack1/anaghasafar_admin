@@ -62,7 +62,7 @@
 
       <div *ngIf="imageForm.get('image')?.value" class="mt-2">
         <p>Current Image:</p>
-        <img [src]="`${env.backendUrl}/storage/'${imageForm.get('image')?.value}`" alt="Current Package Image"
+        <img [src]="`${env.backendUrl}/storage/${imageForm.get('image')?.value}`" alt="Current Package Image"
           style="max-width: 200px; border: 1px solid #ccc;" />
       </div>
     </div>
@@ -253,7 +253,7 @@
     <tbody>
       <tr *ngFor="let pack of filteredPackages">
         <td>
-          <img *ngIf="pack.images?.length" [src]="`${env.backendUrl}/storage/'${pack.images[0]?.img}`" width="60" />
+          <img *ngIf="pack.images?.length" [src]="`${env.backendUrl}/storage/${pack.images[0]?.img}`" width="60" />
         </td>
         <td>{{ pack.package_code }}</td>
         <td>{{ pack.place_name }}</td>

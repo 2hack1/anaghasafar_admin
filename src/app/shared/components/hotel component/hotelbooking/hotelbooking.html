@@ -1,3 +1,4 @@
+<notifier-container></notifier-container>
 <div class="bodies">
   <div class="header">
     <div>
@@ -31,6 +32,7 @@
     </div>
   </div>
   <div class="table-container">
+
     <table>
       <thead>
         <tr>
@@ -38,54 +40,74 @@
           <th>Guest Details</th>
           <th>Room Type</th>
           <th>Check-in/Out</th>
-          <th>R/No.</th>
+          <th style="display: flex;">R/No.  <div class="spinner" *ngIf="isAdding"></div></th>
           <th>Amount</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>BK001</td>
-          <td> <strong>Rahul Sharma</strong><br> 📞 +91 9876543210<br> 📧 rahulemail.com </td>
-          <td> Deluxe Double<br> 2 guests • 2 nights </td>
-          <td> 2024-07-25<br> 2024-07-27 </td>
-          <td> <span
-              style=" background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModalFirstly()"> {{ totalGuestsFirstly }}
-              <!-- <span style="background-color: red; color: white; display: inline-block; width: 25px; text-align: center; padding: 2px; color: white;">No.</span> -->
-            </span> </td>
-          <td>₹5,400<br><small>Booked: 2024-07-20</small></td>
-          <td> <span class="badge confirmed">Confirmed</span> <span class="badge paid">Paid</span> </td>
-          <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
-              title="Delete">delete</i> </td>
-          <td class="actions-icons">
-            <div class="notify-circle"></div>
+        <tr *ngFor="let booking of bookingdata; let i = index  ">
+          <td>
+            
+            <div class="notify-circle" *ngIf="!booking.room_no"></div>
+            BK{{ booking.id | number:'2.0' }}
           </td>
-        </tr>
-        <tr>
-          <td>BK002</td>
-          <td> <strong>Priya Patel</strong><br> 📞 +91 9876543211<br> 📧 priyaemail.com </td>
-          <td> Executive Suite<br> 3 guests • 3 nights </td>
-          <td> 2024-07-26<br> 2024-07-29 </td>
-          <td> <!-- Clickable Number (Triggers Modal) -->
-            <span
-              style="background-color: green; font-size: larger; padding: 2px 6px; color: white; cursor: pointer; border-radius: 4px;"
-              (click)="toggleGuestsModalFirstly()"> {{ totalGuestsFirstly }} </span>
-          <td>₹8,100<br><small>Booked: 2024-07-21</small></td>
-          <td> <span class="badge pending">Pending</span>
-            <span class="badge unpaid">Unpaid</span>
+          <td>
+            <strong>{{ booking.user.name }}</strong><br>
+            📞 {{ booking.user.user_mob_no1 }}<br>
+            📧 {{ booking.user.email }}
           </td>
-          <td class="actions-icons"> <i class="material-icons" title="Edit">edit</i> <i class="material-icons"
-              title="Delete">delete</i>
+          <td>
+            {{ booking.hotel_room.roomType }}<br>
+            {{ booking.adults + booking.children }} guests •
+            {{ calculateNights(booking.check_in_date, booking.check_out_date) }} nights
           </td>
-          <td class="actions-icons">
-            <div class="notify-circle"></div>
+          <td>
+            {{ booking.check_in_date }}<br>
+            {{ booking.check_out_date }}
           </td>
+          <td>
+            <!-- Case: Room number exists -->
+            <span *ngIf="booking.room_no; else noRoom" style="display:block; color: rgb(0, 0, 0); ">
+              {{ booking.room_no }}
+            </span>
 
+            <!-- Case: Room number does NOT exist -->
+             
+            <ng-template #noRoom>
+              <span style="display:block; color: red;">given room no.</span>
+              <span  *ngIf="!isAdding"
+                style="background-color: green; padding: 4px 7px; color: white; cursor: pointer; border-radius: 4px;"
+                 (click)="hoteldata(
+                 booking?.id,
+                   booking?.user?.email,
+                  booking?.user?.name,
+                   booking?.hotel_room?.roomType,
+                 booking?.hotel_vendor?.hotelname
+                             );">
+                add
+              </span>
+            </ng-template>
+          
+
+          </td>
+          <td>
+            ₹{{ booking.total_amount }}<br>
+            <small>Booked: {{ booking.created_at | date:'yyyy-MM-dd' }}</small>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="booking.status.toLowerCase()">{{ booking.status }}</span>
+            <span class="badge" [ngClass]="booking.payment_status.toLowerCase()">{{ booking.payment_status }}</span>
+          </td>
+          <td class="actions-icons">
+            <i class="material-icons" title="Edit" (click)="editBooking(booking)">edit</i>
+            <i class="material-icons" title="Delete" (click)="deleteBooking(booking)">delete</i>
+          </td>
         </tr>
       </tbody>
     </table>
+
   </div>
 </div> <!-- Modal -->
 <div class="modal-backdrop" *ngIf="showGuestsModalFirstly">

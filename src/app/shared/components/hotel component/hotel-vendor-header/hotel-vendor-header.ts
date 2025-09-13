@@ -1,26 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { UserServices } from '../../../../core/services/user-services';
 import { Auth } from '../../../../core/services/auth';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+;
 
 
 @Component({
   selector: 'app-hotel-vendor-header',
-  imports: [RouterLink , CommonModule,],
+  imports: [RouterLink, CommonModule,FormsModule],
   templateUrl: './hotel-vendor-header.html',
   styleUrl: './hotel-vendor-header.scss'
 })
-export class HotelVendorHeader {
- public isMobileView: boolean = true;
+export class HotelVendorHeader implements OnInit {
+  public isMobileView: boolean = true;
   name: any;
+  selectedNotification: any = null;
 
   ngOnInit(): void {
     this.name = sessionStorage.getItem('name')
+    this.getNortification();
   }
 
-  
+
   constructor(private user: UserServices, private auth: Auth) { }
+
+  notifications: any = [];
+  getNortification() {
+    this.user.notifications().subscribe((res: any) => {
+      console.log("notifications", res);
+      this.notifications = res;
+    })
+  }
 
   toggleTarget() {
     // this.togel=!this.togel;
@@ -74,4 +86,36 @@ export class HotelVendorHeader {
   logoutt() {
     this.auth.logout();
   }
+
+  showMessagesModal = false;
+  openMessagesModal(norti: any) {
+    this.selectedNotification = norti;
+    this.showMessagesModal = true;
+    console.log("Notification details:", norti);
+  }
+  closeMessagesModal() {
+    this.showMessagesModal = false;
+    this.selectedNotification = null;
+  }
+
+
+  // side bar user profile
+
+  users = {
+     names: 'Admin Name', emails: 'admin@example.com'
+     };
+  isEditing = false; editName = ''; editEmail = '';
+
+  startEdit() {
+    this.isEditing = true; this.editName = this.users.names
+      ; this.editEmail = this.users.emails;
+  }
+  saveEdit() {
+    console.log('Name:', this.editName); 
+    console.log('Email:', this.editEmail);
+    this.users.names = this.editName; 
+    this.users.emails = this.editEmail;
+    this.isEditing = false;
+  } cancelEdit() { this.isEditing = false; }
+
 }

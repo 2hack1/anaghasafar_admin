@@ -1,5 +1,3 @@
-
-    
 <nav id="sidebar">
     <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; "
         *ngIf="isMobileView">
@@ -9,7 +7,8 @@
     </div>
     <ul class="list-unstyled components">
         <li class="active">
-            <a [routerLink]="['/deskboard']" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
+            <a [routerLink]="['/deskboard']" class="dashboard"><i
+                    class="material-icons">dashboard</i><span>Dashboard</span></a>
         </li>
 
         <div class="small-screen navbar-display">
@@ -46,7 +45,7 @@
         </div>
 
         <!-- ***********************************************  it woring **************************************************** -->
-   
+
 
         <!-- <li class="dropdown">
             <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -83,10 +82,10 @@
                     <a [routerLink]="['/deskboard']">home or deskboard</a>
                 </li>
                 <li>
-                    <a [routerLink]="['/deskboard/rooms']" >rooms</a>
+                    <a [routerLink]="['/deskboard/rooms']">rooms</a>
                 </li>
-                 <li>
-                    <a [routerLink]="['deskboard/booking']" >booking</a>
+                <li>
+                    <a [routerLink]="['deskboard/booking']">booking</a>
                 </li>
             </ul>
         </li>
@@ -98,7 +97,7 @@
                     <a [routerLink]="['deskboard/check']">check it Rufwoking </a>
                 </li>
                 <li>
-                    <a [routerLink]="['/deskboard/rooms']" >rooms</a>
+                    <a [routerLink]="['/deskboard/rooms']">rooms</a>
                 </li>
                 <li>
                     <a href="#">cancellation</a>
@@ -111,7 +110,7 @@
                 <i class="material-icons">border_color</i><span>Booking</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu5">
                 <li>
-                      <a [routerLink]="['deskboard/booking']" >Booking</a>
+                    <a [routerLink]="['deskboard/booking']">Booking</a>
                 </li>
                 <li>
                     <a href="#">Page 2</a>
@@ -141,6 +140,7 @@
         <li class="dropdown">
             <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">content_copy</i><span>setting</span></a>
+
             <ul class="collapse list-unstyled menu" id="pageSubmenu7">
                 <li>
                     <a href="#">On Working</a>
@@ -154,13 +154,21 @@
             </ul>
         </li>
 
-        <!-- <li class="">
-            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
-        </li>
-
-        <li class="">
-            <a href="#"><i class="material-icons">library_books</i><span>Calender</span></a>
-        </li> -->
+        <div class="sidebar-admin-footer">
+            <div class="admin-field">
+                <div *ngIf="!isEditing" class="field-display">
+                    <h1 class="admin-title">Admin</h1> <button class="edit-btn" (click)="startEdit()">Edit</button>
+                </div>
+                <div *ngIf="isEditing" class="field-edit">
+                    <div class="input-row"> <label for="name" style="color: white;">Name:</label> <input id="name"
+                            [(ngModel)]="editName" type="text" placeholder="Enter name" /> </div>
+                    <div class="input-row"> <label for="email" style="color: white;">Email:</label> <input id="email"
+                            [(ngModel)]="editEmail" type="email" placeholder="Enter email" /> </div>
+                    <div class="action-buttons"> <button class="save-btn" (click)="saveEdit()">Save</button> <button
+                            class="cancel-btn" (click)="cancelEdit()">Cancel</button> </div>
+                </div>
+            </div>
+        </div>
     </ul>
 </nav>
 
@@ -184,26 +192,40 @@
                 <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none"
                     id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
+
                         <li class="dropdown nav-item active">
-                            <a href="#" class="nav-link" data-toggle="dropdown">
+                            <a class="nav-link" data-toggle="dropdown">
                                 <span class="material-icons">notifications</span>
-                                <span class="notification">4</span>
+                                <span class="notification">{{ notifications.count }}</span>
                             </a>
+
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">You have 5 new messages</a>
-                                </li>
-                                <li>
-                                    <a href="#">You're now friend with Mike</a>
-                                </li>
-                                <li>
-                                    <a href="#">Wish Mary on her birthday!</a>
-                                </li>
-                                <li>
-                                    <a href="#">5 warnings in Server Console</a>
+                                <li *ngFor="let notif of notifications.notifications"
+                                    style="display: flex; align-items: center; cursor: pointer; color: rgb(89, 159, 216);"
+                                    (click)="openMessagesModal(notif)">
+                                    <i class="notif-dot" role="status" aria-label="new notifications"></i>
+                                    <a>{{ notif.sub }}</a>
                                 </li>
                             </ul>
+
+                            <!-- Modal -->
+                            <div class="simple-modal-backdrop" *ngIf="showMessagesModal" (click)="closeMessagesModal()">
+                                <div class="simple-modal" (click)="$event.stopPropagation()">
+                                    <button class="close-btn" (click)="closeMessagesModal()">×</button>
+                                    <h3>{{ selectedNotification.heading }}</h3>
+
+                                    <h4>{{ selectedNotification.details }}
+                                        <span style="font-size: 14px; color: rgb(35, 112, 212);">More</span>
+                                    </h4>
+
+                                    <h3 class="footer">With kind regards, <br> <span style="color: black;"> {{
+                                            selectedNotification?.message }}</span></h3>
+
+                                </div>
+                            </div>
                         </li>
+
+
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span class="material-icons">apps</span>
@@ -225,5 +247,3 @@
         </nav>
     </div>
 </div>
-
-
