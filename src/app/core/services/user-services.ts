@@ -251,6 +251,10 @@ export class UserServices {
     return this.http.get(`${this.env.base_url}/bookings/nortification/roomno`);
    }
 
+   updateNotification(id: any, data: any){
+    return this.http.post(`${this.env.base_url}/bookings/updatenotification/${id}`, data);
+    }
+    
   chancalatiPolisy(){
     // demo for hostign 
   }

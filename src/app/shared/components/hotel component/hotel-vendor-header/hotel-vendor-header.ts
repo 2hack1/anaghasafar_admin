@@ -1,7 +1,7 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { UserServices } from '../../../../core/services/user-services';
 import { Auth } from '../../../../core/services/auth';
-import { RouterLink } from '@angular/router';
+import { Route, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 ;
@@ -24,8 +24,13 @@ export class HotelVendorHeader implements OnInit {
   }
 
 
-  constructor(private user: UserServices, private auth: Auth) { }
+  constructor(private user: UserServices, private auth: Auth ,private route:Router) { }
 
+
+  randerBooking(){
+ this.route.navigate(['/deskboard/booking'])
+ this.showMessagesModal = false;
+  }
   notifications: any = [];
   getNortification() {
     this.user.notifications().subscribe((res: any) => {
@@ -113,9 +118,13 @@ export class HotelVendorHeader implements OnInit {
   saveEdit() {
     console.log('Name:', this.editName); 
     console.log('Email:', this.editEmail);
+    this.user.updateNotification(1, {names: this.editName, emails: this.editEmail}).subscribe((res:any)=>{
+      console.log("Update response:", res);
+    })
     this.users.names = this.editName; 
     this.users.emails = this.editEmail;
     this.isEditing = false;
   } cancelEdit() { this.isEditing = false; }
 
+  
 }
