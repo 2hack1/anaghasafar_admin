@@ -1,22 +1,15 @@
-
-
-
-import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { UserServices } from '../../../core/services/user-services';
-// import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-check',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './vendor-form.html',
-  styleUrl: './vendor-form.scss'
+  selector: 'app-venderform',
+  imports: [CommonModule,ReactiveFormsModule,FormsModule],
+  templateUrl: './venderform.html',
+  styleUrl: './venderform.scss'
 })
-export class Check implements OnInit {
-  vendorForm: FormGroup;
+export class Venderform {
+vendorForm: FormGroup;
   step = 0;
   steps = ['Vendor Info', 'Hotel Details', 'Location & Price', 'Uploads'];
   images: File[] = [];
@@ -44,7 +37,7 @@ export class Check implements OnInit {
     return Boolean(control?.invalid && (control?.dirty || control?.touched || this.submitted));
   }
 
-
+  
   nextStep() {
     if (this.stepFormValid()) {
       this.step++;
@@ -57,7 +50,7 @@ export class Check implements OnInit {
     if (this.step > 0) this.step--;
   }
   ngOnInit(): void {
-
+    
   }
 
   stepFormValid(): boolean {
@@ -86,36 +79,36 @@ export class Check implements OnInit {
 
   hotelImages: { file: File; preview: string }[] = [];
 
-  onImageChange(event: any): void {
-    const files: FileList = event.target.files;
+onImageChange(event: any): void {
+  const files: FileList = event.target.files;
 
-    if (files && files.length > 0) {
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.hotelImages.push({ file, preview: e.target.result });
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+  if (files && files.length > 0) {
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.hotelImages.push({ file, preview: e.target.result });
+      };
+      reader.readAsDataURL(file);
+    });
   }
+}
 
-  removeImage(index: number, imageInput: HTMLInputElement): void {
-    this.hotelImages.splice(index, 1);
+removeImage(index: number, imageInput: HTMLInputElement): void {
+  this.hotelImages.splice(index, 1);
 
-    // Rebuild FileList and reset input
-    const dataTransfer = new DataTransfer();
-    this.hotelImages.forEach(image => dataTransfer.items.add(image.file));
-    imageInput.files = dataTransfer.files;
-  }
+  // Rebuild FileList and reset input
+  const dataTransfer = new DataTransfer();
+  this.hotelImages.forEach(image => dataTransfer.items.add(image.file));
+  imageInput.files = dataTransfer.files;
+}
 
-  gstInvalid = false;
+gstInvalid = false;
 
-  validateGST(event: any) {
-    const gstValue = event.target.value.toUpperCase();
-    const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
-    this.gstInvalid = gstValue && !gstRegex.test(gstValue);
-  }
+validateGST(event: any) {
+  const gstValue = event.target.value.toUpperCase();
+  const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
+  this.gstInvalid = gstValue && !gstRegex.test(gstValue);
+}
 
   onSubmit() {
     this.submitted = true;

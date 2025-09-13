@@ -46,13 +46,13 @@
         <!-- ***********************************************  it woring **************************************************** -->
         <ul class=" list-unstyled list-unstyled">
             <li>
-                <a href="#allDestinations" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
+                <!-- <a href="#allDestinations" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"
                     (click)="loadDestinations()">
                     <i class="material-icons">location_on</i>
                     <span>All Destinations</span>
-                </a>
+                </a> -->
 
-                <ul class="collapse list-unstyled menu" id="allDestinations">
+                <!-- <ul class="collapse list-unstyled menu" id="allDestinations">
                     <li *ngFor="let dest of destinations">
                         <a [attr.href]="'#dest' + dest.id" [routerLink]="['/destination']" data-toggle="collapse"
                             class="dropdown-toggle" (click)="loadSubDestinations(dest)">
@@ -72,7 +72,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul> -->
             </li>
         </ul>
 
@@ -89,10 +89,10 @@
                 </li>
 
                 <li>
-                    <a [routerLink]="['/PlanenewTrip']"> Plan MyTrip (request)</a>
+                    <a [routerLink]="['/review']">Booking</a>
                 </li>
                 <li>
-                    <a [routerLink]="['/checkit']">check It</a>
+                    <a [routerLink]="['/check']">check</a>
                 </li>
 
             </ul>
@@ -130,7 +130,6 @@
                 </li>
             </ul>
         </li>
-
         <li class="dropdown">
             <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">border_color</i><span>forms</span></a>
@@ -146,7 +145,6 @@
                 </li>
             </ul>
         </li>
-
         <li class="dropdown">
             <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">grid_on</i><span>tables</span></a>
@@ -162,7 +160,6 @@
                 </li>
             </ul>
         </li>
-
         <li class="dropdown">
             <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">content_copy</i><span>Pages</span></a>
@@ -178,23 +175,88 @@
                 </li>
             </ul>
         </li>
-
-        <li class="">
+        <li>
+            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
+        </li>
+        <li>
             <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
         </li>
 
-        <li class="">
-            <a href="#"><i class="material-icons">library_books</i><span>Calender</span></a>
-        </li>
+        <div class="sidebar-admin-footer">
+            <div class="admin-field">
+                <div *ngIf="!isEditing" class="field-display">
+                    <h1 class="admin-title">Admin</h1>
+                    <button class="edit-btn" (click)="startEdit()">Edit</button>
+                </div>
+                <div *ngIf="isEditing" class="field-edit">
+                    <div class="input-row">
+                        <label for="name" style="color: white;">Name:</label>
+                        <input id="name" [(ngModel)]="editName" type="text" placeholder="Enter name" />
+                    </div>
+
+                    <div class="input-row">
+                        <label for="email" style="color: white;">Email:</label>
+                        <input id="email" [(ngModel)]="editEmail" type="email" placeholder="Enter email" />
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="save-btn" (click)="saveEdit()">Save</button>
+                        <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ul>
 </nav>
+
+<!-- <div class="custom-modal" *ngIf="showModal1">
+    <div class="custom-modal-content">
+        <span class="close-button" (click)="closeModal1()">&times;</span>
+
+        <div class="user-details">
+            <img src="https://i.pravatar.cc/100?img=12" alt="User Image" />
+
+       
+            <div class="editable-field">
+                <ng-container *ngIf="!isEditingName; else nameEdit">
+                    <h3>{{ userss.name }}</h3>
+                    <button class="icon-btn" (click)="startEdit('name')">✏️</button>
+                </ng-container>
+                <ng-template #nameEdit>
+                    <input [(ngModel)]="editName" class="edit-input" />
+                    <button class="icon-btn" (click)="saveEdit('name')">✔</button>
+                    <button class="icon-btn" (click)="cancelEdit('name')">✖</button>
+                </ng-template>
+            </div>
+
+         
+            <div class="editable-field">
+                <ng-container *ngIf="!isEditingEmail; else emailEdit">
+                    <p>Email: {{ userss.email }}</p>
+                    <button class="icon-btn" (click)="startEdit('email')">✏️</button>
+                </ng-container>
+                <ng-template #emailEdit>
+                    <input [(ngModel)]="editEmail" class="edit-input" />
+                    <button class="icon-btn" (click)="saveEdit('email')">✔</button>
+                    <button class="icon-btn" (click)="cancelEdit('email')">✖</button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<-- -->
 
 <div id="content">
     <div class="top-navbar">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none"
-                    (click)="toggleTarget()">
+                <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
                     <span class="material-icons">arrow_back_ios</span>
                 </button>
 
@@ -208,6 +270,7 @@
 
                 <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none"
                     id="navbarSupportedContent">
+
                     <ul class="nav navbar-nav ml-auto">
                         <li class="dropdown nav-item active">
                             <a href="#" class="nav-link" data-toggle="dropdown">
@@ -216,7 +279,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">You have 5 new messages</a>
+                                    <a href="#" (click)="openMessagesModal()">You have 5 new messages</a>
                                 </li>
                                 <li>
                                     <a href="#">You're now friend with Mike</a>
@@ -229,22 +292,32 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <!-- 🔘 Other Icons -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">apps</span>
-                            </a>
+                            <a class="nav-link" href="#"><span class="material-icons">apps</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">person</span>
-                            </a>
+                            <a class="nav-link" href="#"><span class="material-icons">person</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">settings</span>
-                            </a>
+                            <a class="nav-link" href="#"><span class="material-icons">settings</span></a>
                         </li>
                     </ul>
+                </div>
+
+                <!-- Modal Backdrop -->
+                <div class="simple-modal-backdrop" *ngIf="showMessagesModal" (click)="closeMessagesModal()">
+                    <div class="simple-modal" (click)="$event.stopPropagation()">
+                        <button class="close-btn" (click)="closeMessagesModal()">×</button>
+                        <h3>Dear Customer,</h3>
+                        <h4>Unfortunately, the account you selected did not work</h4>
+                        <p>
+                            This is why we were unable to carry out the transaction.
+                            Please check your account details and try again.
+                        </p>
+                        <p class="footer">With kind regards, <br> Anagha Safar & Team</p>
+                    </div>
                 </div>
             </div>
         </nav>

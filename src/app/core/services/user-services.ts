@@ -62,7 +62,7 @@ export class UserServices {
     return this.http.post(`${this.apiUrl}ssubdestination/update/${id}`, formData);
   }
 
-  
+
   // 🔹 Delete Sub Destination
   deleteSubDestination(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}ssubdestination/delete/${id}`);
@@ -158,44 +158,44 @@ export class UserServices {
     return this.http.post(`http://localhost:8000/api/topimg/update/${id}`, data);
   }
 
-getUserPlanTrip(){
-      return this.http.get("http://localhost:8000/api/trips");
+  getUserPlanTrip() {
+    return this.http.get("http://localhost:8000/api/trips");
 
-}
-DeleteUserPlanTrip(id:any){
-      return this.http.delete(`http://localhost:8000/api/trips/${id}`);
+  }
+  DeleteUserPlanTrip(id: any) {
+    return this.http.delete(`http://localhost:8000/api/trips/${id}`);
 
-}
+  }
 
-// ********************LOGIN ADMIN ************************
+  // ********************LOGIN ADMIN ************************
 
-loginAdmin(data:FormData){
+  loginAdmin(data: FormData) {
 
-  return this.http.post(`http://localhost:8000/api/login`,data);
-}
-
-
-// image gallary*************
-imageGallary(data:FormData,id:any){
-   return this.http.post(`http://localhost:8000/api/gellery/${id}`,data);
-}
-imagereplaceGallary(data:FormData,id:any){
-  return this.http.post(`http://localhost:8000/api/gellery/${id}/replace`,data);
-}
-loadimagereplaceGallary(id:any){
-  return this.http.get(`http://localhost:8000/api/gellery/${id}`);
-}
+    return this.http.post(`http://localhost:8000/api/login`, data);
+  }
 
 
-getOrderData(){
-  return this.http.get(`http://localhost:8000/api/order`);
-} 
+  // image gallary*************
+  imageGallary(data: FormData, id: any) {
+    return this.http.post(`http://localhost:8000/api/gellery/${id}`, data);
+  }
+  imagereplaceGallary(data: FormData, id: any) {
+    return this.http.post(`http://localhost:8000/api/gellery/${id}/replace`, data);
+  }
+  loadimagereplaceGallary(id: any) {
+    return this.http.get(`http://localhost:8000/api/gellery/${id}`);
+  }
 
-getOrderById(id:Number){
-   return this.http.get(`http://localhost:8000/api/orderbyid/${id}`);
-}
 
-deleteOrderById(id:any){
-  return this.http.delete(`http://localhost:8000/api/delete_order/${id}`)
-}
+  getOrderData() {
+    return this.http.get(`http://localhost:8000/api/order`);
+  }
+
+  getOrderById(id: Number) {
+    return this.http.get(`http://localhost:8000/api/orderbyid/${id}`);
+  }
+
+  deleteOrderById(id: any) {
+    return this.http.delete(`http://localhost:8000/api/delete_order/${id}`)
+  }
 }

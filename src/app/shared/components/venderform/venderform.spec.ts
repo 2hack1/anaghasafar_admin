@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Header } from './header';
+import { Venderform } from './venderform';
 
-describe('Header', () => {
-  let component: Header;
-  let fixture: ComponentFixture<Header>;
+describe('Venderform', () => {
+  let component: Venderform;
+  let fixture: ComponentFixture<Venderform>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Header]
+      imports: [Venderform]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(Header);
+    fixture = TestBed.createComponent(Venderform);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

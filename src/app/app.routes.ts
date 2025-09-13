@@ -3,7 +3,6 @@ import { Destinations } from './shared/components/destinations/destinations';
 import { DeskBoard } from './shared/components/desk-board/desk-board';
 import { Destination } from './shared/components/sub_destination/destination';
 import { Packages } from './shared/components/packages/packages';
-import { Check } from './shared/components/check/check';
 import { AboutPackage } from './shared/components/about-package/about-package';
 import { HomePlaneNewTrip } from './shared/components/home-plane-new-trip/home-plane-new-trip';
 import { HomefourCard } from './shared/components/homefour-card/homefour-card';
@@ -12,12 +11,16 @@ import { Login } from './shared/components/login/login';
 import { authGuard } from './auth-guard';
 import { UserTourOrder } from './shared/components/user-tour-order/user-tour-order';
 import { AboutUserTourOrder } from './shared/components/about-user-tour-order/about-user-tour-order';
-export const routes: Routes = [
+import { Venderform } from './shared/components/venderform/venderform';
+import { check } from './shared/components/check/check';
+import { Review } from './shared/components/review/review';
+import { CancellationFormComponent } from './shared/components/cancellation-form-component/cancellation-form-component';
 
-    {
+export const routes: Routes = [
+  {
     path: "",
     component: DeskBoard,
-    canActivate: [authGuard] // ✅ dashboard protected
+    canActivate: [authGuard]
   },
   {
     path: "destination",
@@ -32,11 +35,6 @@ export const routes: Routes = [
   {
     path: "packages/:id",
     component: Packages,
-    canActivate: [authGuard]
-  },
-  {
-    path: "checkit",
-    component: Check,
     canActivate: [authGuard]
   },
   {
@@ -65,16 +63,28 @@ export const routes: Routes = [
 
   {
     path: "login",
-    component: Login 
+    component: Login
   },
   {
-    path:"userOrder",
-    component:UserTourOrder
+    path: "userOrder",
+    component: UserTourOrder
   },
   {
-    path:"orderAbout/:id",
-    component:AboutUserTourOrder
+    path: "orderAbout/:id",
+    component: AboutUserTourOrder
+  },
+  {
+    path: "Venderform",
+    component: Venderform
+  }, {
+    path: 'check',
+    component: check
+  },
+  {
+    path: 'review',
+    component: Review
+  }, {
+    path: 'cancellation',
+    component: CancellationFormComponent
   }
-  
-
 ];

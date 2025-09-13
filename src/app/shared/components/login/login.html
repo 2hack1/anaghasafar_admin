@@ -3,27 +3,28 @@
     <div class="login-left">
       <img src="https://img.icons8.com/ios-filled/100/000000/car--v1.png" alt="Logo" class="login-logo">
       <div class="login-title">Anagha Safar</div>
-      <div class="login-subtitle">India's letest Tour and travels company</div>
+      <div class="login-subtitle">India's Largest Tour and Travels company</div>
     </div>
     <div class="login-right">
       <div class="login-help">Need help?</div>
       <div class="login-heading">Log in</div>
-      <form  [formGroup]='loginform' (ngSubmit)="onlogin()">
-  <div style="color:red" *ngIf="!checkform"> Form data invalid please try again </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="joe@email.com" formControlName="email">
-      </div>
+      <form [formGroup]='loginform' (ngSubmit)="onlogin()">
+        <div style="color:red" *ngIf="!checkform"> Form data invalid please try again </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="joe@email.com" formControlName="email">
+        </div>
 
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="Enter your Password" formControlName="pass">
-      </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Enter your Password" formControlName="pass">
+        </div>
 
-      <a href="#" class="forgot-link">Forgot password?</a> <a [routerLink]="['/checkit']" class="register-link" style="font-size: 13px; text-decoration: none;"> Hotel vendor Sign up</a>
-      <button type="submit" class="login-btn">Login</button>
-   </form>
+        <a href="#" class="forgot-link">Forgot password?</a> <a [routerLink]="['/Venderform']" class="register-link"
+          style="font-size: 13px; text-decoration: none;"> Hotel vendor Sign up?</a>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
     </div>
-    
+
   </div>
 </div>
