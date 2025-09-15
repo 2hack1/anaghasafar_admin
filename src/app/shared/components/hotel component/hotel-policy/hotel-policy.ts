@@ -13,6 +13,7 @@ export class HotelPolicy implements OnInit {
   ngOnInit(): void {
 
   }
+  // the is page again check
   cancellation = { bookingId: '', email: '', reason: '', agree: false };
 
   submitCancellation() {
