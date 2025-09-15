@@ -107,6 +107,7 @@ onlogin() {
             sessionStorage.setItem('name', res.user.name);
             sessionStorage.setItem('email', res.user.email);
             sessionStorage.setItem('role', res.user.role);
+            sessionStorage.setItem('id', res.user.id);
             this.router.navigate(['/']);
           }
           this.loginform.reset();
@@ -128,6 +129,7 @@ onlogin() {
             sessionStorage.setItem('token', res.access_token);
             sessionStorage.setItem('name', res.user.vendor_name);
             sessionStorage.setItem('email', res.user.vendor_email);
+              sessionStorage.setItem('id', res.user.hotel_vendor_id);
             sessionStorage.setItem('role', 'hotel_vendor');
             this.router.navigate(['/deskboard']);
           }

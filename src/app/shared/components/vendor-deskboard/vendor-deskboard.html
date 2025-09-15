@@ -19,7 +19,7 @@
      <span>Total Bookings</span>
      <i class="fa-regular fa-calendar"></i>
     </div>
-    <h2>247</h2>
+    <h2>{{bokingdata?.total_bookings }} </h2>
     <p class="positive">+12% from last month</p>
    </div>
 
@@ -28,17 +28,17 @@
      <span>Available Rooms</span>
      <i class="fa-solid fa-bed"></i>
     </div>
-    <h2>18</h2>
-    <p>Out of 24 total</p>
+    <h2>  {{bokingdata?.available_rooms}} </h2>
+    <p>Out of {{bokingdata?.total_rooms}} total</p>
    </div>
 
    <div class="card">
     <div class="card-header">
-     <span>Pending Verification</span>
+     <span>Totel Pending Payments</span>
      <i class="fa-regular fa-clock"></i>
     </div>
-    <h2>3</h2>
-    <p>2 documents pending</p>
+    <h2>₹{{bokingdata?.pending_payments | number:'1.0-2'}}</h2>
+    <!-- <p>2 documents pending</p> -->
    </div>
 
    <div class="card">
@@ -46,7 +46,7 @@
      <span>Monthly Revenue</span>
      <i class="fa-solid fa-dollar-sign"></i>
     </div>
-    <h2>₹2,45,680</h2>
+    <h2> ₹{{bokingdata?.total_revenue | number:'1.0-2' }}</h2>
     <p class="positive">+18% from last month</p>
    </div>
   </div>
@@ -61,7 +61,7 @@
     </div>
    </div>
 
-   <div class="recent-bookings">
+   <!-- <div class="recent-bookings">
     <div class="header">
      <h3><i class="fa-regular fa-calendar"></i> Recent Bookings</h3>
      <a href="#">View All</a>
@@ -92,7 +92,31 @@
      </div>
      <div class="booking-price">₹8,100</div>
     </div>
-   </div>
+    
+   </div> -->
+<div class="recent-bookings">
+  <div class="header">
+    <h3><i class="fa-regular fa-calendar"></i> Recent Bookings</h3>
+    <a [routerLink]="'/deskboard/booking'">View All</a>
+  </div>
+
+  <!-- Loop starting from 3rd booking (index 2) -->
+ <div class="booking" *ngFor="let booking of userdata?.slice(1)">
+
+    <div class="booking-info">
+      <h4>{{ booking.username }}</h4>
+      <span>BK{{ booking.booking_id }}</span>
+      <p>{{ booking.check_in }} to {{ booking.check_out }}</p>
+      <div class="tags">
+        <span class="tag" [ngClass]="booking.status">{{ booking.status | titlecase }}</span>
+        <span class="tag" [ngClass]="booking.payment_status">{{ booking.payment_status | titlecase }}</span>
+      </div>
+    </div>
+    <div class="booking-price">₹{{ booking.price }}</div>
+  </div>
+</div>
+
+
   </div>
  </div>
 

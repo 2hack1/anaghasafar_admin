@@ -1,3 +1,4 @@
+<notifier-container></notifier-container>
 <nav id="sidebar">
     <div class="sidebar-header " style="display: flex; justify-content: space-between; align-items: center; "
         *ngIf="isMobileView">
@@ -46,29 +47,6 @@
 
         <!-- ***********************************************  it woring **************************************************** -->
 
-
-        <!-- <li class="dropdown">
-            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                <i class="material-icons">home</i><span>Home</span></a>
-            <ul class="collapse list-unstyled menu" id="pageSubmenu2">
-                <li>
-                    <a [routerLink]="['/topImage']">Top images</a>
-                </li>
-
-                <li>
-                    <a [routerLink]="['/HomeCards']">Four-Cards</a>
-                </li>
-
-                <li>
-                    <a [routerLink]="['/PlanenewTrip']"> Plan MyTrip (request)</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/checkit']">check It</a>
-                </li>
-
-            </ul>
-        </li> -->
-
         <li class="dropdown">
             <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">equalizer</i>
@@ -86,6 +64,9 @@
                 </li>
                 <li>
                     <a [routerLink]="['deskboard/booking']">booking</a>
+                </li>
+                <li>
+                    <a [routerLink]="['deskboard/hotelpolicy']">Hotel policy</a>
                 </li>
             </ul>
         </li>
@@ -227,18 +208,18 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">apps</span>
+                            <a class="nav-link" >
+                                <span class="material-icons"(click)="notworking()">apps</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">person</span>
+                            <a class="nav-link" >
+                                <span class="material-icons" (click)="notworking()">person</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="material-icons">settings</span>
+                            <a class="nav-link" >
+                                <span class="material-icons" (click)="notworking()">settings</span>
                             </a>
                         </li>
                     </ul>

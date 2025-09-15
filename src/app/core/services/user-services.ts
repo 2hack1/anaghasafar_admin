@@ -13,6 +13,7 @@ export interface AdminEntry {
 @Injectable({
   providedIn: 'root'
 })
+   
 export class UserServices {
 
   private stateSubject = new BehaviorSubject<string>('deactive');
@@ -29,6 +30,8 @@ export class UserServices {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
     this.stateSubject.next(newState);
   }
+ 
+
   // ********************destinations***************************
   // Get all main destinations
   getAll(): Observable<AdminEntry[]> {
@@ -252,9 +255,20 @@ export class UserServices {
    }
 
    updateNotification(id: any, data: any){
-    return this.http.post(`${this.env.base_url}/bookings/updatenotification/${id}`, data);
+    return this.http.post(`${this.env.base_url}/vendor/${id}/update-name-email/`, data);
     }
-    
+
+    getvendorDetails(id: any){
+      return this.http.get(`${this.env.base_url}/get/vendor/${id}`);
+    }
+    getbookingDetails(id: any){
+      return this.http.get(`${this.env.base_url}/bookings/wholebookingdata/${id}`);
+    }
+      userDataForHotelDeskboard(id: any){
+      return this.http.get(`${this.env.base_url}/bookings/recentlybooking/${id}`);
+      }
+
+    // http://localhost:8000/api/get/vendor/1
   chancalatiPolisy(){
     // demo for hostign 
   }

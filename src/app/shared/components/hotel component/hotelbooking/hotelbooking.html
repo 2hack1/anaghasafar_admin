@@ -11,26 +11,38 @@
   <div class="cards">
     <div class="card">
       <h4>Total Bookings</h4>
-      <div class="value">5</div>
+      <div class="value">{{bokingdata?.total_bookings }} </div>
     </div>
     <div class="card">
       <h4>Total Revenue</h4>
-      <div class="value">₹33,900</div>
+      <div class="value">₹{{bokingdata?.total_revenue | number:'1.0-2'}}</div>
     </div>
     <div class="card">
       <h4>Pending Payments</h4>
-      <div class="value">₹10,800</div>
+      <div class="value">₹{{bokingdata?.pending_payments | number:'1.0-2'}}  </div>
     </div>
     <div class="card">
       <h4>Confirmed</h4>
-      <div class="value">2</div>
+      <div class="value">{{bokingdata?.confirmed }}</div>
     </div>
   </div>
-  <div class="search-filter"> <input type="text" placeholder="Search by guest name, booking ID, or room type..." />
-    <div class="status-buttons"> <button class="active">All</button> <button>Confirmed</button> <button>Pending</button>
-      <button>Completed</button> <button>Cancelled</button>
-    </div>
+
+  
+
+
+<div class="search-filter">
+  <input type="text" [(ngModel)]="searchQuery" 
+         (input)="applyFilters()" 
+         placeholder="Search by guest name, booking ID, or room type..." />
+
+  <div class="status-buttons">
+    <button [class.active]="selectedStatus==='All'" (click)="setStatus('All')">All</button>
+    <button [class.active]="selectedStatus==='Confirmed'" (click)="setStatus('Confirmed')">Confirmed</button>
+    <button [class.active]="selectedStatus==='Pending'" (click)="setStatus('Pending')">Pending</button>
+    <button [class.active]="selectedStatus==='Completed'" (click)="setStatus('Completed')">Completed</button>
+    <button [class.active]="selectedStatus==='Cancelled'" (click)="setStatus('Cancelled')">Cancelled</button>
   </div>
+</div>
   <div class="table-container">
 
     <table>
@@ -47,7 +59,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let booking of bookingdata; let i = index  ">
+        <!-- <tr *ngFor="let booking of bookingdata; let i = index  "> -->
+          <tr *ngFor="let booking of filteredBookings; let i = index">
+
           <td>
             
             <div class="notify-circle" *ngIf="!booking.room_no"></div>

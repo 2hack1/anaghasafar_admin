@@ -29,7 +29,7 @@
     <div class="card-content">
      <div>
       <p class="label">Total Revenue</p>
-      <h2 class="count"> ₹33,900</h2>
+      <h2 class="count"> ₹{{bokingdata?.total_revenue | number:'1.0-2'}}</h2>
      </div>
      <div class="icon-circle3">
       ₹
@@ -40,7 +40,7 @@
     <div class="card-content">
      <div>
       <p class="label">Pending Payments</p>
-      <h2 class="count2">₹10,800</h2>
+      <h2 class="count2">₹{{bokingdata?.pending_payments | number:'1.0-2'}} </h2>
      </div>
      <div class="icon-circle2">
       ₹
@@ -51,7 +51,7 @@
     <div class="card-content">
      <div>
       <p class="label">Confirmed</p>
-      <h2 class="count">2</h2>
+      <h2 class="count">{{bokingdata?.confirmed }}</h2>
      </div>
      <div class="icon-circle">
       ✓

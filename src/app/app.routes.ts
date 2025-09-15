@@ -22,6 +22,7 @@ import { Hotelbooking } from './shared/components/hotel component/hotelbooking/h
 import { HotelTeck } from './shared/components/hotel component/hotel-teck/hotel-teck';
 import { AddRooms } from './shared/components/hotel component/add-rooms/add-rooms';
 import { ShowRoomDetails } from './shared/components/hotel component/show-room-details/show-room-details';
+import { HotelPolicy } from './shared/components/hotel component/hotel-policy/hotel-policy';
 
 
 
@@ -121,8 +122,10 @@ export const routes: Routes = [
   } ,{
     path:"deskboard/hotel-rooms-details/:id",
     component:ShowRoomDetails
-  }
- ,{
+  },{
+    path:"deskboard/hotelpolicy",
+    component:HotelPolicy
+  } ,{
   path: '**',
  component:Pagenotfound
 }

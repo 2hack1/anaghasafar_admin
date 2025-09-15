@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UserServices } from '../../../../core/services/user-services';
 import { NotifierModule, NotifierService } from 'angular-notifier';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hotelbooking',
-  imports: [CommonModule ,NotifierModule],
+  imports: [CommonModule ,NotifierModule , FormsModule],
   templateUrl: './hotelbooking.html',
   styleUrl: './hotelbooking.scss'
 })
@@ -43,6 +44,7 @@ ngOnInit(): void {
     localStorage.removeItem('roomAssignSuccess');
   }
   this.getbooking();
+  this.getbookingsdata();
 }
 
 constructor(private userservice:UserServices , private notifier: NotifierService){
@@ -55,6 +57,16 @@ constructor(private userservice:UserServices , private notifier: NotifierService
     // Calculate total pages based on ranges 
     this.totalPages = Math.ceil(this.allRanges.length / this.rangesPerPage);
 }
+
+
+bokingdata:any;
+ getbookingsdata(){
+  const id= sessionStorage.getItem('id');
+  this.userservice.getbookingDetails(id).subscribe((res:any)=>{
+    console.log(res,"booking details:");
+    this.bokingdata=res;
+  })
+ }
 
  toggleGuestsModal() {
     this.showGuestsModal = !this.showGuestsModal;
@@ -97,25 +109,74 @@ constructor(private userservice:UserServices , private notifier: NotifierService
     }
   }
 
-  bookingdata:any=[];
-getbooking(){
 
-  this.userservice.getHotelboking().subscribe({
+
+  bookingdata: any[] = [];   // all bookings from API
+filteredBookings: any[] = []; // filtered + searched bookings
+searchQuery: string = '';
+selectedStatus: string = 'All'; // default tab
+
+
+  // bookingdata:any=[];
+  
+//    getbooking(){
+//   this.userservice.getHotelboking().subscribe({
    
-      next: (res: any) => {
-      console.log("Response Response:", res);
-      this.bookingdata=res;
-      console.log( this.bookingdata[0].hotel_vendor.hotelname
-,"bookingdata:");
-      // 👉 handle your success response here
+//       next: (res: any) => {
+//       console.log("Response Response:", res);
+//       this.bookingdata=res;
+//       console.log( this.bookingdata[0].hotel_vendor.hotelname
+//       ,"bookingdata:");
+//       // 👉 handle your success response here
+//     },
+//     error: (err: any) => {
+//       console.error("Error:", err);
+//       // 👉 handle error here
+//     },
+
+//   })
+
+// }
+getbooking() {
+  this.userservice.getHotelboking().subscribe({
+    next: (res: any) => {
+      console.log("Response:", res);
+      this.bookingdata = res;
+      this.applyFilters(); // apply search + filter
     },
     error: (err: any) => {
       console.error("Error:", err);
-      // 👉 handle error here
     },
+  });
+}
 
-  })
 
+applyFilters() {
+  let data = [...this.bookingdata];
+
+  // 🔍 Search filter
+  if (this.searchQuery.trim()) {
+    const q = this.searchQuery.toLowerCase();
+    data = data.filter(b =>
+      b.user?.name?.toLowerCase().includes(q) ||
+      b.id.toString().includes(q) ||
+      b.hotel_room?.roomType?.toLowerCase().includes(q)
+    );
+  }
+
+  // ✅ Status filter
+  // if (this.selectedStatus !== 'All') {
+  //   data = data.filter(b => b.status === this.selectedStatus);
+  // }
+  // ✅ Status filter (case-insensitive)
+if (this.selectedStatus !== 'All') {
+  data = data.filter(b => 
+    b.status?.toLowerCase() === this.selectedStatus.toLowerCase()
+  );
+}
+
+
+  this.filteredBookings = data;
 }
 
 
@@ -127,6 +188,15 @@ hotleroomdata={
   hotelname:'',
 
 }
+setStatus(status: string) {
+  this.selectedStatus = status;
+  this.applyFilters();
+}
+
+// setStatus(status: string) {
+//   this.selectedStatus = status;
+//   this.applyFilters();
+// }
 
 hoteldata(id:any,email:string,name:string,roomtype:string,hotelname:any){
   console.log("lsjdlkfjlsdlflsdlflsj lndlfj");

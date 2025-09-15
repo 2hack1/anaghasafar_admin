@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white" style="margin-top: -2rem;">
+            <h3 class="mb-0 text-black" style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                Hotel Cancellation Policy</h3>
+        </div>
+        <div class="card-body"> <!-- Cancellation Form -->
+            <form (ngSubmit)="submitCancellation1()" #cancelForm="ngForm"> <label class="form-label mb-2">Select
+                    Policies</label>
+                <div class="mb-3 d-flex flex-column gap-2"> <!-- Policy Checkboxes -->
+                    <div *ngFor="let policy of policyList" class="form-check"> <input type="checkbox"
+                            class="form-check-input" [id]="policy.value" [(ngModel)]="selectedPolicies[policy.value]"
+                            name="{{policy.value}}"> <label class="form-check-label" [for]="policy.value">{{
+                            policy.label }}</label> </div>
+                </div> <!-- Dynamic Textareas for each selected policy -->
+                <div *ngFor="let policy of policyList">
+                    
+                    <div *ngIf="selectedPolicies[policy.value]" class="mb-3"> <label class="form-label">{{ policy.label
+                            }} Details</label> <textarea class="form-control" rows="3"
+                            [(ngModel)]="policyDetails[policy.value]" name="{{policy.value}}Details"
+                            placeholder="Enter {{ policy.label.toLowerCase() }} details..."></textarea> </div>
+                </div>
+                <div class="form-check mb-3">
+                    <!-- <input type="checkbox" id="agree" name="agree" [(ngModel)]="cancellation.agree" class="form-check-input" required> <label for="agree" class="form-check-label"> I have read and agree to the cancellation policy. </label> -->
+                </div>
+
+
+
+
+            </form> <!-- Nav Tabs -->
+            <ul class="nav nav-tabs justify-content-center" id="policyTabs" role="tablist"
+                style="margin-top: 10px; padding: 10px;">
+                <li class="nav-item" role="presentation"> <button class="nav-link " id="cancellation-tab"
+                        data-bs-toggle="tab" data-bs-target="#cancellation" type="button" role="tab"
+                        aria-controls="cancellation" aria-selected="false"> Cancellation & Refund Policy </button> </li>
+                <li class="nav-item" role="presentation"> <button class="nav-link" id="payment-tab" data-bs-toggle="tab"
+                        data-bs-target="#payment" type="button" role="tab" aria-controls="payment"
+                        aria-selected="false"> Payment Policy </button> </li>
+
+                <li class="nav-item" role="presentation"> <button class="nav-link" id="lastminute-tab"
+                        data-bs-toggle="tab" data-bs-target="#lastminute" type="button" role="tab"
+                        aria-controls="lastminute" aria-selected="false"> Last-Minute Cancellation Policy </button>
+                </li>
+                <li class="nav-item" role="presentation"> <button class="nav-link" id="nonrefundable-tab"
+                        data-bs-toggle="tab" data-bs-target="#nonrefundable" type="button" role="tab"
+                        aria-controls="nonrefundable" aria-selected="false"> Non-Refundable Policy </button> </li>
+            </ul> <!-- Tab Content -->
+        
+            
+          <!-- </form> -->
+            <div class="tab-content p-4" id="policyTabsContent"> <!-- Cancellation Policy -->
+                <div class="tab-pane fade show active" id="cancellation" role="tabpanel"
+                    aria-labelledby="cancellation-tab">
+                    <h5 class="text-primary">Cancellation & Refund Policy</h5>
+                    <p>Guests may cancel free of charge up to <strong>48 hours</strong> before check-in. After this
+                        period, a cancellation fee of one night’s stay will be charged. Refunds will be processed within
+                        <strong>7–10 business days</strong>.</p>
+                </div> <!-- Payment Policy -->
+                <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+                    <h5 class="text-primary">Payment Policy</h5>
+                    <p>Full payment or an advance deposit is required to confirm reservations. We accept all major
+                        credit cards, debit cards, and online transfers. Pending payments must be cleared at check-in.
+                    </p>
+                </div> <!-- Last-Minute Policy -->
+                <div class="tab-pane fade" id="lastminute" role="tabpanel" aria-labelledby="lastminute-tab">
+                    <h5 class="text-primary">Last-Minute Cancellation Policy</h5>
+                    <p>Cancellations made within <strong>24 hours</strong> of check-in will incur a charge of
+                        <strong>100% of the first night’s stay</strong>. No refunds will be provided for same-day
+                        cancellations.</p>
+                </div> <!-- Non-Refundable Policy -->
+                <div class="tab-pane fade" id="nonrefundable" role="tabpanel" aria-labelledby="nonrefundable-tab">
+                    <h5 class="text-primary">Non-Refundable Policy</h5>
+                    <p>Bookings under the non-refundable rate plan cannot be modified or cancelled. The full booking
+                        amount will be charged, and no refund will be issued.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
