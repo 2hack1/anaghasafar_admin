@@ -261,6 +261,10 @@ export class UserServices {
     getvendorDetails(id: any){
       return this.http.get(`${this.env.base_url}/get/vendor/${id}`);
     }
+    getvendoralldata(id:any){
+      return this.http.get(`${this.env.base_url}/vendor/alldata/${id}`);
+
+    }
     getbookingDetails(id: any){
       return this.http.get(`${this.env.base_url}/bookings/wholebookingdata/${id}`);
     }
@@ -268,7 +272,25 @@ export class UserServices {
       return this.http.get(`${this.env.base_url}/bookings/recentlybooking/${id}`);
       }
 
-    // http://localhost:8000/api/get/vendor/1
+
+
+  // *************************hotel policy api*****************
+
+cancelPolisy( data: any, id: any){
+    return this.http.post(`${this.env.base_url}/hotel/${id}/cancellation`, data);
+}
+ privacyPolisy1( data: any, id: any){
+    return this.http.post(`${this.env.base_url}/hotel/${id}/privacy`, data);
+}
+  termsPolisy( data: any, id: any){
+    return this.http.post(`${this.env.base_url}/hotel/${id}/terms`, data);
+  }
+
+  paymentPolisy( data: any, id: any){
+
+    return this.http.post(`${this.env.base_url}/hotel/${id}/payment`, data);
+  }
+
   chancalatiPolisy(){
     // demo for hostign 
   }

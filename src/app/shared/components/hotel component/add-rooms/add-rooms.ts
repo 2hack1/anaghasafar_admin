@@ -6,6 +6,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { UserServices } from '../../../../core/services/user-services';
 import { NotifierContainerComponent, NotifierModule, NotifierService } from 'angular-notifier';
 import { ActivatedRoute, CanActivate, Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment.development';
 
 
 
@@ -21,7 +22,7 @@ export class AddRooms {
   showcancellation: boolean = true;
   // formErrors: string[] = [];
   
-
+env=environment.backendUrl
 //   Single Room – For one person, usually one single bed.
 
 // Double Room – For two people, one double bed or two twin beds.
@@ -86,7 +87,7 @@ roomId: string | null = null;
 ngOnInit(): void {
   this.roomId = this.activate.snapshot.paramMap.get('id');
   this.editMode = !!this.roomId;
- const apiImagePath='http://localhost:8000/storage/';
+ const apiImagePath=`${this.env}/storage/`;
   if (this.editMode) {
     //  this.showcancellation=true;
     //  console.log(this.showcancellation)

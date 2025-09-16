@@ -1,89 +1,89 @@
+<notifier-container></notifier-container>
 <div class="container mt-5">
     <div class="card shadow-lg border-0">
         <div class="card-header bg-primary text-white" style="margin-top: -2rem;">
-            <h3 class="mb-0 text-black" style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            <h3 class="mb-0 text-black" style="color: rgb(24, 23, 23); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                 Hotel Cancellation Policy</h3>
         </div>
         <div class="card-body"> <!-- Cancellation Form -->
-            <form (ngSubmit)="submitCancellation1()" #cancelForm="ngForm"> <label class="form-label mb-2">Select
-                    Policies</label>
-                <div class="mb-3 d-flex flex-column gap-2"> <!-- Policy Checkboxes -->
-                    <div *ngFor="let policy of policyList" class="form-check"> <input type="checkbox"
-                            class="form-check-input" [id]="policy.value" [(ngModel)]="selectedPolicies[policy.value]"
-                            name="{{policy.value}}"> <label class="form-check-label" [for]="policy.value">{{
-                            policy.label }}</label> </div>
-                </div> <!-- Dynamic Textareas for each selected policy -->
-                <div *ngFor="let policy of policyList">
-                    <div *ngIf="selectedPolicies[policy.value]" class="mb-3"> <label class="form-label">{{ policy.label
-                            }} Details</label> <textarea class="form-control" rows="3"
-                            [(ngModel)]="policyDetails[policy.value]" name="{{policy.value}}Details"
-                            placeholder="Enter {{ policy.label.toLowerCase() }} details..."></textarea> </div>
-                </div>
-                <div class="form-check mb-3">
-                    <!-- <input type="checkbox" id="agree" name="agree" [(ngModel)]="cancellation.agree" class="form-check-input" required> <label for="agree" class="form-check-label"> I have read and agree to the cancellation policy. </label> -->
-                </div>
-            </form> <!-- Nav Tabs -->
+           <form (ngSubmit)="submitCancellation1()" #cancelForm="ngForm">
+  <label class="form-label mb-2">Select Policies</label>
 
-          <!-- Nav Tabs -->
-<ul class="nav nav-tabs justify-content-center" id="policyTabs" role="tablist"
-    style="margin-top: 10px; padding: 10px;">
+  <div class="mb-3 d-flex flex-column gap-2">
+    <!-- Policy Checkboxes -->
+    <div *ngFor="let policy of policyList" class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [id]="policy.value"
+        [(ngModel)]="selectedPolicies[policy.value]"
+        name="{{policy.value}}"
+      />
+      <label class="form-check-label" [for]="policy.value">{{ policy.label }}</label>
+    </div>
+  </div>
+
+  <!-- Dynamic Textareas -->
+  <div *ngFor="let policy of policyList">
+    <div *ngIf="selectedPolicies[policy.value]" class="mb-3">
+      <label class="form-label">{{ policy.label }} Details</label>
+      <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="policyDetails[policy.value]"
+        name="{{policy.value}}Details"
+        placeholder="Enter {{ policy.label.toLowerCase() }} details..."
+      ></textarea>
+    </div>
+</div>
+<div class="mt-3" *ngIf="isAnyPolicySelected()">
+  <button class="btn btn-primary" type="submit">Submit</button>
+</div>
+
+</form>
+
+            
+            <!-- Nav Tabs -->
+
+         <ul class="nav nav-tabs justify-content-center" role="tablist" style="margin-top: 10px; padding: 10px;">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="cancellation-tab" data-bs-toggle="tab"
-      data-bs-target="#cancellation" type="button" role="tab" aria-controls="cancellation"
-      aria-selected="true">Cancellation & Refund Policy</button>
+    <button class="nav-link active"
+            type="button"
+            (click)="showPolicy('cancellation')">Cancellation & Refund Policy</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="payment-tab" data-bs-toggle="tab"
-      data-bs-target="#payment" type="button" role="tab" aria-controls="payment"
-      aria-selected="false">Payment Policy</button>
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('payment')">Payment Policy</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="lastminute-tab" data-bs-toggle="tab"
-      data-bs-target="#lastminute" type="button" role="tab" aria-controls="lastminute"
-      aria-selected="false">Last-Minute Cancellation Policy</button>
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('lastminute')">Privacy Policy</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="nonrefundable-tab" data-bs-toggle="tab"
-      data-bs-target="#nonrefundable" type="button" role="tab" aria-controls="nonrefundable"
-      aria-selected="false">Non-Refundable Policy</button>
-  </li>
-  <!-- ✅ New Tab -->
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="flexible-tab" data-bs-toggle="tab"
-      data-bs-target="#flexible" type="button" role="tab" aria-controls="flexible"
-      aria-selected="false">Flexible Policy</button>
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('nonrefundable')">Term  & coditions</button>
   </li>
 </ul>
 
-<!-- Tab Content -->
-<div class="tab-content p-4" id="policyTabsContent">
-  <!-- Existing Tabs -->
-  <div class="tab-pane fade show active" id="cancellation" role="tabpanel"
-    aria-labelledby="cancellation-tab">
+<div class="tab-content p-4">
+  <div *ngIf="activePolicy==='cancellation'">
     <h5 class="text-primary">Cancellation & Refund Policy</h5>
-    <p>Guests may cancel free of charge up to <strong>48 hours</strong> before check-in...</p>
+    <p>{{ policyContents.cancellation }}</p>
   </div>
-
-  <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+  <div *ngIf="activePolicy==='payment'">
     <h5 class="text-primary">Payment Policy</h5>
-    <p>Full payment or an advance deposit is required...</p>
+    <p>{{ policyContents.payment }}</p>
   </div>
-
-  <div class="tab-pane fade" id="lastminute" role="tabpanel" aria-labelledby="lastminute-tab">
-    <h5 class="text-primary">Last-Minute Cancellation Policy</h5>
-    <p>Cancellations made within <strong>24 hours</strong>...</p>
+  <div *ngIf="activePolicy==='lastminute'">
+    <h5 class="text-primary">Confidentiality & privacy policy</h5>
+    <p>{{ policyContents.lastminute }}</p>
   </div>
-
-  <div class="tab-pane fade" id="nonrefundable" role="tabpanel" aria-labelledby="nonrefundable-tab">
-    <h5 class="text-primary">Non-Refundable Policy</h5>
-    <p>Bookings under the non-refundable rate plan cannot be modified...</p>
-  </div>
-
-  <!-- ✅ New Tab Content -->
-  <div class="tab-pane fade" id="flexible" role="tabpanel" aria-labelledby="flexible-tab">
-    <h5 class="text-primary">Flexible Policy</h5>
-    <p>This policy allows guests to cancel up to <strong>12 hours</strong> before check-in with no fee. 
-       After that, only one night’s charge applies. Refunds within <strong>3–5 business days</strong>.</p>
+  <div *ngIf="activePolicy==='nonrefundable'">
+    <h5 class="text-primary">Usage Policy</h5>
+    <p>{{ policyContents.nonrefundable }}</p>
   </div>
 </div>
 
