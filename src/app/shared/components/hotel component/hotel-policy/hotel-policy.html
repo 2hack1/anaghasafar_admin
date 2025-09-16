@@ -14,7 +14,6 @@
                             policy.label }}</label> </div>
                 </div> <!-- Dynamic Textareas for each selected policy -->
                 <div *ngFor="let policy of policyList">
-                    
                     <div *ngIf="selectedPolicies[policy.value]" class="mb-3"> <label class="form-label">{{ policy.label
                             }} Details</label> <textarea class="form-control" rows="3"
                             [(ngModel)]="policyDetails[policy.value]" name="{{policy.value}}Details"
@@ -23,10 +22,6 @@
                 <div class="form-check mb-3">
                     <!-- <input type="checkbox" id="agree" name="agree" [(ngModel)]="cancellation.agree" class="form-check-input" required> <label for="agree" class="form-check-label"> I have read and agree to the cancellation policy. </label> -->
                 </div>
-
-
-
-
             </form> <!-- Nav Tabs -->
             <ul class="nav nav-tabs justify-content-center" id="policyTabs" role="tablist"
                 style="margin-top: 10px; padding: 10px;">
@@ -36,7 +31,6 @@
                 <li class="nav-item" role="presentation"> <button class="nav-link" id="payment-tab" data-bs-toggle="tab"
                         data-bs-target="#payment" type="button" role="tab" aria-controls="payment"
                         aria-selected="false"> Payment Policy </button> </li>
-
                 <li class="nav-item" role="presentation"> <button class="nav-link" id="lastminute-tab"
                         data-bs-toggle="tab" data-bs-target="#lastminute" type="button" role="tab"
                         aria-controls="lastminute" aria-selected="false"> Last-Minute Cancellation Policy </button>
@@ -45,9 +39,6 @@
                         data-bs-toggle="tab" data-bs-target="#nonrefundable" type="button" role="tab"
                         aria-controls="nonrefundable" aria-selected="false"> Non-Refundable Policy </button> </li>
             </ul> <!-- Tab Content -->
-        
-            
-          <!-- </form> -->
             <div class="tab-content p-4" id="policyTabsContent"> <!-- Cancellation Policy -->
                 <div class="tab-pane fade show active" id="cancellation" role="tabpanel"
                     aria-labelledby="cancellation-tab">
@@ -64,7 +55,7 @@
                 </div> <!-- Last-Minute Policy -->
                 <div class="tab-pane fade" id="lastminute" role="tabpanel" aria-labelledby="lastminute-tab">
                     <h5 class="text-primary">Last-Minute Cancellation Policy</h5>
-                    <p>Cancellations made within <strong>24 hours</strong> of check-in will incur a charge of
+                    <p>Cancellations made within <strong>24 hours</strong> of check-in will incurr a charge of
                         <strong>100% of the first night’s stay</strong>. No refunds will be provided for same-day
                         cancellations.</p>
                 </div> <!-- Non-Refundable Policy -->
