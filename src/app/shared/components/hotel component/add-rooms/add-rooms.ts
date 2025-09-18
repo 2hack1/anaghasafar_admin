@@ -254,7 +254,7 @@ hotelImages: { file: File | null; preview: string; existing?: boolean; name?: st
     formDat.append('description', this.roomForm.get('description')?.value || '');
     formDat.append('cancellationPolicy', this.roomForm.get('cancellationPolicy')?.value || '');
     formDat.append('cancellation_charges', this.roomForm.get('cancellation_charges')?.value.toString() || '0');
-    formDat.append('hotel_vendor_id', String(1211)); // Change if dynamic
+    formDat.append('hotel_vendor_id', String(sessionStorage.getItem('id'))); // Change if dynamic
 
     // Optional: log for debugging
     for (let [key, value] of formDat.entries()) {
