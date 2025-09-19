@@ -16,6 +16,7 @@ export class VendorDeskboard implements OnInit {
   ngOnInit(): void {
     
     this.getbookingsdata();
+
     this.getprofiledata();
   }
 
@@ -35,8 +36,8 @@ bokingdata:any;
 
  getprofiledata(){
  this.userservice.userDataForHotelDeskboard(sessionStorage.getItem('id')).subscribe((res:any)=>{
-     console.log(res,"user details:");
-     this.userdata=res.bookings
+   this.userdata=res.bookings
+   console.log(res.bookings,"user details:11111111111111111111111111111111111111111111111111");
  });
 }
 }

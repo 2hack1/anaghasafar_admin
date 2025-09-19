@@ -91,7 +91,7 @@ ngOnInit(): void {
   if (this.editMode) {
     //  this.showcancellation=true;
     //  console.log(this.showcancellation)
-  const vendorid = Number(sessionStorage.getItem('vendorid'));
+  const vendorid = Number(sessionStorage.getItem('id'));
 
     console.log("sdjflsjdlf", vendorid)
     this.service.gethotelroom(vendorid,this.roomId).subscribe((res: any) => {

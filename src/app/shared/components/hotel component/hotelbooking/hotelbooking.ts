@@ -110,35 +110,15 @@ bokingdata:any;
   }
 
 
-
   bookingdata: any[] = [];   // all bookings from API
 filteredBookings: any[] = []; // filtered + searched bookings
 searchQuery: string = '';
 selectedStatus: string = 'All'; // default tab
 
 
-  // bookingdata:any=[];
-  
-//    getbooking(){
-//   this.userservice.getHotelboking().subscribe({
-   
-//       next: (res: any) => {
-//       console.log("Response Response:", res);
-//       this.bookingdata=res;
-//       console.log( this.bookingdata[0].hotel_vendor.hotelname
-//       ,"bookingdata:");
-//       // 👉 handle your success response here
-//     },
-//     error: (err: any) => {
-//       console.error("Error:", err);
-//       // 👉 handle error here
-//     },
-
-//   })
-
-// }
-getbooking() {
-  this.userservice.getHotelboking().subscribe({
+getbooking(){
+  const vendorid= sessionStorage.getItem('id');
+  this.userservice.getbooking(vendorid).subscribe({
     next: (res: any) => {
       console.log("Response:", res);
       this.bookingdata = res;
@@ -146,8 +126,8 @@ getbooking() {
     },
     error: (err: any) => {
       console.error("Error:", err);
-    },
-  });
+    }
+  })
 }
 
 

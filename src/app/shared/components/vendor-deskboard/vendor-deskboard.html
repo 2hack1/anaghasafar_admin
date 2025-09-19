@@ -101,7 +101,7 @@
   </div>
 
   <!-- Loop starting from 3rd booking (index 2) -->
- <div class="booking" *ngFor="let booking of userdata?.slice(1)">
+ <div class="booking" *ngFor="let booking of userdata?.slice(0, 2)">
 
     <div class="booking-info">
       <h4>{{ booking.username }}</h4>

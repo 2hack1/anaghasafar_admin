@@ -230,6 +230,11 @@ export class UserServices {
   getAllHotelRooms() {
     return this.http.get(`${this.env.base_url}/hotel-rooms`);
   }
+  
+  getHotelByid(id:any){
+    
+    return this.http.get(`${this.env.base_url}/hotel-roomswithid/${id}`);
+  }
 
   updateRoomData(data: FormData, id: any) {
 
@@ -250,8 +255,8 @@ export class UserServices {
     return this.http.post(`${this.env.base_url}/bookings/addroomno/${bookingid}`, bookingdata);
   }
   
-  notifications(){
-    return this.http.get(`${this.env.base_url}/bookings/nortification/roomno`);
+  notifications(vendorid:any){
+    return this.http.get(`${this.env.base_url}/bookings/nortification/roomno/${vendorid}`);
    }
 
    updateNotification(id: any, data: any){
@@ -270,6 +275,10 @@ export class UserServices {
     }
       userDataForHotelDeskboard(id: any){
       return this.http.get(`${this.env.base_url}/bookings/recentlybooking/${id}`);
+      }
+
+      getbooking(vandorId:any){
+        return this.http.get(`${this.env.base_url}/bookings/vendor/${vandorId}`)
       }
 
 

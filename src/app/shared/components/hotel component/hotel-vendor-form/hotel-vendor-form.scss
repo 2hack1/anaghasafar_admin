@@ -17,3 +17,7 @@ select.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {
   border-color: #dc3545;
 }
+
+.text-uppercase {
+  text-transform: uppercase; /* forces display in caps */
+}

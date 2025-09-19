@@ -44,7 +44,9 @@ getvernorDetails(){
   }
   notifications: any = [];
   getNortification() {
-    this.user.notifications().subscribe((res: any) => {
+      const id=sessionStorage.getItem('id');
+
+    this.user.notifications(id).subscribe((res: any) => {
       console.log("notifications", res);
       this.notifications = res;
     })

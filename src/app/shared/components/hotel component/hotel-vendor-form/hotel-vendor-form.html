@@ -1,7 +1,6 @@
+<notifier-container></notifier-container>
 <div class="container py-5">
 
-
-  
   <div class="card shadow-lg p-4">
     
 <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
@@ -195,7 +194,16 @@
       <div class="d-flex justify-content-between mt-4">
         <button type="button" class="btn btn-outline-secondary" (click)="previousStep()" [disabled]="step === 0">Back</button>
         <button *ngIf="step < steps.length - 1" type="button" class="btn btn-primary" (click)="nextStep()">Next </button>
-        <button *ngIf="step === steps.length - 1" type="submit" class="btn btn-success">Submit</button>
+        <!-- <button *ngIf="step === steps.length - 1" type="submit" class="btn btn-success">Submit</button> -->
+      <button 
+  *ngIf="step === steps.length - 1"
+  type="submit"
+  class="btn btn-success"
+  [disabled]="loading"
+>
+  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+  {{ loading ? 'Submitting...' : 'Submit' }}
+</button>
       </div>
     </form>
 

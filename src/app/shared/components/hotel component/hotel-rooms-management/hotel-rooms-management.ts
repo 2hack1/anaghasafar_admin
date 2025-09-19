@@ -49,7 +49,8 @@ env=environment;
 
 
   getRoomsData() {
-    this.service.getAllHotelRooms().subscribe((res: any) => {
+    const id = sessionStorage.getItem('id');
+    this.service.getHotelByid(id).subscribe((res: any) => {
       console.log("res:", res.data[0].hotel_vendor_id);
       sessionStorage.setItem('vendorid',res.data[0].hotel_vendor_id);
       this.alldata = res.data.map((room: any) => ({
