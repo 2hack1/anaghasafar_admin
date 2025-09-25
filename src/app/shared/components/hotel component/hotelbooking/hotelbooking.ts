@@ -63,7 +63,7 @@ bokingdata:any;
  getbookingsdata(){
   const id= sessionStorage.getItem('id');
   this.userservice.getbookingDetails(id).subscribe((res:any)=>{
-    console.log(res,"booking details:");
+    // console.log(res,"booking details:");
     this.bokingdata=res;
   })
  }
@@ -76,7 +76,7 @@ bokingdata:any;
     selectNumber(num: number) {
     // that place i am transfer values in the two model 
     this.roomsFirstly = num;
-    console.log("Selected number of rooms:", this.roomsFirstly);
+    // console.log("Selected number of rooms:", this.roomsFirstly);
     this.toggleGuestsModal();
   }
     nextPage() {
@@ -120,7 +120,7 @@ getbooking(){
   const vendorid= sessionStorage.getItem('id');
   this.userservice.getbooking(vendorid).subscribe({
     next: (res: any) => {
-      console.log("Response:", res);
+      // console.log("Response:", res);
       this.bookingdata = res;
       this.applyFilters(); // apply search + filter
     },
@@ -179,10 +179,10 @@ setStatus(status: string) {
 // }
 
 hoteldata(id:any,email:string,name:string,roomtype:string,hotelname:any){
-  console.log("lsjdlkfjlsdlflsdlflsj lndlfj");
+  // console.log("lsjdlkfjlsdlflsdlflsj lndlfj");
 
   this.toggleGuestsModalFirstly();
-  console.log(this.hotleroomdata,"hotleroomdata:", id,email,name,roomtype,hotelname);
+  // console.log(this.hotleroomdata,"hotleroomdata:", id,email,name,roomtype,hotelname);
  this.hotleroomdata.id=id.toString();
     this.hotleroomdata.email=email;
     this.hotleroomdata.name=name;
@@ -290,11 +290,11 @@ applyGuestsFirstly() {
   // ********************************************************************************************************
 
 editBooking(booking: any) {
-  console.log("Edit booking:", booking);
+  // console.log("Edit booking:", booking);
 }
 
 deleteBooking(booking: any) {
-  console.log("Delete booking:", booking);
+  // console.log("Delete booking:", booking);
 }
 calculateNights(checkIn: string, checkOut: string): number {
   const inDate = new Date(checkIn);

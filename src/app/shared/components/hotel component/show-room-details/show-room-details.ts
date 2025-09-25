@@ -49,9 +49,9 @@ export class ShowRoomDetails {
     // Replace this with your real API call
     const vendorid = Number(sessionStorage.getItem('vendorid'));
 
-    console.log("sdjflsjdlf", vendorid)
+    // console.log("sdjflsjdlf", vendorid)
     this.service.gethotelroom(vendorid, id).subscribe((res: any) => {
-      console.log("shwo room details :", res.data);
+      // console.log("shwo room details :", res.data);
       const room = res.data;
       this.data = res.data;
 

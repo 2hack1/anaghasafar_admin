@@ -118,7 +118,7 @@ validateGST(event: any) {
     this.submitted = true;
     if (this.vendorForm.valid) {
       const data = { ...this.vendorForm.value, images: this.images };
-      console.log('Form submitted:', data);
+      // console.log('Form submitted:', data);
       // Send to backend API
     } else {
       this.markCurrentStepFieldsTouched();

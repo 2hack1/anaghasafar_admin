@@ -62,7 +62,7 @@ export class Packages implements OnInit {
 
 
   ) {
-    console.log(this.generateId())
+    // console.log(this.generateId())
     this.packageForm = this.fb.group({
       package_code: ['', Validators.required],
       place_name: ['', Validators.required],
@@ -427,42 +427,42 @@ export class Packages implements OnInit {
     switch (this.currentStep) {
       case 1:
         if (this.packageForm.invalid) return alert("Please fill all required fields.");
-        console.log("Step 1 working");
+        // console.log("Step 1 working");
         this.savePackageInfo();
         //  this.nextStep();  
         this.a = true;
         break;
       case 2:
         if (!this.a) return alert("Please upload an image.");
-        console.log("Step 2 working");
+        // console.log("Step 2 working");
         this.saveImage();
 
         // this.nextStep();
         break;
       case 3:
         if (this.itineraryForm.invalid) return alert("Please enter itinerary details.");
-        console.log("Step 3 working");
+        // console.log("Step 3 working");
         this.saveItinerary();
         break;
       case 4:
         if (!this.a) return alert("Please fill month and year.");
-        console.log("Step 4 working");
+        // console.log("Step 4 working");
         this.saveMonth();
         break;
       case 5:
         if (this.monthForm.invalid) return alert("Please enter transport details.");
-        console.log("Step 5 working");
+        // console.log("Step 5 working");
         this.saveDate();
         break;
       case 6:
         if (this.transportForm.invalid) return alert("Please enter transport details.");
-        console.log("Step 6 working");
+        // console.log("Step 6 working");
         this.saveTransports();
         // this.nextStep();
         break;
       case 7:
         if (this.transportForm.invalid) return alert("Please enter transport details.");
-        console.log("Step 6 working");
+        // console.log("Step 6 working");
         this.submitImages();
         this.nextStep();
         break;
@@ -471,7 +471,7 @@ export class Packages implements OnInit {
           alert("Please fill all date fields.");
           break;
         }
-        console.log("Step 7 working");
+        // console.log("Step 7 working");
         this.formVisible = false; // Close form after final step
         this.loadPackages();
         break;
@@ -564,9 +564,9 @@ export class Packages implements OnInit {
         formDat.append('images[]', obj.file);
       });
 
-      for (const pair of formDat.entries()) {
-        console.log(" that is image :", `${pair[0]}: `, pair[1]);
-      }
+      // for (const pair of formDat.entries()) {
+      //   console.log(" that is image :", `${pair[0]}: `, pair[1]);
+      // }
      
 
       this.service.imagereplaceGallary(formDat, this.service.currentpackageId).subscribe({
@@ -599,7 +599,7 @@ export class Packages implements OnInit {
       // Create API – send image upload request
       this.service.imageGallary(formDat, this.currentId).subscribe({
         next: (res) => {
-          console.log("multi image", res);
+          // console.log("multi image", res);
           this.notifier.notify('success', ' 7st Form Details Successfully Upload!');
           this.nextStep();
         },
@@ -608,31 +608,6 @@ export class Packages implements OnInit {
         }
       });
     }
-
-    // if(!this.currentId){
-    //   alert("Somthing wants worng")
-    // }
-
-    // console.log(this.service.currentpackageId);
-    // console.log(this.service.subdestinationid);
-    // console.log(this.currentId);
-    // this.service.imageGallary(formDat,this.currentId).subscribe((res:any)=>{
-
-    //   console.log("multi image",res);
-    // })
-
-    // Demo backend call - replace with your real API
-    // this.http.post<any>('http://localhost:8000/api/upload-images', formData).subscribe({
-    //   next: (response) => {
-    //     this.uploadedImageUrls = response.images; // e.g., ["gallery/img1.jpg", "gallery/img2.jpg"]
-    //     this.imageFiles = [];
-    //     this.previewImages = [];
-    //     alert('Images pushed successfully!');
-    //   },
-    //   error: () => {
-    //     alert('Upload failed');
-    //   }
-    // });
   }
 
   saveImage() {
@@ -696,7 +671,7 @@ export class Packages implements OnInit {
     if (this.isEditing) {
       this.service.updateItinerary(this.service.currentpackageId, body).subscribe({
         next: (res: any) => {
-          console.log("✅ Itinerary updated:", res);
+          // console.log("✅ Itinerary updated:", res);
           this.notifier.notify('success', ' 4st Form Details Successfully Updated!');
           this.nextStep();
         },
@@ -713,7 +688,7 @@ export class Packages implements OnInit {
       // Call create itinerary API
       this.service.saveItinerary(body, this.currentId).subscribe({
         next: (res) => {
-          console.log("✅ Itinerary created:", res);
+          // console.log("✅ Itinerary created:", res);
           this.notifier.notify('success', ' 4st Form Details Successfully Upload!');
           this.nextStep();
         },
@@ -768,7 +743,7 @@ export class Packages implements OnInit {
       // Create month tour records
       this.service.saveMonthTour(moList).subscribe({
         next: (res: any) => {
-          console.log("📦 Saved months:", res);
+          // console.log("📦 Saved months:", res);
           this.loadPackagesMonth(this.currentId);
           this.notifier.notify('success', ' Form Details Successfully Upload!');
           this.nextStep();

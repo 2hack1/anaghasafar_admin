@@ -35,16 +35,16 @@ export class UserTourOrder implements OnInit {
     this.us_.getOrderData().subscribe({
       next: (res: any) => {
         this.users = res;
-        console.log(res);
+        // console.log(res);
       }, error: (err: any) => {
-        console.log('check it')
+        // console.log('check it')
       },
     })
   }
   
   showUser(user: any) {
 
-    console.log(user,"userId")
+    // console.log(user,"userId")
     this.route.navigateByUrl(`/orderAbout/${user}`);
   }
 
@@ -53,7 +53,7 @@ deleteUser(user: Number) {
 
   if (confirmDelete) {
     this.us_.deleteOrderById(user).subscribe((res: any) => {
-      console.log('Deleted:', res);
+      // console.log('Deleted:', res);
     });
    this.getorderdata();
   }

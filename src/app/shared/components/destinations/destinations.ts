@@ -30,7 +30,7 @@ export class Destinations {
   
   sendId(entry: AdminEntry):void {
   if (entry?.id) {
-    console.log('Navigating to ID:', entry.id);
+    // console.log('Navigating to ID:', entry.id);
     this.route.navigate(['/sub-des', entry.id]);  // Cleaner and more reliable
   } else {
     console.warn('Invalid entry:', entry);
@@ -52,7 +52,7 @@ export class Destinations {
     this.formVisible = true;
     this.isEditing = editing;
     if (editing && entry) {
-      console.log('Editing entry:', entry); // DEBUG
+      // console.log('Editing entry:', entry); // DEBUG
     this.formData = { ...entry }; // ensure id is preserved
     } else {
       this.formData = { name: '', type: '' };

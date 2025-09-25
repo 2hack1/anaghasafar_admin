@@ -133,7 +133,7 @@ validateGST(event: any) {
 
 onSubmit() {
   
-  console.log('Form submitted:', this.vendorForm.value);
+  // console.log('Form submitted:', this.vendorForm.value);
       this.loading = true; // show spinner
   if (this.vendorForm.valid && this.licenseFile) {
     this.submitted = true;
@@ -152,12 +152,12 @@ onSubmit() {
       formData.append('hotel_images[]', file);  // 'images[]' matches backend expectation
     });
 
-    console.log('Sending form data...');
+    // console.log('Sending form data...');
 
    
     this.userService.registerHotelVendor(formData).subscribe({
   next: (res: any) => {
-    console.log('✅ Server response:', res); 
+    // console.log('✅ Server response:', res); 
       if (res.access_token) {
         sessionStorage.setItem('token', res.access_token);
         sessionStorage.setItem('name', res.vendor.vendor_name);

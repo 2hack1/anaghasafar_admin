@@ -13,7 +13,7 @@ export interface AdminEntry {
 @Injectable({
   providedIn: 'root'
 })
-   
+
 export class UserServices {
 
   private stateSubject = new BehaviorSubject<string>('deactive');
@@ -24,13 +24,13 @@ export class UserServices {
   subdestinationid: any;
   currentpackageId: any;
   norifilerrun = 0;
-  env=environment
+  env = environment
 
   toggle() {
     const newState = this.stateSubject.getValue() === 'active' ? 'deactive' : 'active';
     this.stateSubject.next(newState);
   }
- 
+
 
   // ********************destinations***************************
   // Get all main destinations
@@ -207,32 +207,32 @@ export class UserServices {
   }
 
   registerHotelVendor(data: any) {
-    return this.http.post(`${this.env.base_url}/vendor/register`,data)
+    return this.http.post(`${this.env.base_url}/vendor/register`, data)
   }
 
   loginHotelVendor(data: FormData) {
-    return this.http.post(`${this.env.base_url}/vendor/login`,data)
+    return this.http.post(`${this.env.base_url}/vendor/login`, data)
   }
 
   addhotelrooms(data: FormData) {
-    return this.http.post(`${this.env.base_url}/hotel-rooms`,data);
+    return this.http.post(`${this.env.base_url}/hotel-rooms`, data);
   }
-// ***************************** 
+  // ***************************** 
   // gethotelroom(id: any) {
   //   return this.http.get(`${this.env.base_url}/hotel-rooms/${id}`);
   // }
 
   // ************************
-  gethotelroom(hotelid:any,roomid:any) {
+  gethotelroom(hotelid: any, roomid: any) {
     return this.http.get(`${this.env.base_url}/hotels/${hotelid}/rooms/${roomid}`);
   }
 
   getAllHotelRooms() {
     return this.http.get(`${this.env.base_url}/hotel-rooms`);
   }
-  
-  getHotelByid(id:any){
-    
+
+  getHotelByid(id: any) {
+
     return this.http.get(`${this.env.base_url}/hotel-roomswithid/${id}`);
   }
 
@@ -249,61 +249,73 @@ export class UserServices {
   getHotelboking() {
     return this.http.get(`${this.env.base_url}/bookings`);
   }
-  
+
   // add room no to booking
-  setRoomno(bookingdata: any, bookingid: any){
+  setRoomno(bookingdata: any, bookingid: any) {
     return this.http.post(`${this.env.base_url}/bookings/addroomno/${bookingid}`, bookingdata);
   }
-  
-  notifications(vendorid:any){
+
+  notifications(vendorid: any) {
     return this.http.get(`${this.env.base_url}/bookings/nortification/roomno/${vendorid}`);
-   }
+  }
 
-   updateNotification(id: any, data: any){
+  updateNotification(id: any, data: any) {
     return this.http.post(`${this.env.base_url}/vendor/${id}/update-name-email/`, data);
-    }
+  }
 
-    getvendorDetails(id: any){
-      return this.http.get(`${this.env.base_url}/get/vendor/${id}`);
-    }
-    getvendoralldata(id:any){
-      return this.http.get(`${this.env.base_url}/vendor/alldata/${id}`);
+  getvendorDetails(id: any) {
+    return this.http.get(`${this.env.base_url}/get/vendor/${id}`);
+  }
+  getvendoralldata(id: any) {
+    return this.http.get(`${this.env.base_url}/vendor/alldata/${id}`);
 
-    }
-    getbookingDetails(id: any){
-      return this.http.get(`${this.env.base_url}/bookings/wholebookingdata/${id}`);
-    }
-      userDataForHotelDeskboard(id: any){
-      return this.http.get(`${this.env.base_url}/bookings/recentlybooking/${id}`);
-      }
+  }
+  getbookingDetails(id: any) {
+    return this.http.get(`${this.env.base_url}/bookings/wholebookingdata/${id}`);
+  }
+  userDataForHotelDeskboard(id: any) {
+    return this.http.get(`${this.env.base_url}/bookings/recentlybooking/${id}`);
+  }
 
-      getbooking(vandorId:any){
-        return this.http.get(`${this.env.base_url}/bookings/vendor/${vandorId}`)
-      }
+  getbooking(vandorId: any) {
+    return this.http.get(`${this.env.base_url}/bookings/vendor/${vandorId}`)
+  }
 
 
 
   // *************************hotel policy api*****************
 
-cancelPolisy( data: any, id: any){
+  cancelPolisy(data: any, id: any) {
     return this.http.post(`${this.env.base_url}/hotel/${id}/cancellation`, data);
-}
- privacyPolisy1( data: any, id: any){
+  }
+  privacyPolisy1(data: any, id: any) {
     return this.http.post(`${this.env.base_url}/hotel/${id}/privacy`, data);
-}
-  termsPolisy( data: any, id: any){
+  }
+  termsPolisy(data: any, id: any) {
     return this.http.post(`${this.env.base_url}/hotel/${id}/terms`, data);
   }
 
-  paymentPolisy( data: any, id: any){
+  paymentPolisy(data: any, id: any) {
 
     return this.http.post(`${this.env.base_url}/hotel/${id}/payment`, data);
   }
 
-  chancalatiPolisy(){
+  aadBankDetails(data: any) {
+    return this.http.post(`${this.env.base_url}/vendors`, data);
+  }
+
+  updateBankDetails(id: any, data: any) {
+    return this.http.post(`${this.env.base_url}/vendors/update/${id}`, data);
+  }
+
+  getBankDetail(id: any) {
+    return this.http.get(`${this.env.base_url}/vendors/${id}`);
+  }
+
+  chancalatiPolisy() {
     // demo for hostign 
   }
-  privacyPolisy(){
-      // demo for hostign 
+  privacyPolisy() {
+    // demo for hostign 
   }
 }

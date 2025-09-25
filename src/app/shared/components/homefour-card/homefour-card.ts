@@ -29,7 +29,7 @@ export class HomefourCard implements OnInit {
   }
   
   saveCard(): void {
-    console.log("cards", this.selectedCard);
+    // console.log("cards", this.selectedCard);
     this.car={ 
       heading:this.selectedCard.heading,
       headingData:this.selectedCard.headingData,
@@ -42,7 +42,7 @@ export class HomefourCard implements OnInit {
   updatecard(data:any,id:any){
     
     this.service.update4card(id,data).subscribe((res)=>{
-      console.log("its working");
+      // console.log("its working");
       this.selectedCard = null;
       
       this.notifier.notify('success','card has been Successfully updated!.....');

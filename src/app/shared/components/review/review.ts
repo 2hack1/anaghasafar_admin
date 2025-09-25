@@ -21,7 +21,7 @@ export class Review implements OnInit{
  getbookingsdata(){
   const id= sessionStorage.getItem('id');
   this.userservice.getbookingDetails(id).subscribe((res:any)=>{
-    console.log(res,"booking details:");
+    // console.log(res,"booking details:");
     this.bokingdata=res;
   })
  }

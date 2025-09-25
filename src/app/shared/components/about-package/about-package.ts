@@ -25,7 +25,7 @@ constructor(private activateRout:ActivatedRoute,private service:UserServices){
   ngOnInit(): void {
     
     this.packageId=this.activateRout.snapshot.paramMap.get('id');
-    console.log(this.packageId);
+    // console.log(this.packageId);
     this.getItinaries(this.packageId);
     this.getMonth(this.packageId);
     this.getPackage(this.packageId);
@@ -35,7 +35,7 @@ constructor(private activateRout:ActivatedRoute,private service:UserServices){
   getPackage( packageId:any){
     this.service.getperticular(packageId).subscribe((res)=>{
      this.packages=res;
-     console.log("packages",this.packages)
+    //  console.log("packages",this.packages)
      
     })
 // getperticular(sub_des_id: number) {
@@ -46,7 +46,7 @@ constructor(private activateRout:ActivatedRoute,private service:UserServices){
   getItinaries(packageId:any){
     this.service.getitineries(packageId).subscribe((res)=>{
    this.itineries=res;
-  console.log("itineries",this.itineries);
+  // console.log("itineries",this.itineries);
     })
 
 // getitineries(package_id:any){
@@ -58,7 +58,7 @@ getTrasnsport(packageId:any){
   this.service.getTransportation(packageId).subscribe((res)=>{
 
     this.transport=res;
-    console.log("transport",this.transport);
+    // console.log("transport",this.transport);
   })
 // getTransportation(package_id:any){
 //     return this.http.get(`${this.apiUrl}transports/${package_id}`);
@@ -67,7 +67,7 @@ getTrasnsport(packageId:any){
   getMonth(packageId:any){
     this.service.getMonth(packageId).subscribe((res)=>{
       this.monthDate=res;
-      console.log("month",this.monthDate);
+      // console.log("month",this.monthDate);
     })
 
   // getMonth(package_id:number){

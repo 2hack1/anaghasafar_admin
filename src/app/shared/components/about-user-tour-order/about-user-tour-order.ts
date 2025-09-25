@@ -18,7 +18,7 @@ constructor(private route:ActivatedRoute,private  service:UserServices){}
 
   ngOnInit(): void {
    this.orderId= Number(this.route.snapshot.paramMap.get('id'));
-   console.log(this.orderId,'order id');
+  //  console.log(this.orderId,'order id');
    this.getOrderData(this.orderId);
   }
 
@@ -29,7 +29,7 @@ constructor(private route:ActivatedRoute,private  service:UserServices){}
   getOrderData(id:Number){
 
     this.service.getOrderById(id).subscribe((res:any)=>{
-      console.log(res);
+      // console.log(res);
  this.orderData=res;
     })
   }

@@ -31,13 +31,13 @@ export class Topimage implements OnInit {
   getCards(): void {
     this.service.gettopimage().subscribe((res) => {
       this.cards = res;
-      console.log(res)
+      // console.log(res)
     });
   }
   
   editCard(card: any): void {
     this.selectedCard = { ...card };
-    console.log("card details", this.selectedCard);
+    // console.log("card details", this.selectedCard);
     this.selectedImage = null;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

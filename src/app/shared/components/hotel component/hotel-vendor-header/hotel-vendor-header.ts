@@ -33,7 +33,7 @@ export class HotelVendorHeader implements OnInit {
 getvernorDetails(){
     const id=  sessionStorage.getItem('id')
   this.user.getvendorDetails(id).subscribe((res:any)=>{
-    console.log("vendor details", res); 
+    // console.log("vendor details", res); 
     this.editName =res.vendor.vendor_name;
     this.editEmail=res.vendor.vendor_email;
   })
@@ -47,7 +47,7 @@ getvernorDetails(){
       const id=sessionStorage.getItem('id');
 
     this.user.notifications(id).subscribe((res: any) => {
-      console.log("notifications", res);
+      // console.log("notifications", res);
       this.notifications = res;
     })
   }
@@ -55,7 +55,7 @@ getvernorDetails(){
   toggleTarget() {
     // this.togel=!this.togel;
     this.isMobileView = !this.isMobileView;
-    console.log(this.isMobileView);
+    // console.log(this.isMobileView);
 
     this.user.toggle();
   }
@@ -109,7 +109,7 @@ getvernorDetails(){
   openMessagesModal(norti: any) {
     this.selectedNotification = norti;
     this.showMessagesModal = true;
-    console.log("Notification details:", norti);
+    // console.log("Notification details:", norti);
   }
   closeMessagesModal() {
     this.showMessagesModal = false;
@@ -135,8 +135,8 @@ getvernorDetails(){
     return; // user canceled
   }
 
-  console.log('Name:', this.editName); 
-  console.log('Email:', this.editEmail);
+  // console.log('Name:', this.editName); 
+  // console.log('Email:', this.editEmail);
 
   const form = new FormData(); 
   form.append('vendor_name', this.editName);
@@ -144,7 +144,7 @@ getvernorDetails(){
 
   this.user.updateNotification(1, form).subscribe({
     next: (res: any) => {
-      console.log("Update response:", res);
+      // console.log("Update response:", res);
 
       // ✅ success notify
       

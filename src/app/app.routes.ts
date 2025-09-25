@@ -23,6 +23,7 @@ import { HotelTeck } from './shared/components/hotel component/hotel-teck/hotel-
 import { AddRooms } from './shared/components/hotel component/add-rooms/add-rooms';
 import { ShowRoomDetails } from './shared/components/hotel component/show-room-details/show-room-details';
 import { HotelPolicy } from './shared/components/hotel component/hotel-policy/hotel-policy';
+import { VendorBackDetails } from './shared/components/vendor-back-details/vendor-back-details';
 
 
 
@@ -119,7 +120,12 @@ export const routes: Routes = [
   },{
    path:"deskboard/hotel-rooms/edit/:id",
     component:AddRooms
-  } ,{
+  },{
+
+   path:"deskboard/bank-transaction-detail",
+   component:VendorBackDetails
+  }
+   ,{
     path:"deskboard/hotel-rooms-details/:id",
     component:ShowRoomDetails
   },{

@@ -107,11 +107,11 @@ export class HotelTeck  implements OnInit {
   }
 
   onSubmit(): void {
-  console.log('Is form valid?', this.roomForm.valid);
-  console.log('Form values:', this.roomForm.value);
+  // console.log('Is form valid?', this.roomForm.valid);
+  // console.log('Form values:', this.roomForm.value);
 
   if (this.roomForm.valid) {
-    console.log('Form submitted successfully!');
+    // console.log('Form submitted successfully!');
   } else {
     this.roomForm.markAllAsTouched();
   }

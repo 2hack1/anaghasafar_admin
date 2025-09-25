@@ -26,7 +26,7 @@ bokingdata:any;
    getbookingsdata(){
   const id= sessionStorage.getItem('id');
   this.userservice.getbookingDetails(id).subscribe((res:any)=>{
-    console.log(res,"booking details:");
+    // console.log(res,"booking details:");
     this.bokingdata=res;
   })
  }
@@ -37,7 +37,7 @@ bokingdata:any;
  getprofiledata(){
  this.userservice.userDataForHotelDeskboard(sessionStorage.getItem('id')).subscribe((res:any)=>{
    this.userdata=res.bookings
-   console.log(res.bookings,"user details:11111111111111111111111111111111111111111111111111");
+  //  console.log(res.bookings,"user details:1111");
  });
 }
 }

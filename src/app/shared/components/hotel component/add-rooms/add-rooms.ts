@@ -93,7 +93,7 @@ ngOnInit(): void {
     //  console.log(this.showcancellation)
   const vendorid = Number(sessionStorage.getItem('id'));
 
-    console.log("sdjflsjdlf", vendorid)
+    // console.log("sdjflsjdlf", vendorid)
     this.service.gethotelroom(vendorid,this.roomId).subscribe((res: any) => {
       const data = res.data;
 
@@ -257,9 +257,9 @@ hotelImages: { file: File | null; preview: string; existing?: boolean; name?: st
     formDat.append('hotel_vendor_id', String(sessionStorage.getItem('id'))); // Change if dynamic
 
     // Optional: log for debugging
-    for (let [key, value] of formDat.entries()) {
-      console.log(`${key}:`, value);
-    }
+    // for (let [key, value] of formDat.entries()) {
+    //   // console.log(`${key}:`, value);
+    // }
 
     // ✅ Submit to backend
     this.service.addhotelrooms(formDat).subscribe((res: any) => {
@@ -348,14 +348,14 @@ formDat.append('cancellation_charges', cancellationCharges.toString());
     this.service.updateRoomData( formDat,this.roomId,).subscribe((res: any) => {
       this.service.norifilerrun=1;
       this.route.navigate(["deskboard/rooms"]);
-      console.log("res for user side",res);
+      // console.log("res for user side",res);
     });
     //  this.showcancellation=false;
-  for (let [key, value] of formDat.entries()) {
-      console.log("all data check",`${key}:`, value);
-    }
-    console.log("room id",this.roomId);
-
+  // for (let [key, value] of formDat.entries()) {
+  //     // console.log("all data check",`${key}:`, value);
+  //   }
+    // console.log("room id",this.roomId);
+// 
   } else {
     this.roomForm.markAllAsTouched();
     this.notifier.notify('error', 'All fields are required!');

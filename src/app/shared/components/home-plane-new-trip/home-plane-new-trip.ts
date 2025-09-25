@@ -29,7 +29,7 @@ bookings: any;
     this.userService.DeleteUserPlanTrip(id).subscribe(() => {
       // this.bookings = this.bookings.filter(b => b.id !== id);
       this.getBookings();
-      console.log("delete working",id);
+      // console.log("delete working",id);
     });
   }
 }

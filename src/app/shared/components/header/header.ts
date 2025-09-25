@@ -26,7 +26,7 @@ export class Header implements OnInit {
   toggleTarget() {
     // this.togel=!this.togel;
     this.isMobileView = !this.isMobileView;
-    console.log(this.isMobileView);
+    // console.log(this.isMobileView);
 
     this.user.toggle();
   }

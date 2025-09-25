@@ -36,7 +36,7 @@ env=environment
   des_id: any;
   ngOnInit(): void {
     this.des_id = this.route.snapshot.paramMap.get('id');
-    console.log("dest_id:", this.des_id);
+    // console.log("dest_id:", this.des_id);
     this.loadSubDestinations(this.des_id);
   }
   // getall:any;
@@ -45,13 +45,13 @@ env=environment
     this.service.getAllSubDestinations(id).subscribe((res: any) => {
       this.allSubDestinations = res.sub_destinations;
       this.destination = res.name;
-      console.log("allSubDestination:", this.allSubDestinations)
+      // console.log("allSubDestination:", this.allSubDestinations)
     });
   }
    send(entry:any){
-      console.log('Navigating to ID:', entry.sub_destination_id);
+      // console.log('Navigating to ID:', entry.sub_destination_id);
     if (entry?.sub_destination_id) {
-    console.log('Navigating to ID:', entry.id);
+    // console.log('Navigating to ID:', entry.id);
     this.router.navigate(['/packages', entry.sub_destination_id]);  // Cleaner and more reliable
     
   } else {
@@ -93,7 +93,7 @@ env=environment
       formData.append('name', this.subDestForm.value.name);
 
       this.service.updateSubDestination(this.currentId, formData).subscribe((data) => {
-        console.log(data)
+        // console.log(data)
         this.loadSubDestinations(this.des_id);
         this.formVisible = false;
       });
@@ -109,7 +109,7 @@ env=environment
 
   deleteSubDest(id: number) {
     if (confirm('Are you sure to delete this sub destination?')) {
-      console.log(id);
+      // console.log(id);
       this.service.deleteSubDestination(id).subscribe(() => {
         this.loadSubDestinations(this.des_id);
       });
