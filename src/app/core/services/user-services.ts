@@ -268,8 +268,8 @@ export class UserServices {
   }
   getvendoralldata(id: any) {
     return this.http.get(`${this.env.base_url}/vendor/alldata/${id}`);
-
   }
+  
   getbookingDetails(id: any) {
     return this.http.get(`${this.env.base_url}/bookings/wholebookingdata/${id}`);
   }
@@ -310,12 +310,30 @@ export class UserServices {
 
   getBankDetail(id: any) {
     return this.http.get(`${this.env.base_url}/vendors/${id}`);
-  }
-
+  } 
+  
   chancalatiPolisy() {
     // demo for hostign 
   }
   privacyPolisy() {
     // demo for hostign 
+  }
+  
+  gethoteldeskondestination(){
+    return this.http.get(`${this.env.base_url}/get/hoteldesk/admin`);
+  }
+  gethotelprofile(){
+    return this.http.get(`${this.env.base_url}/hotels`);
+    
+  }
+  
+  
+  getpaid(){
+    return this.http.get(`${this.env.base_url}/paid/booking`);
+    
+  }
+  getunpaid(){
+    
+    return this.http.get(`${this.env.base_url}/unpaid/booking`);
   }
 }
