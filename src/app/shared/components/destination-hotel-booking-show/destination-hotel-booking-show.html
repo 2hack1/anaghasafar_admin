@@ -51,19 +51,16 @@
           <th>Guest Details</th>
           <th>Room Type</th>
           <th>Check-in/Out</th>
-          <th style="display: flex;">R/No. <div class="spinner" *ngIf="isAdding"></div>
-          </th>
+         
           <th>Amount</th>
           <th>Status</th>
-          <!-- <th>Actions</th> -->
+         
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let booking of bookingdata; let i = index  "> -->
+       
         <tr *ngFor="let booking of filteredBookings; let i = index">
-
           <td>
-
             <div class="notify-circle" *ngIf="!booking.room_no"></div>
             BK{{ booking.id | number:'2.0' }}
           </td>
@@ -81,31 +78,8 @@
             {{ booking.check_in_date }}<br>
             {{ booking.check_out_date }}
           </td>
-          <td>
-            <!-- Case: Room number exists -->
-            <span *ngIf="booking.room_no; else noRoom" style="display:block; color: rgb(0, 0, 0); ">
-              {{ booking.room_no }}
-            </span>
-
             <!-- Case: Room number does NOT exist -->
 
-            <ng-template #noRoom>
-              <span style="display:block; color: red;">given room no.</span>
-              <span *ngIf="!isAdding"
-                style="background-color: green; padding: 4px 7px; color: white; cursor: pointer; border-radius: 4px;"
-                (click)="hoteldata(
-                 booking?.id,
-                   booking?.user?.email,
-                  booking?.user?.name,
-                   booking?.hotel_room?.roomType,
-                 booking?.hotel_vendor?.hotelname
-                             );">
-                add
-              </span>
-            </ng-template>
-
-
-          </td>
           <td>
             ₹{{ booking.total_amount }}<br>
             <small>Booked: {{ booking.created_at | date:'yyyy-MM-dd' }}</small>
@@ -114,16 +88,14 @@
             <span class="badge" [ngClass]="booking.status.toLowerCase()">{{ booking.status }}</span>
             <span class="badge" [ngClass]="booking.payment_status.toLowerCase()">{{ booking.payment_status }}</span>
           </td>
-          <!-- <td class="actions-icons">
-            <i class="material-icons" title="Edit" (click)="editBooking(booking)">edit</i>
-            <i class="material-icons" title="Delete" (click)="deleteBooking(booking)">delete</i>
-          </td> -->
+         
         </tr>
       </tbody>
     </table>
 
   </div>
-</div> <!-- Modal -->
+</div> 
+<!-- Modal -->
 <div class="modal-backdrop" *ngIf="showGuestsModalFirstly">
   <div class="modal-box"> <button
       style=" margin-left: 22rem; color: black; width: 30px; height: 20px; font-size: 20px; background-color: white; border: none; "
@@ -147,6 +119,7 @@
   <div class="modal-box"> <!-- Close Button -->
     <button class="close-btn" (click)="toggleGuestsModal()">x</button>
     <!-- Step 1: Select Guest Range -->
+     
     <div *ngIf="step === 1">
       <h3>Select Room's</h3> <!-- Ranges as Cards -->
       <div class="cards-grid" [class.animating]="isAnimating">

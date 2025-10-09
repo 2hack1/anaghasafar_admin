@@ -13,10 +13,20 @@ export class DeskBoard implements OnInit {
   
   ngOnInit(): void {
   this.getBookings();
+  this.gethoteldata();
   }
 
 constructor(private service:UserServices){}
  
+
+getdesckboradData:any;
+gethoteldata(){
+  this.service.gethoteldeskondestination().subscribe((res:any)=>{
+console.log(res);
+this.getdesckboradData=res;
+  })
+}
+
 getBookings(): void {
     this.service.getUserPlanTrip().subscribe((res) => {
       this.bookings = res;

@@ -1,0 +1,92 @@
+<notifier-container></notifier-container>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white" style="margin-top: -2rem;">
+            <h3 class="mb-0 text-black" style="color: rgb(24, 23, 23); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                Hotel Cancellation Policy</h3>
+        </div>
+        <div class="card-body"> <!-- Cancellation Form -->
+           <form (ngSubmit)="submitCancellation1()" #cancelForm="ngForm">
+  <label class="form-label mb-2">Select Policies</label>
+
+  <div class="mb-3 d-flex flex-column gap-2">
+    <!-- Policy Checkboxes -->
+    <div *ngFor="let policy of policyList" class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [id]="policy.value"
+        [(ngModel)]="selectedPolicies[policy.value]"
+        name="{{policy.value}}"
+      />
+      <label class="form-check-label" [for]="policy.value">{{ policy.label }}</label>
+    </div>
+  </div>
+
+  <!-- Dynamic Textareas -->
+  <div *ngFor="let policy of policyList">
+    <div *ngIf="selectedPolicies[policy.value]" class="mb-3">
+      <label class="form-label">{{ policy.label }} Details</label>
+      <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="policyDetails[policy.value]"
+        name="{{policy.value}}Details"
+        placeholder="Enter {{ policy.label.toLowerCase() }} details..."
+      ></textarea>
+    </div>
+</div>
+<div class="mt-3" *ngIf="isAnyPolicySelected()">
+  <button class="btn btn-primary" type="submit">Submit</button>
+</div>
+
+</form>
+
+            
+            <!-- Nav Tabs -->
+
+         <ul class="nav nav-tabs justify-content-center" role="tablist" style="margin-top: 10px; padding: 10px;">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active"
+            type="button"
+            (click)="showPolicy('cancellation')">Cancellation & Refund Policy</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('payment')">Payment Policy</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('lastminute')">Privacy Policy</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link"
+            type="button"
+            (click)="showPolicy('nonrefundable')">Term  & coditions</button>
+  </li>
+</ul>
+
+<div class="tab-content p-4">
+  <div *ngIf="activePolicy==='cancellation'">
+    <h5 class="text-primary">Cancellation & Refund Policy</h5>
+    <p>{{ policyContents.cancellation }}</p>
+  </div>
+  <div *ngIf="activePolicy==='payment'">
+    <h5 class="text-primary">Payment Policy</h5>
+    <p>{{ policyContents.payment }}</p>
+  </div>
+  <div *ngIf="activePolicy==='lastminute'">
+    <h5 class="text-primary">Confidentiality & privacy policy</h5>
+    <p>{{ policyContents.lastminute }}</p>
+  </div>
+  <div *ngIf="activePolicy==='nonrefundable'">
+    <h5 class="text-primary">Usage Policy</h5>
+    <p>{{ policyContents.nonrefundable }}</p>
+  </div>
+</div>
+
+        </div>
+    </div>
+</div>

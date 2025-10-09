@@ -2,16 +2,16 @@
 <div class="bodies">
   <div class="header">
     <div>
-      <h1>Booking Management</h1>
-      <p>Track and manage all your hotel bookings</p>
+      <h1>available hotels</h1>
+      <p>Track and manage all your hotel</p>
     </div>
     <div class="actions"> <button class="btn filter">Advanced Filter</button> <button class="btn export">Export</button>
     </div>
   </div>
   <div class="cards">
     <div class="card">
-      <h4>Total Bookings</h4>
-      <div class="value">{{bokingdata?.total_bookings }} </div>
+      <h4>Total available hotels</h4>
+      <div class="value">{{bokingdata?.total_hotels }} </div>
     </div>
     <div class="card">
       <h4>Total Revenue</h4>
@@ -32,98 +32,62 @@
 
   <div class="search-filter">
     <input type="text" [(ngModel)]="searchQuery" (input)="applyFilters()"
-      placeholder="Search by guest name, booking ID, or room type..." />
-
-    <div class="status-buttons">
-      <button [class.active]="selectedStatus==='All'" (click)="setStatus('All')">All</button>
-      <button [class.active]="selectedStatus==='Confirmed'" (click)="setStatus('Confirmed')">Confirmed</button>
-      <button [class.active]="selectedStatus==='Pending'" (click)="setStatus('Pending')">Pending</button>
-      <button [class.active]="selectedStatus==='Completed'" (click)="setStatus('Completed')">Completed</button>
-      <button [class.active]="selectedStatus==='Cancelled'" (click)="setStatus('Cancelled')">Cancelled</button>
-    </div>
+      placeholder="Search by hotel name..." />
   </div>
   <div class="table-container">
 
     <table>
       <thead>
         <tr>
-          <th>Booking ID</th>
-          <th>Guest Details</th>
-          <th>Room Type</th>
-          <th>Check-in/Out</th>
-          <th style="display: flex;">R/No. <div class="spinner" *ngIf="isAdding"></div>
-          </th>
-          <th>Amount</th>
-          <th>Status</th>
-          <!-- <th>Actions</th> -->
+          <th>Hotel ID</th>
+          <th>hotel name</th>
+          <th>Hotel Email</th>
+          <th>Total No. Rooms</th>
+         
+          <th>Address</th>
+          <th>Action</th>
+         
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let booking of bookingdata; let i = index  "> -->
+       
         <tr *ngFor="let booking of filteredBookings; let i = index">
-
           <td>
-
             <div class="notify-circle" *ngIf="!booking.room_no"></div>
-            BK{{ booking.id | number:'2.0' }}
+            BK{{ booking.hotel_vendor_id | number:'2.0' }}
           </td>
           <td>
-            <strong>{{ booking.user.name }}</strong><br>
-            📞 {{ booking.user.user_mob_no1 }}<br>
-            📧 {{ booking.user.email }}
+            <strong>{{ booking.hotelname }}</strong><br>
+            <!-- 📞 {{ booking.user.user_mob_no1 }}<br>
+            📧 {{ booking.user.email }} -->
           </td>
           <td>
-            {{ booking.hotel_room.roomType }}<br>
-            {{ booking.adults + booking.children }} guests •
-            {{ calculateNights(booking.check_in_date, booking.check_out_date) }} nights
+            {{booking.vendor_email }}<br>
+            <!-- {{ booking.adults + booking.children }} guests • -->
+            <!-- {{ calculateNights(booking.check_in_date, booking.check_out_date) }} nights -->
           </td>
           <td>
-            {{ booking.check_in_date }}<br>
-            {{ booking.check_out_date }}
+            {{ booking.totalrooms }} rooms<br>
+            <!-- {{ booking.check_out_date }} -->
           </td>
-          <td>
-            <!-- Case: Room number exists -->
-            <span *ngIf="booking.room_no; else noRoom" style="display:block; color: rgb(0, 0, 0); ">
-              {{ booking.room_no }}
-            </span>
-
             <!-- Case: Room number does NOT exist -->
 
-            <ng-template #noRoom>
-              <span style="display:block; color: red;">given room no.</span>
-              <span *ngIf="!isAdding"
-                style="background-color: green; padding: 4px 7px; color: white; cursor: pointer; border-radius: 4px;"
-                (click)="hoteldata(
-                 booking?.id,
-                   booking?.user?.email,
-                  booking?.user?.name,
-                   booking?.hotel_room?.roomType,
-                 booking?.hotel_vendor?.hotelname
-                             );">
-                add
-              </span>
-            </ng-template>
-
-
+          <td>
+            {{ booking.address }},{{booking.city}},{{booking.state}}<br>
+            <!-- <small>Booked: {{ booking.created_at | date:'yyyy-MM-dd' }}</small> -->
           </td>
           <td>
-            ₹{{ booking.total_amount }}<br>
-            <small>Booked: {{ booking.created_at | date:'yyyy-MM-dd' }}</small>
+            <button class="btn btn-primary" >see more</button>
+            <!-- <span class="badge" [ngClass]="booking.payment_status.toLowerCase()">{{ booking.payment_status }}</span> -->
           </td>
-          <td>
-            <span class="badge" [ngClass]="booking.status.toLowerCase()">{{ booking.status }}</span>
-            <span class="badge" [ngClass]="booking.payment_status.toLowerCase()">{{ booking.payment_status }}</span>
-          </td>
-          <!-- <td class="actions-icons">
-            <i class="material-icons" title="Edit" (click)="editBooking(booking)">edit</i>
-            <i class="material-icons" title="Delete" (click)="deleteBooking(booking)">delete</i>
-          </td> -->
+         
         </tr>
       </tbody>
     </table>
 
   </div>
-</div> <!-- Modal -->
+</div> 
+<!-- Modal -->
 <div class="modal-backdrop" *ngIf="showGuestsModalFirstly">
   <div class="modal-box"> <button
       style=" margin-left: 22rem; color: black; width: 30px; height: 20px; font-size: 20px; background-color: white; border: none; "
@@ -147,6 +111,7 @@
   <div class="modal-box"> <!-- Close Button -->
     <button class="close-btn" (click)="toggleGuestsModal()">x</button>
     <!-- Step 1: Select Guest Range -->
+     
     <div *ngIf="step === 1">
       <h3>Select Room's</h3> <!-- Ranges as Cards -->
       <div class="cards-grid" [class.animating]="isAnimating">

@@ -24,6 +24,9 @@ import { AddRooms } from './shared/components/hotel component/add-rooms/add-room
 import { ShowRoomDetails } from './shared/components/hotel component/show-room-details/show-room-details';
 import { HotelPolicy } from './shared/components/hotel component/hotel-policy/hotel-policy';
 import { VendorBackDetails } from './shared/components/vendor-back-details/vendor-back-details';
+import { DestinationHotelBookingShow } from './shared/components/destination-hotel-booking-show/destination-hotel-booking-show';
+import { Adminhotelinfo } from './shared/components/adminhotelinfo/adminhotelinfo';
+import { DesTermsPolicyes } from './shared/components/des-terms-policyes/des-terms-policyes';
 
 
 
@@ -95,7 +98,17 @@ export const routes: Routes = [
     path:"hotelVendorForm",
     component:HotelVendorForm
   
-  },{ 
+  },{
+    path:"hotelbookings",
+    component:DestinationHotelBookingShow
+  },{
+    path:"hotels",
+    component:Adminhotelinfo
+  },{
+    path:"terms&condition",
+    component:DesTermsPolicyes
+  }
+  ,{ 
     path:"deskboard",
   component: VendorDeskboard 
   },{

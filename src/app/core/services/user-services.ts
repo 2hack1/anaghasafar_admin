@@ -322,18 +322,18 @@ export class UserServices {
   gethoteldeskondestination(){
     return this.http.get(`${this.env.base_url}/get/hoteldesk/admin`);
   }
+
   gethotelprofile(){
-    return this.http.get(`${this.env.base_url}/hotels`);
-    
+    return this.http.get(`${this.env.base_url}/hotels`); 
   }
-  
-  
+
   getpaid(){
     return this.http.get(`${this.env.base_url}/paid/booking`);
-    
   }
-  getunpaid(){
-    
+
+  getunpaid(){ 
     return this.http.get(`${this.env.base_url}/unpaid/booking`);
   }
+
+  
 }

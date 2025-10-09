@@ -88,13 +88,11 @@
                     <a [routerLink]="['/HomeCards']">Four-Cards</a>
                 </li>
 
-                <li>
-                    <a [routerLink]="['/PlanenewTrip']"> Plan MyTrip (request)</a>
-                </li>
+               
                 <li>
                     <a [routerLink]="['/checkit']">check It</a>
                 </li>
-
+               
             </ul>
         </li>
 
@@ -102,36 +100,32 @@
             <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">equalizer</i>
 
-                <span>User Activity</span></a>
+                <span>Hotel informations</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu3">
+              
                 <li>
-                    <a [routerLink]="['/userOrder']">User Tour Order</a>
+                    <a [routerLink]="['/hotelbookings']"> available hotels hotel</a>
                 </li>
                 <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
+                    <a [routerLink]="['/hotels']"> hotel bookings</a>
                 </li>
             </ul>
         </li>
         <li class="dropdown">
             <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                <i class="material-icons">extension</i><span>ui element</span></a>
+                <i class="material-icons">extension</i><span>user activity</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu4">
-                <li>
-                    <a href="#">Page 1</a>
+                 <li>
+                    <a [routerLink]="['/PlanenewTrip']"> Plan MyTrip (request)</a>
                 </li>
                 <li>
-                    <a href="#">Page 2</a>
+                    <a [routerLink]="['/userOrder']">User Tour Order</a>
                 </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
+                
             </ul>
         </li>
 
-        <li class="dropdown">
+        <!-- <li class="dropdown">
             <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">border_color</i><span>forms</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu5">
@@ -145,9 +139,9 @@
                     <a href="#">Page 3</a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
-        <li class="dropdown">
+        <!-- <li class="dropdown">
             <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">grid_on</i><span>tables</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu6">
@@ -161,9 +155,9 @@
                     <a href="#">Page 3</a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
-        <li class="dropdown">
+        <!-- <li class="dropdown">
             <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="material-icons">content_copy</i><span>Pages</span></a>
             <ul class="collapse list-unstyled menu" id="pageSubmenu7">
@@ -177,14 +171,14 @@
                     <a href="#">Page 3</a>
                 </li>
             </ul>
+        </li> -->
+
+        <li class="">
+            <a [routerLink]="['/terms&condition']"><i class="material-icons">date_range</i><span>terms&conditions</span></a>
         </li>
 
         <li class="">
-            <a href="#"><i class="material-icons">date_range</i><span>copy</span></a>
-        </li>
-
-        <li class="">
-            <a href="#"><i class="material-icons">library_books</i><span>Calender</span></a>
+            <a href="#"><i class="material-icons">library_books</i><span>banking data</span></a>
         </li>
     </ul>
 </nav>
