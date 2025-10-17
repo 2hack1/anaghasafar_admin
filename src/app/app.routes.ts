@@ -32,7 +32,7 @@ import { DesTermsPolicyes } from './shared/components/des-terms-policyes/des-ter
 
 export const routes: Routes = [
 
-    {
+  {
     path: "",
     component: DeskBoard,
     canActivate: [authGuard] // ✅ dashboard protected
@@ -83,70 +83,70 @@ export const routes: Routes = [
 
   {
     path: "login",
-    component: Login 
+    component: Login
   },
   {
-    path:"userOrder",
-    component:UserTourOrder
-    ,canActivate: [authGuard]
+    path: "userOrder",
+    component: UserTourOrder
+    , canActivate: [authGuard]
   },
   {
-    path:"orderAbout/:id",
-    component:AboutUserTourOrder,
-     canActivate: [authGuard]
-  },{
-    path:"hotelVendorForm",
-    component:HotelVendorForm
-  
-  },{
-    path:"hotelbookings",
-    component:DestinationHotelBookingShow
-  },{
-    path:"hotels",
-    component:Adminhotelinfo
-  },{
-    path:"terms&condition",
-    component:DesTermsPolicyes
-  }
-  ,{ 
-    path:"deskboard",
-  component: VendorDeskboard 
-  },{
+    path: "orderAbout/:id",
+    component: AboutUserTourOrder,
+    canActivate: [authGuard]
+  }, {
+    path: "hotelVendorForm",
+    component: HotelVendorForm
 
-     path:"deskboard/review",
-  component: Review
-  },{
-       path:"deskboard/rooms",
-      component: HotelRoomsManagement
-  },{
-    path:"notfounderror404",
-    component:Pagenotfound
-  },{
-     path:"deskboard/booking",
-      component: Hotelbooking
-  },{
-    path:"deskboard/check",
-    component:HotelTeck
-  },{
-    path:"deskboard/hotel-rooms",
-    component:AddRooms
-  },{
-   path:"deskboard/hotel-rooms/edit/:id",
-    component:AddRooms
-  },{
-
-   path:"deskboard/bank-transaction-detail",
-   component:VendorBackDetails
+  }, {
+    path: "hotelbookings",
+    component: DestinationHotelBookingShow
+  }, {
+    path: "hotels",
+    component: Adminhotelinfo
+  }, {
+    path: "terms&condition",
+    component: DesTermsPolicyes
   }
-   ,{
-    path:"deskboard/hotel-rooms-details/:id",
-    component:ShowRoomDetails
-  },{
-    path:"deskboard/hotelpolicy",
-    component:HotelPolicy
-  } ,{
-  path: '**',
- component:Pagenotfound
-}
+  , {
+    path: "deskboard",
+    component: VendorDeskboard
+  }, {
+
+    path: "deskboard/review",
+    component: Review
+  }, {
+    path: "deskboard/rooms",
+    component: HotelRoomsManagement
+  }, {
+    path: "notfounderror404",
+    component: Pagenotfound
+  }, {
+    path: "deskboard/booking",
+    component: Hotelbooking
+  }, {
+    path: "deskboard/check",
+    component: HotelTeck
+  }, {
+    path: "deskboard/hotel-rooms",
+    component: AddRooms
+  }, {
+    path: "deskboard/hotel-rooms/edit/:id",
+    component: AddRooms
+  }, {
+
+    path: "deskboard/bank-transaction-detail",
+    component: VendorBackDetails
+  }
+  , {
+    path: "deskboard/hotel-rooms-details/:id",
+    component: ShowRoomDetails
+  }, {
+    path: "deskboard/hotelpolicy",
+    component: HotelPolicy
+  }, {
+    path: '**',
+    component: Pagenotfound
+  }
 
 ];

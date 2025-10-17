@@ -320,7 +320,8 @@ export class UserServices {
   }
   
   gethoteldeskondestination(){
-    return this.http.get(`${this.env.base_url}/get/hoteldesk/admin`);
+    // return this.http.get(`${this.env.base_url}/get/hoteldesk/admin`);
+    return this.http.get(`${this.env.base_url}/chek/admin`);
   }
 
   gethotelprofile(){

@@ -1,25 +1,11 @@
-// import { CanActivateFn, Router } from '@angular/router';
-
-// import { inject } from '@angular/core';
-// export const authGuard: CanActivateFn = (route, state) => {
-  
-//   const routes= inject(Router);
-
-//   const token= sessionStorage.getItem('token');
-//   if(token){
-
-//     return true;
-//   }else{
-//       return routes.createUrlTree(['/login']);
-//   }
-// };
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = sessionStorage.getItem('token');
-  const role = sessionStorage.getItem('role'); // e.g., 'admin' or 'hotel_vendor'
+  const role = sessionStorage.getItem('role');
+   // e.g., 'admin' or 'hotel_vendor'
   const url = state.url;
 
   if (!token) {
